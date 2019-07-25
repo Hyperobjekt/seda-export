@@ -5,7 +5,7 @@ const Handlebars = require('handlebars')
 
 class Pdfer {
   async html(data, template) {
-    console.log('html()');
+    // console.log('html()');
     try {
       // Fetch and parse the JSON.
       let json;
@@ -36,20 +36,17 @@ class Pdfer {
   }
 
   async pdf(data, template, output) {
-    console.log('pdf()');
+    // console.log('pdf()');
     const html = await this.html(data, template)
     // console.log(html)
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
     await page.setContent(html)
-
-    // return page.pdf()
     await page.pdf({
       path: output,
       format: 'A4',
       printBackground: true
     })
-
     process.exit()
   }
 }
