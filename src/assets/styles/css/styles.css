@@ -1,0 +1,49 @@
+html {
+  font-size: 62.5%; }
+
+/* Fonts */
+@font-face {
+  font-family: 'MaisonNeue-Bold';
+  src: url("./assets/font/MaisonNeue-Bold.ttf"); }
+
+@font-face {
+  font-family: 'MaisonNeue-Book';
+  src: url("./assets/font/MaisonNeue-Book.ttf"); }
+
+@font-face {
+  font-family: 'MaisonNeue-Medium';
+  src: url("./assets/font/MaisonNeue-Medium.ttf"); }
+
+@font-face {
+  font-family: 'SharpGrotesk-Book20';
+  src: url("./assets/font/SharpGrotesk-Book20.otf"); }
+
+@font-face {
+  font-family: 'SharpGrotesk-Medium15';
+  src: url("./assets/font/SharpGrotesk-Medium15.otf"); }
+
+@font-face {
+  font-family: 'SharpGrotesk-Medium20';
+  src: url("./assets/font/SharpGrotesk-Medium20.otf"); }
+
+@font-face {
+  font-family: 'SharpGrotesk-MediumItalic20';
+  src: url("./assets/font/SharpGrotesk-MediumItalic20.otf"); }
+
+.pagebreak {
+  page-break-before: always; }
+
+h1 {
+  font-family: "SharpGrotesk-Medium20", "Lato", "Helvetica Neue", Arial, sans-serif, -apple-system;
+  color: "#031232";
+  font-size: 4.3rem;
+  line-height: 6.6rem;
+  letter-spacing: .056rem; }
+
+h2 {
+  font-family: "SharpGrotesk-Medium20", "Lato", "Helvetica Neue", Arial, sans-serif, -apple-system;
+  color: red; }
+
+h2.front {
+  font-family: "SharpGrotesk-Medium20", "Lato", "Helvetica Neue", Arial, sans-serif, -apple-system;
+  font-size: 100px; }

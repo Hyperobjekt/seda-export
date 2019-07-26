@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "export": "node ./src/ExportPDF.js --data=./input/data.json --template=./src/template.hbs --output=./output/result.pdf"
+    "dev": "",
+    "export": "node ./src/ExportPDF.js --data=./input/data.json --templates=./src/assets/templates --output=./output/result.pdf",
+    "build-css": "node-sass --include-path ./src/assets/styles/scss ./src/assets/styles/scss/styles.scss ./src/assets/styles/css/styles.css",
+    "dev": "nodemon -e js,scss -x \"npm run build-css && cp ./src/assets/styles/css/styles.css ./src/assets/templates/styles.hbs && npm run export\""
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,8 @@
   "devDependencies": {
     "fs": "0.0.1-security",
     "handlebars": "^4.1.2",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.19.1",
     "path": "^0.12.7",
     "puppeteer": "^1.19.0",
     "util": "^0.12.1",

@@ -4,7 +4,7 @@ const Puppeteer = require('puppeteer')
 const Handlebars = require('handlebars')
 
 class Pdfer {
-  async html(data, template) {
+  async html(data, templates) {
     // console.log('html()');
     try {
       // Fetch and parse the JSON.
@@ -18,7 +18,10 @@ class Pdfer {
       }
       const jsonparse = JSON.parse(json);
       // Fetch the template.
-      const templatePath = Path.resolve(template)
+      // console.log('template string');
+      // console.log(templates);
+      let t = templates + '/template.hbs';
+      const templatePath = Path.resolve(t);
       let content;
       try {
          content = Fs.readFileSync(templatePath, { encoding: 'utf8' })
@@ -26,18 +29,35 @@ class Pdfer {
         // An error occurred fetching template file
         console.error(err);
       }
+      // Register partials
+      let stylesPartial = Fs.readFileSync('./src/assets/templates/styles.hbs', 'utf8');
+      Handlebars.registerPartial('styles', stylesPartial);
+      // console.log('partials:');
+      // console.log(Handlebars.partials);
+      // instead of {{> partialName}} use {{partial "templateName"}}
+      // Handlebars.registerHelper('partial', function (templateName) {
+      //   return new Handlebars.SafeString(JST[templateName](this));
+      // });
+      // for(let [name, template] of Object.entries(Handlebars.partials)) {
+      //   Handlebars.partials[name] = Handlebars.compile(template);
+      // }
       // compile and render the template with handlebars
-      const handlebars = Handlebars.compile(content);
+      let handlebars;
+      try {
+        handlebars = Handlebars.compile(content);
+      } catch (e) {
+        throw new Error(e)
+      }
       // Return the handlebars template rendered with data
       return handlebars(jsonparse)
     } catch (error) {
-      throw new Error('Cannot create invoice HTML template.')
+      throw new Error('Cannot create HTML template.')
     }
   }
 
-  async pdf(data, template, output) {
+  async pdf(data, templates, output) {
     // console.log('pdf()');
-    const html = await this.html(data, template)
+    const html = await this.html(data, templates)
     // console.log(html)
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()

@@ -4,8 +4,14 @@ Execute a node.js script to export a PDF using provided JSON and handlebars temp
 
 ## Commands
 
-To run the dev script:
+To run the export script only:
 
 ```
 npm run export
+```
+
+To set up a nodemon script to watch and update all js and scss files:
+
+```
+npm run dev
 ```

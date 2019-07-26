@@ -1,0 +1,75 @@
+html {
+  font-size: 62.5%;
+}
+/* Fonts */
+@font-face {
+  font-family: 'MaisonNeue-Bold';
+  src: url('./assets/font/MaisonNeue-Bold.ttf');
+}
+@font-face {
+  font-family: 'MaisonNeue-Book';
+  src: url('./assets/font/MaisonNeue-Book.ttf');
+}
+@font-face {
+  font-family: 'MaisonNeue-Medium';
+  src: url('./assets/font/MaisonNeue-Medium.ttf');
+}
+@font-face {
+  font-family: 'SharpGrotesk-Book20';
+  src: url('./assets/font/SharpGrotesk-Book20.otf');
+}
+@font-face {
+  font-family: 'SharpGrotesk-Medium15';
+  src: url('./assets/font/SharpGrotesk-Medium15.otf');
+}
+@font-face {
+  font-family: 'SharpGrotesk-Medium20';
+  src: url('./assets/font/SharpGrotesk-Medium20.otf');
+}
+@font-face {
+  font-family: 'SharpGrotesk-MediumItalic20';
+  src: url('./assets/font/SharpGrotesk-MediumItalic20.otf');
+}
+
+// Variables
+// Maison Neue fonts
+$maisonneue-bold: 'MaisonNeue-Bold', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$maisonneue-book: 'MaisonNeue-Book', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$maisonneue-med: 'MaisonNeue-Medium', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+// SharKGrotesk fonts
+$sharpgrotesk-book-20: 'SharpGrotesk-Book20', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$sharpgrotesk-med-15: 'SharpGrotesk-Medium15', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$sharpgrotesk-med-20: 'SharpGrotesk-Medium20', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$sharpgrotesk-med-ital-20: 'SharpGrotesk-MediumItalic20', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+// Colors
+$primary-dark: '#031232';
+$secondary-blue: '#0090FF';
+$secondary-red: '#FF003E';
+$bg-white: '#F9F9F9';
+$secondary-gray: '#515151';
+
+
+.pagebreak { page-break-before: always; }
+
+h1 {
+  font-family: $sharpgrotesk-med-20;
+  color: $primary-dark;
+  font-size: 4.3rem;
+  line-height: 6.6rem;
+  letter-spacing: .056rem;
+  // color: purple !important;
+}
+
+h2 {
+  font-family: $sharpgrotesk-med-20;
+  color: red;
+}
+
+h2.front {
+  font-family: $sharpgrotesk-med-20;
+  font-size: 100px;
+}
+
+h3 {
+
+}
