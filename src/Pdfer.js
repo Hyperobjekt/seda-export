@@ -30,17 +30,12 @@ class Pdfer {
         console.error(err);
       }
       // Register partials
-      let stylesPartial = Fs.readFileSync('./src/assets/templates/styles.hbs', 'utf8');
+      let fontsPartial = Fs.readFileSync(templates + '/fonts.hbs', 'utf8');
+      Handlebars.registerPartial('fonts', fontsPartial);
+      let stylesPartial = Fs.readFileSync(templates + '/styles.hbs', 'utf8');
       Handlebars.registerPartial('styles', stylesPartial);
       // console.log('partials:');
       // console.log(Handlebars.partials);
-      // instead of {{> partialName}} use {{partial "templateName"}}
-      // Handlebars.registerHelper('partial', function (templateName) {
-      //   return new Handlebars.SafeString(JST[templateName](this));
-      // });
-      // for(let [name, template] of Object.entries(Handlebars.partials)) {
-      //   Handlebars.partials[name] = Handlebars.compile(template);
-      // }
       // compile and render the template with handlebars
       let handlebars;
       try {
@@ -62,9 +57,10 @@ class Pdfer {
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
     await page.setContent(html)
+    await page.emulateMedia('screen')
     await page.pdf({
       path: output,
-      format: 'A4',
+      format: 'Letter',
       printBackground: true
     })
     process.exit()

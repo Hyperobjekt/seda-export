@@ -1,75 +1,201 @@
-html {
+html, body {
   font-size: 62.5%;
+  -webkit-print-color-adjust: exact;
 }
 /* Fonts */
 @font-face {
   font-family: 'MaisonNeue-Bold';
-  src: url('./assets/font/MaisonNeue-Bold.ttf');
+  src: url('./src/assets/font/MaisonNeue-Bold.ttf');
 }
 @font-face {
   font-family: 'MaisonNeue-Book';
-  src: url('./assets/font/MaisonNeue-Book.ttf');
+  src: url('./src/assets/font/MaisonNeue-Book.ttf');
 }
 @font-face {
   font-family: 'MaisonNeue-Medium';
-  src: url('./assets/font/MaisonNeue-Medium.ttf');
+  src: url('./src/assets/font/MaisonNeue-Medium.ttf');
 }
 @font-face {
   font-family: 'SharpGrotesk-Book20';
-  src: url('./assets/font/SharpGrotesk-Book20.otf');
+  src: url('./src/assets/font/SharpGrotesk-Book20.otf');
+// test
 }
 @font-face {
   font-family: 'SharpGrotesk-Medium15';
-  src: url('./assets/font/SharpGrotesk-Medium15.otf');
+  src: url('./src/assets/font/SharpGrotesk-Medium15.otf');
 }
 @font-face {
   font-family: 'SharpGrotesk-Medium20';
-  src: url('./assets/font/SharpGrotesk-Medium20.otf');
+  src: url('./src/assets/font/SharpGrotesk-Medium20.otf');
 }
 @font-face {
   font-family: 'SharpGrotesk-MediumItalic20';
-  src: url('./assets/font/SharpGrotesk-MediumItalic20.otf');
+  src: url('./src/assets/font/SharpGrotesk-MediumItalic20.otf');
 }
+
 
 // Variables
 // Maison Neue fonts
-$maisonneue-bold: 'MaisonNeue-Bold', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
-$maisonneue-book: 'MaisonNeue-Book', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
-$maisonneue-med: 'MaisonNeue-Medium', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$maisonneue-bold: 'MaisonNeue-Bold', 'Lato', 'Helvetica Neue', Arial, sans-serif;
+$maisonneue-book: 'MaisonNeue-Book', 'Lato', 'Helvetica Neue', Arial, sans-serif;
+$maisonneue-med: 'MaisonNeue-Medium', 'Lato', 'Helvetica Neue', Arial, sans-serif;
 // SharKGrotesk fonts
-$sharpgrotesk-book-20: 'SharpGrotesk-Book20', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
-$sharpgrotesk-med-15: 'SharpGrotesk-Medium15', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
-$sharpgrotesk-med-20: 'SharpGrotesk-Medium20', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
-$sharpgrotesk-med-ital-20: 'SharpGrotesk-MediumItalic20', 'Lato', 'Helvetica Neue', Arial, sans-serif, -apple-system;
+$sharpgrotesk-book-20: 'SharpGrotesk-Book20',  'Lato', 'Helvetica Neue', Arial, sans-serif;
+$sharpgrotesk-med-15: 'SharpGrotesk-Medium15', 'times', 'Lato', 'Helvetica Neue', Arial, sans-serif;
+$sharpgrotesk-med-20: 'SharpGrotesk-Medium20', 'times', 'Lato', 'Helvetica Neue', Arial, sans-serif;
+$sharpgrotesk-med-ital-20: 'SharpGrotesk-MediumItalic20', 'Lato', 'Helvetica Neue', Arial, sans-serif;
 // Colors
-$primary-dark: '#031232';
-$secondary-blue: '#0090FF';
-$secondary-red: '#FF003E';
-$bg-white: '#F9F9F9';
-$secondary-gray: '#515151';
+$primary-dark: #031232;
+$secondary-blue: #0090FF;
+$secondary-red: #FF003E;
+$bg-white: #F9F9F9;
+$secondary-gray: #515151;
+$another-gray: #404040;
+$yet-another-gray: #A9A9A9;
 
 
-.pagebreak { page-break-before: always; }
+.pagebreak {
+  page-break-before: always;
+  width: 100%;
+  display: block;
 
-h1 {
+}
+
+.h1 {
   font-family: $sharpgrotesk-med-20;
   color: $primary-dark;
-  font-size: 4.3rem;
+  font-size: 43px;
   line-height: 6.6rem;
   letter-spacing: .056rem;
+  display: block;
+  width: 100%;
   // color: purple !important;
 }
 
-h2 {
+.h2 {
   font-family: $sharpgrotesk-med-20;
-  color: red;
+  font-size: 5.5rem;
+  line-height: 10.2rem;
+  letter-spacing: .072rem;
+  color: $primary-dark;
+  display: block;
+  width: 100%;
 }
 
-h2.front {
-  font-family: $sharpgrotesk-med-20;
-  font-size: 100px;
+.front {
+  font-family: $sharpgrotesk-med-15;
+  font-size: 2.3rem;
+  line-height: 3.5rem;
+  letter-spacing: .095rem;
+  text-transform: uppercase;
+  color: $another-gray;
+  display: block;
+  width: 100%;
 }
 
-h3 {
+.h3 {
+  font-family: $sharpgrotesk-med-15;
+  font-size: 28px;
+  line-height: 56px;
+  letter-spacing: .37px;
+  text-transform: uppercase;
+  color: $primary-dark;
+  display: block;
+  width: 100%;
+}
 
+.h4 {
+  font-family: $sharpgrotesk-med-20;
+  font-size: 2.5rem;
+  line-height: 3.7rem;
+  letter-spacing: .033rem;
+  color: $primary-dark;
+  display: block;
+  width: 100%;
+}
+
+.h5 {
+  font-family: $sharpgrotesk-med-15;
+  font-size: 3.5rem;
+  line-height: 4rem;
+  letter-spacing: .046rem;
+  text-transform: uppercase;
+  // font-weight: 200;
+  color: $primary-dark;
+  display: block;
+  width: 100%;
+}
+
+.h6 {
+  font-family: $sharpgrotesk-med-20;
+  font-size: 2.8rem;
+  line-height: 4rem;
+  letter-spacing: .043rem;
+  color: $secondary-blue;
+  display: block;
+  width: 100%;
+}
+
+.h7 {
+  font-family: $sharpgrotesk-med-20;
+  font-size: 2.2rem;
+  line-height: 3.3rem;
+  letter-spacing: .144rem;
+  color: $another-gray;
+  display: block;
+  width: 100%;
+}
+
+.h8 {
+  font-family: $sharpgrotesk-med-15;
+  font-size: 2.2rem;
+  line-height: 3.3rem;
+  letter-spacing: .144rem;
+  text-transform: uppercase;
+  font-weight: 200;
+  color: $another-gray;
+  display: block;
+  width: 100%;
+}
+
+a,
+.url {
+  font-family: $sharpgrotesk-med-15;
+  font-size: 1.6rem;
+  line-height: 2.54rem;
+  letter-spacing: .2rem;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-style: normal;
+  color: $yet-another-gray;
+}
+
+body,
+p {
+  font-family: $maisonneue-book;
+  font-size: 2.4rem;
+  line-height: 3.6rem;
+  letter-spacing: .031rem;
+  color: $secondary-gray;
+}
+
+// Slightly larger darker body text for front page.
+p.body-front {
+  font-family: $maisonneue-book;
+  font-size: 2.7rem;
+  line-height: 4rem;
+  letter-spacing: .018rem;
+  color: $primary-dark;
+}
+
+p.body-smaller {
+  font-size: 2.3rem;
+  line-height: 3.3rem;
+  letter-spacing: .029rem;
+}
+
+p.body-smallest {
+  font-size: 1.9rem;
+  line-height: 2.9rem;
+  letter-spacing: .025rem;
 }
