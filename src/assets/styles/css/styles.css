@@ -1,6 +1,6 @@
 html, body {
-  font-size: 62.5%;
-  -webkit-print-color-adjust: exact; }
+  -webkit-print-color-adjust: exact;
+  margin: 0; }
 
 /* Fonts */
 @font-face {
@@ -39,17 +39,17 @@ html, body {
 .h1 {
   font-family: "SharpGrotesk-Medium20", "times", "Lato", "Helvetica Neue", Arial, sans-serif;
   color: #031232;
-  font-size: 43px;
-  line-height: 6.6rem;
-  letter-spacing: .056rem;
+  font-size: 21px;
+  line-height: 33px;
+  letter-spacing: .28px;
   display: block;
   width: 100%; }
 
 .h2 {
   font-family: "SharpGrotesk-Medium20", "times", "Lato", "Helvetica Neue", Arial, sans-serif;
-  font-size: 5.5rem;
-  line-height: 10.2rem;
-  letter-spacing: .072rem;
+  font-size: 27.5px;
+  line-height: 51px;
+  letter-spacing: .36px;
   color: #031232;
   display: block;
   width: 100%; }
@@ -157,3 +157,8 @@ p.body-smallest {
   font-size: 1.9rem;
   line-height: 2.9rem;
   letter-spacing: .025rem; }
+
+.front-top {
+  height: 621px;
+  width: 100%;
+  background-color: #F9F9F9; }

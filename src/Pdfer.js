@@ -56,8 +56,13 @@ class Pdfer {
     // console.log(html)
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
+    await page.emulateMedia('print')
+    // await page.setViewport({
+    //   width: 600,
+    //   height: 800,
+    //   deviceScaleFactor: 1
+    // })
     await page.setContent(html)
-    await page.emulateMedia('screen')
     await page.pdf({
       path: output,
       format: 'Letter',

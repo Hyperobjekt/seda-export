@@ -1,6 +1,12 @@
+// Page dimensions at 2x:
+// 816px W
+// 1151px H
+// Basically, a true 72x2=144dpi instead of 150 used by designers.
+
 html, body {
-  font-size: 62.5%;
+  // font-size: 62.5%;
   -webkit-print-color-adjust: exact;
+  margin: 0;
 }
 /* Fonts */
 @font-face {
@@ -52,6 +58,7 @@ $bg-white: #F9F9F9;
 $secondary-gray: #515151;
 $another-gray: #404040;
 $yet-another-gray: #A9A9A9;
+$yet-another-gray-gray: #F9F9F9;
 
 
 .pagebreak {
@@ -64,9 +71,9 @@ $yet-another-gray: #A9A9A9;
 .h1 {
   font-family: $sharpgrotesk-med-20;
   color: $primary-dark;
-  font-size: 43px;
-  line-height: 6.6rem;
-  letter-spacing: .056rem;
+  font-size: 21px; //43px;
+  line-height: 33px; // 6.6rem;
+  letter-spacing: .28px; // .056rem;
   display: block;
   width: 100%;
   // color: purple !important;
@@ -74,9 +81,9 @@ $yet-another-gray: #A9A9A9;
 
 .h2 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 5.5rem;
-  line-height: 10.2rem;
-  letter-spacing: .072rem;
+  font-size: 27.5px; // 5.5rem;
+  line-height: 51px; // 10.2rem;
+  letter-spacing: .36px; // .072rem;
   color: $primary-dark;
   display: block;
   width: 100%;
@@ -199,3 +206,12 @@ p.body-smallest {
   line-height: 2.9rem;
   letter-spacing: .025rem;
 }
+
+// Front page
+.front-top {
+  height: 621px;
+  width: 100%;
+  background-color: $yet-another-gray-gray;
+
+}
+// End front page
