@@ -1,14 +1,16 @@
 // Page dimensions at 2x:
 // 816px W
-// 1151px H
+// 1056px H
 // Basically, a true 72x2=144dpi instead of 150 used by designers.
 
 @import "./front-page-bg.scss";
+@import "./logo-sm.scss";
 
 html, body {
-  // font-size: 62.5%;
+  // font-size: 64%; // 62.5%;
   -webkit-print-color-adjust: exact;
   margin: 0;
+  padding: 0;
 }
 /* Fonts */
 @font-face {
@@ -179,6 +181,16 @@ a,
   color: $yet-another-gray;
 }
 
+.another-url-class-not-in-style-guide {
+  font-family: $sharpgrotesk-med-15;
+  font-size: 23px;
+  line-height: 35px;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-style: normal;
+  color: $another-gray;
+}
+
 body,
 p {
   font-family: $maisonneue-book;
@@ -189,7 +201,7 @@ p {
 }
 
 // Slightly larger darker body text for front page.
-p.body-front {
+.body-front {
   font-family: $maisonneue-book;
   font-size: 14px; // 27px;
   line-height: 20px; // 40px;
@@ -197,21 +209,50 @@ p.body-front {
   color: $primary-dark;
 }
 
-p.body-smaller {
+.body-smaller {
   font-size: 11.5px; // 23px;
   line-height: 16.5px; // 33px;
   letter-spacing: 0.145px; // .29px;
 }
 
-p.body-smallest {
+.body-smallest {
   font-size: 9.5px; // 19px;
   line-height: 14.5px; // 29px;
   letter-spacing: 0.125px; // .25px;
 }
 
+#page_1 {
+  background-color: blue;
+  height: 1146px;
+  display: block;
+  width: 100%;
+}
+
+.page {
+  height: 1146px; // 1056px; // 1650px; // 800px; // 1060px;
+  display: block;
+  width: 100%; // 1275px; // 600px; // 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// For use as header or footer in various contexts
+.headerfooter {
+
+}
+
+.logo-sm {
+  background-image: $logo-sm;
+  background-repeat: none;
+  background-size: 49px 51px;
+  width: 49px; // 76px;
+  height: 51px; // 79px;
+  display: block;
+}
+
 // Front page
 .front-top {
-  height: 621px;
+  height: calc( 890px * .7);// 569px; // 621px;
   width: 100%;
   background-color: $yet-another-gray-gray;
   background-image: $front-page-bg;
@@ -219,4 +260,46 @@ p.body-smallest {
   background-size: 68% auto; // 439px 318.5px; // 878px 637px;
   background-repeat: no-repeat;
 }
+
+
+.front-bottom {
+  // background-color: red;
+  position: relative;
+  height: calc( 762px * .7); // 500px; // 487px;
+  width: 100%;
+
+  &>div,
+  &>span,
+  &>hr {
+    position: absolute;
+    left: 70px;
+  }
+
+  .logo-sm {
+    top: 70px;
+  }
+  .title {
+    top: 147px;
+  }
+  .short-hr {
+    top: 248px;
+    height: 1.27px;
+    width: 30px; // 1.98px;
+    background: $primary-dark;
+    border: 0;
+  }
+  .about {
+    top: 284px;
+  }
+  .date {
+    top: 380px;
+    text-transform: uppercase;
+  }
+  .infolink {
+    top: 407px;
+    text-transform: uppercase;
+  }
+
+}
+
 // End front page
