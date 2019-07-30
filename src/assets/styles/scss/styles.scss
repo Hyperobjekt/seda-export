@@ -3,6 +3,8 @@
 // 1151px H
 // Basically, a true 72x2=144dpi instead of 150 used by designers.
 
+@import "./front-page-bg.scss";
+
 html, body {
   // font-size: 62.5%;
   -webkit-print-color-adjust: exact;
@@ -212,8 +214,9 @@ p.body-smallest {
   height: 621px;
   width: 100%;
   background-color: $yet-another-gray-gray;
-  background-image: url("../../assets/img/cover-map-scatterplot.png");
+  background-image: $front-page-bg;
   background-position: center center;
-  background-size: 80% 45%;
+  background-size: 68% auto; // 439px 318.5px; // 878px 637px;
+  background-repeat: no-repeat;
 }
 // End front page

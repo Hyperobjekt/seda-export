@@ -30,9 +30,10 @@ class Pdfer {
         console.error(err);
       }
       // Register partials
-      let fontsPartial = Fs.readFileSync(templates + '/fonts.hbs', 'utf8');
-      Handlebars.registerPartial('fonts', fontsPartial);
+      // let fontsPartial = Fs.readFileSync(templates + '/fonts.hbs', 'utf8');
+      // Handlebars.registerPartial('fonts', fontsPartial);
       let stylesPartial = Fs.readFileSync(templates + '/styles.hbs', 'utf8');
+      // console.log(stylesPartial);
       Handlebars.registerPartial('styles', stylesPartial);
       // console.log('partials:');
       // console.log(Handlebars.partials);
@@ -62,7 +63,8 @@ class Pdfer {
     //   height: 800,
     //   deviceScaleFactor: 1
     // })
-    await page.setContent(html)
+    await page.setContent(html);
+    // await page.waitForNavigation();
     await page.pdf({
       path: output,
       format: 'Letter',
