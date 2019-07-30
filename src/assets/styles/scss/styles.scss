@@ -91,9 +91,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .front {
   font-family: $sharpgrotesk-med-15;
-  font-size: 2.3rem;
-  line-height: 3.5rem;
-  letter-spacing: .095rem;
+  font-size: 11.5px; // 2.3rem;
+  line-height: 17.5px; // 3.5rem;
+  letter-spacing: 0.475px; // .095rem;
   text-transform: uppercase;
   color: $another-gray;
   display: block;
@@ -102,9 +102,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h3 {
   font-family: $sharpgrotesk-med-15;
-  font-size: 28px;
-  line-height: 56px;
-  letter-spacing: .37px;
+  font-size: 14px; // 28px;
+  line-height: 28px; // 56px;
+  letter-spacing: 0.185px; // .37px;
   text-transform: uppercase;
   color: $primary-dark;
   display: block;
@@ -113,9 +113,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h4 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 2.5rem;
-  line-height: 3.7rem;
-  letter-spacing: .033rem;
+  font-size: 25px;
+  line-height: 37px;
+  letter-spacing: .33px;
   color: $primary-dark;
   display: block;
   width: 100%;
@@ -123,9 +123,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h5 {
   font-family: $sharpgrotesk-med-15;
-  font-size: 3.5rem;
-  line-height: 4rem;
-  letter-spacing: .046rem;
+  font-size: 17.5px; // 35px;
+  line-height: 20px; // 40px;
+  letter-spacing: .23px; // .46px;
   text-transform: uppercase;
   // font-weight: 200;
   color: $primary-dark;
@@ -135,9 +135,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h6 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 2.8rem;
-  line-height: 4rem;
-  letter-spacing: .043rem;
+  font-size: 14px; // 28px;
+  line-height: 20px; // 40px;
+  letter-spacing: 0.215px; // .43px;
   color: $secondary-blue;
   display: block;
   width: 100%;
@@ -145,7 +145,7 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h7 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 2.2rem;
+  font-size: 22px;
   line-height: 3.3rem;
   letter-spacing: .144rem;
   color: $another-gray;
@@ -155,9 +155,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h8 {
   font-family: $sharpgrotesk-med-15;
-  font-size: 2.2rem;
-  line-height: 3.3rem;
-  letter-spacing: .144rem;
+  font-size: 11px; // 22px;
+  line-height: 16.5px; // 33px;
+  letter-spacing: 0.72px; // 1.44px;
   text-transform: uppercase;
   font-weight: 200;
   color: $another-gray;
@@ -168,9 +168,9 @@ $yet-another-gray-gray: #F9F9F9;
 a,
 .url {
   font-family: $sharpgrotesk-med-15;
-  font-size: 1.6rem;
-  line-height: 2.54rem;
-  letter-spacing: .2rem;
+  font-size: 16px;
+  line-height: 25.4px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 100;
   font-style: normal;
@@ -180,31 +180,31 @@ a,
 body,
 p {
   font-family: $maisonneue-book;
-  font-size: 2.4rem;
-  line-height: 3.6rem;
-  letter-spacing: .031rem;
+  font-size: 12px; // 24px;
+  line-height: 13px; // 36px;
+  letter-spacing: 0.155px; // .31px;
   color: $secondary-gray;
 }
 
 // Slightly larger darker body text for front page.
 p.body-front {
   font-family: $maisonneue-book;
-  font-size: 2.7rem;
-  line-height: 4rem;
-  letter-spacing: .018rem;
+  font-size: 14px; // 27px;
+  line-height: 20px; // 40px;
+  letter-spacing: .09px; // .18px;
   color: $primary-dark;
 }
 
 p.body-smaller {
-  font-size: 2.3rem;
-  line-height: 3.3rem;
-  letter-spacing: .029rem;
+  font-size: 11.5px; // 23px;
+  line-height: 16.5px; // 33px;
+  letter-spacing: 0.145px; // .29px;
 }
 
 p.body-smallest {
-  font-size: 1.9rem;
-  line-height: 2.9rem;
-  letter-spacing: .025rem;
+  font-size: 9.5px; // 19px;
+  line-height: 14.5px; // 29px;
+  letter-spacing: 0.125px; // .25px;
 }
 
 // Front page
@@ -212,6 +212,8 @@ p.body-smallest {
   height: 621px;
   width: 100%;
   background-color: $yet-another-gray-gray;
-
+  background-image: url("../../assets/img/cover-map-scatterplot.png");
+  background-position: center center;
+  background-size: 80% 45%;
 }
 // End front page
