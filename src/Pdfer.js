@@ -17,6 +17,14 @@ class Pdfer {
         console.error(err);
       }
       const jsonparse = JSON.parse(json);
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      const yy = today.getYear() - 100;
+      const datestring = mm + '/' + dd + '/' + yy;
+      jsonparse.today = datestring;
+      jsonparse.infourl = 'EDOPPORTUNITY.ORG';
+      console.log(jsonparse);
       // Fetch the template.
       // console.log('template string');
       // console.log(templates);

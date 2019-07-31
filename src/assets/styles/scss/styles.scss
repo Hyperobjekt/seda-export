@@ -5,6 +5,8 @@
 
 @import "./front-page-bg.scss";
 @import "./logo-sm.scss";
+@import "./new-logo-sm.scss";
+@import "./about-the-data-bg.scss";
 
 html, body {
   // font-size: 64%; // 62.5%;
@@ -45,6 +47,9 @@ html, body {
 
 
 // Variables
+// Vertical size ratio for placement and font sizing
+$vertical-ratio: 0.7;
+$horizontal-ratio: 0.64;
 // Maison Neue fonts
 $maisonneue-bold: 'MaisonNeue-Bold', 'Lato', 'Helvetica Neue', Arial, sans-serif;
 $maisonneue-book: 'MaisonNeue-Book', 'Lato', 'Helvetica Neue', Arial, sans-serif;
@@ -69,15 +74,14 @@ $yet-another-gray-gray: #F9F9F9;
   page-break-before: always;
   width: 100%;
   display: block;
-
 }
 
 .h1 {
   font-family: $sharpgrotesk-med-20;
   color: $primary-dark;
-  font-size: 21px; //43px;
-  line-height: 33px; // 6.6rem;
-  letter-spacing: .28px; // .056rem;
+  font-size: calc(43px * #{$vertical-ratio}); // 21px; //43px;
+  line-height: calc(66px * #{$vertical-ratio}); // 33px; // 6.6rem;
+  letter-spacing: calc(0.56 * #{$vertical-ratio}); // .056rem;
   display: block;
   width: 100%;
   // color: purple !important;
@@ -85,9 +89,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h2 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 27.5px; // 5.5rem;
-  line-height: 51px; // 10.2rem;
-  letter-spacing: .36px; // .072rem;
+  font-size: calc(55px * #{$vertical-ratio});
+  line-height: calc(102px * #{$vertical-ratio});
+  letter-spacing: calc(0.72px * #{$vertical-ratio});
   color: $primary-dark;
   display: block;
   width: 100%;
@@ -95,9 +99,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .front {
   font-family: $sharpgrotesk-med-15;
-  font-size: 11.5px; // 2.3rem;
-  line-height: 17.5px; // 3.5rem;
-  letter-spacing: 0.475px; // .095rem;
+  font-size: calc(23px * #{$vertical-ratio});
+  line-height: calc(35px * #{$vertical-ratio});
+  letter-spacing: calc(0.95px * #{$vertical-ratio});
   text-transform: uppercase;
   color: $another-gray;
   display: block;
@@ -106,9 +110,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h3 {
   font-family: $sharpgrotesk-med-15;
-  font-size: 14px; // 28px;
-  line-height: 28px; // 56px;
-  letter-spacing: 0.185px; // .37px;
+  font-size: calc(28px * #{$vertical-ratio});
+  line-height: calc(56px * #{$vertical-ratio});
+  letter-spacing: calc(0.37px * #{$vertical-ratio});
   text-transform: uppercase;
   color: $primary-dark;
   display: block;
@@ -117,9 +121,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h4 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 25px;
-  line-height: 37px;
-  letter-spacing: .33px;
+  font-size: calc(25px * #{$vertical-ratio});
+  line-height: calc(37px * #{$vertical-ratio});
+  letter-spacing: calc(0.33px * #{$vertical-ratio});
   color: $primary-dark;
   display: block;
   width: 100%;
@@ -127,9 +131,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h5 {
   font-family: $sharpgrotesk-med-15;
-  font-size: 17.5px; // 35px;
-  line-height: 20px; // 40px;
-  letter-spacing: .23px; // .46px;
+  font-size: calc(35px * #{$vertical-ratio});
+  line-height: calc(40px * #{$vertical-ratio});
+  letter-spacing: calc(0.46px * #{$vertical-ratio});
   text-transform: uppercase;
   // font-weight: 200;
   color: $primary-dark;
@@ -139,9 +143,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h6 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 14px; // 28px;
-  line-height: 20px; // 40px;
-  letter-spacing: 0.215px; // .43px;
+  font-size: calc(28px * #{$vertical-ratio});
+  line-height: calc(40px * #{$vertical-ratio});
+  letter-spacing: calc(0.43px * #{$vertical-ratio});
   color: $secondary-blue;
   display: block;
   width: 100%;
@@ -149,9 +153,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h7 {
   font-family: $sharpgrotesk-med-20;
-  font-size: 22px;
-  line-height: 3.3rem;
-  letter-spacing: .144rem;
+  font-size: calc(22px * #{$vertical-ratio});
+  line-height: calc(33px * #{$vertical-ratio});
+  letter-spacing: calc(1.44px * #{$vertical-ratio});
   color: $another-gray;
   display: block;
   width: 100%;
@@ -159,9 +163,9 @@ $yet-another-gray-gray: #F9F9F9;
 
 .h8 {
   font-family: $sharpgrotesk-med-15;
-  font-size: 11px; // 22px;
-  line-height: 16.5px; // 33px;
-  letter-spacing: 0.72px; // 1.44px;
+  font-size: calc(22px * #{$vertical-ratio});
+  line-height: calc(33px * #{$vertical-ratio});
+  letter-spacing: calc(1.44px * #{$vertical-ratio});
   text-transform: uppercase;
   font-weight: 200;
   color: $another-gray;
@@ -169,13 +173,14 @@ $yet-another-gray-gray: #F9F9F9;
   width: 100%;
 }
 
-a,
+// a,
 .url {
   font-family: $sharpgrotesk-med-15;
-  font-size: 16px;
-  line-height: 25.4px;
-  letter-spacing: 2px;
+  font-size: calc(16px * #{$vertical-ratio});
+  line-height: calc(25.4px * #{$vertical-ratio});
+  letter-spacing: calc(2px * #{$vertical-ratio});
   text-transform: uppercase;
+  text-decoration: none !important;
   font-weight: 100;
   font-style: normal;
   color: $yet-another-gray;
@@ -183,49 +188,50 @@ a,
 
 .another-url-class-not-in-style-guide {
   font-family: $sharpgrotesk-med-15;
-  font-size: 23px;
-  line-height: 35px;
+  font-size: calc(23px * #{$vertical-ratio});
+  line-height: calc(35px * #{$vertical-ratio});
+  // letter-spacing: calc(0.72px * #{$vertical-ratio});
   text-transform: uppercase;
   font-weight: 100;
   font-style: normal;
-  color: $another-gray;
+  color: $another-gray !important;
 }
 
 body,
 p {
   font-family: $maisonneue-book;
-  font-size: 12px; // 24px;
-  line-height: 13px; // 36px;
-  letter-spacing: 0.155px; // .31px;
+  font-size: calc(24px * #{$vertical-ratio});
+  line-height: calc(36px * #{$vertical-ratio});
+  letter-spacing: calc(0.31px * #{$vertical-ratio});
   color: $secondary-gray;
 }
 
 // Slightly larger darker body text for front page.
 .body-front {
   font-family: $maisonneue-book;
-  font-size: 14px; // 27px;
-  line-height: 20px; // 40px;
-  letter-spacing: .09px; // .18px;
+  font-size: calc(27px * #{$vertical-ratio});
+  line-height: calc(40px * #{$vertical-ratio});
+  letter-spacing: calc(0.18px * #{$vertical-ratio});
   color: $primary-dark;
 }
 
 .body-smaller {
-  font-size: 11.5px; // 23px;
-  line-height: 16.5px; // 33px;
-  letter-spacing: 0.145px; // .29px;
+  font-size: calc(22px * #{$vertical-ratio});
+  line-height: calc(33px * #{$vertical-ratio});
+  letter-spacing: calc(0.29px * #{$vertical-ratio});
 }
 
 .body-smallest {
-  font-size: 9.5px; // 19px;
-  line-height: 14.5px; // 29px;
-  letter-spacing: 0.125px; // .25px;
+  font-size: calc(19px * #{$vertical-ratio});
+  line-height: calc(29px * #{$vertical-ratio});
+  letter-spacing: calc(0.25px * #{$vertical-ratio});
 }
 
 #page_1 {
-  background-color: blue;
-  height: 1146px;
-  display: block;
-  width: 100%;
+  // background-color: blue;
+  // height: 1146px;
+  // display: block;
+  // width: 100%;
 }
 
 .page {
@@ -237,22 +243,57 @@ p {
 }
 
 // For use as header or footer in various contexts
-.headerfooter {
+.header,
+.footer {
+  width: 100%;
+  // background-color: blue;
+  .wrapper {
+    position: relative;
+    height: calc(55px * #{$vertical-ratio});
+    margin-right: 45px; // calc(45px * #{$vertical-ratio});
+    margin-left: 45px; // calc(45px * #{$vertical-ratio});
+    .logo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      background-image: $logo-sm;
+      background-repeat: no-repeat;
+      background-size: calc(55px * #{$vertical-ratio}) calc(53px * #{$vertical-ratio}); // 49px 51px;
+      height: calc(55px * #{$vertical-ratio});
+      width: calc(53px * #{$horizontal-ratio});
+    }
+    a {
+      // background-color: red;
+      position: absolute;
+      height: calc(55px * #{$vertical-ratio});
+      top: 0;
+      right: 0;
+      // right: calc((1274px - 1229px) * #{$horizontal-ratio});
+    }
+  }
+}
+
+.header {
+  padding-top: 45px;
+}
+
+.footer {
 
 }
 
 .logo-sm {
   background-image: $logo-sm;
-  background-repeat: none;
-  background-size: 49px 51px;
-  width: 49px; // 76px;
-  height: 51px; // 79px;
+  background-repeat: no-repeat;
+  background-size: calc(76px * #{$vertical-ratio}) calc(79px * #{$vertical-ratio}); // 49px 51px;
+  width: calc(76px * #{$vertical-ratio}); // 49px; // 76px;
+  height: calc(79px * #{$vertical-ratio}); // 51px; // 79px;
   display: block;
 }
 
 // Front page
 .front-top {
-  height: calc( 890px * .7);// 569px; // 621px;
+  height: calc( 890px * #{$vertical-ratio});// 569px; // 621px;
   width: 100%;
   background-color: $yet-another-gray-gray;
   background-image: $front-page-bg;
@@ -265,41 +306,68 @@ p {
 .front-bottom {
   // background-color: red;
   position: relative;
-  height: calc( 762px * .7); // 500px; // 487px;
+  height: calc( 762px * #{$vertical-ratio}); // 500px; // 487px;
   width: 100%;
 
   &>div,
   &>span,
   &>hr {
     position: absolute;
-    left: 70px;
+    left: calc(109px * #{$horizontal-ratio}); // 70px;
   }
 
   .logo-sm {
-    top: 70px;
+    top: calc((996px - 888px) * #{$vertical-ratio}); // 70px;
   }
   .title {
-    top: 147px;
+    top: calc((1119px - 888px) * #{$vertical-ratio}); // 147px;
   }
   .short-hr {
-    top: 248px;
+    top: calc((1273px - 888px) * #{$vertical-ratio}); // 248px;
     height: 1.27px;
     width: 30px; // 1.98px;
     background: $primary-dark;
     border: 0;
   }
   .about {
-    top: 284px;
+    top: calc((1330px - 888px) * #{$vertical-ratio}); // 284px;
   }
   .date {
-    top: 380px;
+    top: calc((1482px - 888px) * #{$vertical-ratio}); // 380px;
     text-transform: uppercase;
   }
   .infolink {
-    top: 407px;
+    top: calc((1524px - 888px) * #{$vertical-ratio}); // 407px;
     text-transform: uppercase;
+    a {
+      font-family: $sharpgrotesk-med-15;
+      font-size: calc(23px * #{$vertical-ratio});
+      line-height: calc(35px * #{$vertical-ratio});
+      // letter-spacing: calc(0.72px * #{$vertical-ratio});
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 100;
+      font-style: normal;
+      color: $another-gray !important;
+    }
   }
+}
+// End front page
 
+// Page 2
+#page_2 {
+  background-image: $about-the-data-bg;
+  background-repeat: no-repeat;
+  background-size: 100% calc(1045px * #{$vertical-ratio});
+  background-position: center 30%;
+  .content {
+    width: calc(671px * #{$horizontal-ratio});
+    display: block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: calc((1652px - 1525px) * #{$vertical-ratio});
+  }
 }
 
-// End front page
+// Page 2 end
