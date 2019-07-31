@@ -6,6 +6,7 @@
 @import "./front-page-bg.scss";
 @import "./logo-sm.scss";
 @import "./new-logo-sm.scss";
+@import "./new-logo-sm-2x.scss";
 @import "./about-the-data-bg.scss";
 
 html, body {
@@ -257,7 +258,7 @@ p {
       top: 0;
       left: 0;
       display: inline-block;
-      background-image: $logo-sm;
+      background-image: $new-logo-sm-2x; // $logo-sm;
       background-repeat: no-repeat;
       background-size: calc(55px * #{$vertical-ratio}) calc(53px * #{$vertical-ratio}); // 49px 51px;
       height: calc(55px * #{$vertical-ratio});
@@ -283,7 +284,7 @@ p {
 }
 
 .logo-sm {
-  background-image: $logo-sm;
+  background-image: $new-logo-sm-2x; // $new-logo-sm; // $logo-sm;
   background-repeat: no-repeat;
   background-size: calc(76px * #{$vertical-ratio}) calc(79px * #{$vertical-ratio}); // 49px 51px;
   width: calc(76px * #{$vertical-ratio}); // 49px; // 76px;
@@ -360,14 +361,62 @@ p {
   background-repeat: no-repeat;
   background-size: 100% calc(1045px * #{$vertical-ratio});
   background-position: center 30%;
-  .content {
-    width: calc(671px * #{$horizontal-ratio});
-    display: block;
-    margin-top: auto;
+  .content-wrapper {
+    height: 600px;
+    margin-top: 420px;
+    width: calc(800px * #{$horizontal-ratio});
+    bottom: 0;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: calc((1652px - 1525px) * #{$vertical-ratio});
+    position: relative;
+    .content {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
   }
 }
-
 // Page 2 end
+
+// Page 3
+@mixin another-header-style-not-in-style-guide {
+  font-family: $sharpgrotesk-med-20;
+  font-size: calc(28.5px * #{$vertical-ratio});
+  line-height: calc(42.77px * #{$vertical-ratio});
+  letter-spacing: calc(0.37px * #{$vertical-ratio});
+  color: $primary-dark;
+  display: block;
+  width: 100%;
+}
+
+#page_3 {
+  .content-wrapper {
+    // background-color: blue;
+    width: calc(859px * #{$horizontal-ratio});
+    margin-top: calc((138px - 101px) * #{$vertical-ratio});
+    // bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    .content {
+      // background-color: blue;
+      width: 100%;
+      .h2 {
+        @include another-header-style-not-in-style-guide;
+        margin-bottom: calc((270px - 211px) * #{$vertical-ratio});
+        width: calc(598px * #{$horizontal-ratio});
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .box {
+        background-color: #F9F9F9;
+        padding: calc((314px - 270px) * #{$vertical-ratio});
+        // padding-right: calc((314px - 270px) * #{$horizontal-ratio});
+        // padding-left: calc((314px - 270px) * #{$horizontal-ratio});
+        margin-bottom: calc((687px - 639px) * #{$vertical-ratio});
+      }
+    }
+  }
+}
+// Page 3 end
