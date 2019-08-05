@@ -12,6 +12,7 @@
 @import "./icon-average.scss";
 @import "./icon-growth.scss";
 @import "./icon-changes.scss";
+@import "./about-chart-bg.scss";
 
 
 html, body {
@@ -396,7 +397,7 @@ p {
   .content-wrapper {
     // background-color: blue;
     width: calc(859px * #{$horizontal-ratio});
-    margin-top: calc((138px - 101px) * #{$vertical-ratio});
+    margin-top: calc(40px * #{$vertical-ratio}); // calc((138px - 101px) * #{$vertical-ratio});
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -405,7 +406,7 @@ p {
       width: 100%;
       .h2 {
         @include another-header-style-not-in-style-guide;
-        margin-bottom: calc((270px - 211px) * #{$vertical-ratio});
+        margin-bottom: calc(40px * #{$vertical-ratio}); // calc((270px - 211px) * #{$vertical-ratio});
         width: calc(598px * #{$horizontal-ratio});
         text-align: center;
         margin-left: auto;
@@ -416,7 +417,7 @@ p {
         padding: calc((314px - 270px) * #{$vertical-ratio});
         // padding-right: calc((314px - 270px) * #{$horizontal-ratio});
         // padding-left: calc((314px - 270px) * #{$horizontal-ratio});
-        margin-bottom: calc((687px - 639px) * #{$vertical-ratio});
+        margin-bottom: calc(35px * #{$vertical-ratio}); // calc((687px - 639px) * #{$vertical-ratio});
         .head {
           height: calc(59.94px * #{$horizontal-ratio});
           // border: 1px solid black;
@@ -446,18 +447,83 @@ p {
             }
           }
         }
+        .h4 {
+          font-size: calc(23px * #{$vertical-ratio});
+          line-height: calc(35px * #{$vertical-ratio});
+          letter-spacing: calc(.31px * #{$vertical-ratio});
+        }
       }
     }
   }
 }
 // Page 3 end
-//
-// Page 4
+// Page 4 start
 #page_4 {
-  background-color: red;
-  // height: 1600px; // 1500px;
-  // width: 1275px;
-  margin: 0;
-  padding: 0;
+
 }
 // Page 4 end
+// Page 5 start
+#page_5 {
+
+}
+// Page 5 end
+// Page 6 start
+#page_6 {
+
+}
+// Page 6 end
+// Page 7 start
+#page_7 {
+
+}
+// Page 7 end
+// Page 8 start
+#page_8 {
+
+}
+// Page 8 end
+// Page 9 start
+#page_9 {
+
+}
+// Page 9 end
+// Page 10
+#page_10 {
+  // background-color: red;
+  // margin: 0;
+  // padding: 0;
+  background-image: $about-chart-bg;
+  background-repeat: no-repeat;
+  background-size: 100% calc(857px * #{$vertical-ratio});
+  background-position: center bottom;
+  position: relative;
+  .parent {
+    position: absolute;
+    width: calc(632px * #{$vertical-ratio});
+    left: calc(302px * #{$horizontal-ratio});
+    top: calc(200px * #{$vertical-ratio});
+    .h2 {
+      // padding-bottom: calc(40px * #{$vertical-ratio});
+    }
+    p {
+      display: block;
+      padding-bottom: calc(60px * #{$vertical-ratio});
+    }
+    a.button {
+      margin-top: calc(40px * #{$vertical-ratio});
+      color: #fff;
+      background-color: $secondary-red;
+      height: calc(96px * #{$vertical-ratio});
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: Helvetica;
+      font-weight: bold;
+      font-size: calc(28px * #{$vertical-ratio});
+      line-height: calc(34px * #{$vertical-ratio});
+      letter-spacing: calc(1.28px * #{$vertical-ratio});
+      padding: calc((514px - 477px) * #{$vertical-ratio});
+      border-radius: calc(2px * #{$vertical-ratio});
+    }
+  }
+}
+// Page 10 end
