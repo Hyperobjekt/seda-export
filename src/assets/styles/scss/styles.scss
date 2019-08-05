@@ -1,13 +1,18 @@
 // Page dimensions at 2x:
 // 816px W
 // 1056px H
-// Basically, a true 72x2=144dpi instead of 150 used by designers.
+// Basically, 96dpi instead of 150 used by designers.
+// It makes no difference how you set the puppeteer dimensions externally.
 
 @import "./front-page-bg.scss";
 @import "./logo-sm.scss";
 @import "./new-logo-sm.scss";
 @import "./new-logo-sm-2x.scss";
 @import "./about-the-data-bg.scss";
+@import "./icon-average.scss";
+@import "./icon-growth.scss";
+@import "./icon-changes.scss";
+
 
 html, body {
   // font-size: 64%; // 62.5%;
@@ -49,7 +54,7 @@ html, body {
 
 // Variables
 // Vertical size ratio for placement and font sizing
-$vertical-ratio: 0.7;
+$vertical-ratio: 0.64;
 $horizontal-ratio: 0.64;
 // Maison Neue fonts
 $maisonneue-bold: 'MaisonNeue-Bold', 'Lato', 'Helvetica Neue', Arial, sans-serif;
@@ -228,19 +233,20 @@ p {
   letter-spacing: calc(0.25px * #{$vertical-ratio});
 }
 
-#page_1 {
-  // background-color: blue;
-  // height: 1146px;
-  // display: block;
-  // width: 100%;
-}
+// #page_3 {
+//   background-color: green;
+//   height: 1146px;
+//   display: block;
+//   width: 100%;
+// }
 
 .page {
-  height: 1146px; // 1056px; // 1650px; // 800px; // 1060px;
+  height: 1056px; // 1650px; // 1146px;
   display: block;
-  width: 100%; // 1275px; // 600px; // 100%;
+  width: 816px; // 100%; // 1275px; // 100%; // 1275px; // 600px; // 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 // For use as header or footer in various contexts
@@ -361,18 +367,15 @@ p {
   background-repeat: no-repeat;
   background-size: 100% calc(1045px * #{$vertical-ratio});
   background-position: center 30%;
+  position: relative;
   .content-wrapper {
-    height: 600px;
-    margin-top: 420px;
-    width: calc(800px * #{$horizontal-ratio});
-    bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
+    position: absolute;
+    width: 100%;
+    bottom: calc((1649px - 1513px) * #{$horizontal-ratio});
     .content {
-      width: 100%;
-      position: absolute;
-      bottom: 0;
+      width: calc(671px * #{$horizontal-ratio});
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
@@ -394,7 +397,6 @@ p {
     // background-color: blue;
     width: calc(859px * #{$horizontal-ratio});
     margin-top: calc((138px - 101px) * #{$vertical-ratio});
-    // bottom: 0;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -415,8 +417,47 @@ p {
         // padding-right: calc((314px - 270px) * #{$horizontal-ratio});
         // padding-left: calc((314px - 270px) * #{$horizontal-ratio});
         margin-bottom: calc((687px - 639px) * #{$vertical-ratio});
+        .head {
+          height: calc(59.94px * #{$horizontal-ratio});
+          // border: 1px solid black;
+          padding: 0 0 calc((400px - 374px) * #{$horizontal-ratio});
+          margin: 0;
+          display: flex;
+          .title {
+            width: auto;
+            // border: 1px solid black;
+            padding: 3px 0 0 calc((331px - 313px) * #{$horizontal-ratio});
+            margin: 0;
+          }
+          .icon {
+            width: calc(59.98px * #{$horizontal-ratio});
+            height: calc(59.94px * #{$horizontal-ratio});
+            background-repeat: no-repeat;
+            background-size: calc(60px * #{$horizontal-ratio}) calc(60px * #{$horizontal-ratio});
+            background-position: center;
+            &.average {
+              background-image: $icon-average;
+            }
+            &.growth {
+              background-image: $icon-growth;
+            }
+            &.changes {
+              background-image: $icon-changes;
+            }
+          }
+        }
       }
     }
   }
 }
 // Page 3 end
+//
+// Page 4
+#page_4 {
+  background-color: red;
+  // height: 1600px; // 1500px;
+  // width: 1275px;
+  margin: 0;
+  padding: 0;
+}
+// Page 4 end

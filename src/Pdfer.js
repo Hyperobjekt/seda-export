@@ -67,10 +67,18 @@ class Pdfer {
     const page = await browser.newPage()
     await page.emulateMedia('print')
     // await page.setViewport({
-    //   width: 600,
-    //   height: 800,
-    //   deviceScaleFactor: 1
+    //   width: 1275,
+    //   height: 1650,
+    //   deviceScaleFactor: 2 // 1.5625
     // })
+    await page.emulate({
+      viewport: {
+        width: 1632, // 1275,
+        height: 2112, // 1650,
+        deviceScaleFactor: 2 // 1.5625
+      },
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'
+    });
     await page.setContent(html);
     // await page.waitForNavigation();
     await page.pdf({
