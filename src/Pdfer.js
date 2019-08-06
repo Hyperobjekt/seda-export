@@ -6,12 +6,122 @@ const Handlebars = require('handlebars')
 class Pdfer {
 
   async getPlural(entity) {
-    console.log('getPlural');
+    // console.log('getPlural');
     switch (entity) {
       case 'county':
-        return 'counties';
+      return 'counties';
       default:
-        return String(entity + 's');
+      return String(entity + 's');
+    }
+  }
+
+  async getStateAbbrev(state) {
+    console.log('getStateAbbrev');
+    switch (state) {
+      case 'District of Columbia':
+        return 'DC';
+      case 'Alaska':
+        return 'AK';
+      case 'Alabama':
+        return 'AL';
+      case 'Arkansas':
+        return 'AR';
+      case 'Arizona':
+        return 'AZ';
+      case 'California':
+        return 'CA';
+      case 'Colorado':
+        return 'CO';
+      case 'Connecticut':
+        return 'CT';
+      case 'Delaware':
+        return 'DE';
+      case 'Florida':
+        return 'FL';
+      case 'Georgia':
+        return 'GA';
+      case 'Hawaii':
+        return 'HI';
+      case 'Iowa':
+        return 'IA';
+      case 'Idaho':
+        return 'ID';
+      case 'Illinois':
+        return 'IL';
+      case 'Indiana':
+        return 'IN';
+      case 'Kansas':
+        return 'KS';
+      case 'Kentucky':
+        return 'KY';
+      case 'Louisiana':
+        return 'LA';
+      case 'Massachusetts':
+        return 'MA';
+      case 'Maryland':
+        return 'MD';
+      case 'Maine':
+        return 'ME';
+      case 'Michigan':
+        return 'MI';
+      case 'Minnesota':
+        return 'MN';
+      case 'Missouri':
+        return 'MO';
+      case 'Mississippi':
+        return 'MS';
+      case 'Montana':
+        return 'MT';
+      case 'North Carolina':
+        return 'NC';
+      case 'North Dakota':
+        return 'ND';
+      case 'Nebraska':
+        return 'NE';
+      case 'New Hampshire':
+        return 'NH';
+      case 'New Jersey':
+        return 'NJ';
+      case 'New Mexico':
+        return 'NM';
+      case 'Nevada':
+        return 'NV';
+      case 'New York':
+        return 'NY';
+      case 'Ohio':
+        return 'OH';
+      case 'Oklahoma':
+        return 'OK';
+      case 'Oregon':
+        return 'OR';
+      case 'Pennsylvania':
+        return 'PA';
+      case 'Rhode Island':
+        return 'RI';
+      case 'South Carolina':
+        return 'SC';
+      case 'South Dakota':
+        return 'SD';
+      case 'Tennessee':
+        return 'TN';
+      case 'Texas':
+        return 'TX';
+      case 'Utah':
+        return 'UT';
+      case 'Virginia':
+        return 'VA';
+      case 'Vermont':
+        return 'VT';
+      case 'Washington':
+        return 'WA';
+      case 'Wisconsin':
+        return 'WI';
+      case 'West Virginia':
+        return 'WV';
+      case 'Wyoming':
+        return 'WY';
+      default:
+        return 'AK';
     }
   }
 
@@ -22,7 +132,7 @@ class Pdfer {
       let json;
       const dataPath = Path.resolve(data)
       try {
-         json = Fs.readFileSync(dataPath, { encoding: 'utf8' });
+        json = Fs.readFileSync(dataPath, { encoding: 'utf8' });
       } catch (err) {
         // An error occurred fetching template file
         console.error(err);
@@ -37,6 +147,7 @@ class Pdfer {
       jsonparse.infourl = 'EDOPPORTUNITY.ORG';
       const _verbiage = {}; // JSON object for addl strings needed by template
       _verbiage.type_plural = await this.getPlural(jsonparse.region);
+      _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
       jsonparse.verbiage = _verbiage;
       console.log(jsonparse);
       // Fetch the template.
@@ -46,7 +157,7 @@ class Pdfer {
       const templatePath = Path.resolve(t);
       let content;
       try {
-         content = Fs.readFileSync(templatePath, { encoding: 'utf8' })
+        content = Fs.readFileSync(templatePath, { encoding: 'utf8' })
       } catch (err) {
         // An error occurred fetching template file
         console.error(err);

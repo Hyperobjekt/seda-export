@@ -25,7 +25,7 @@
       <div class="front-top"></div>
       <div class="front-bottom">
         <div class="square-logo logo-sm"></div>
-        <span class="h1 title">Exploring Educational Opportunity<br>in {{ location.name }}</span>
+        <span class="h1 title">Exploring Educational Opportunity<br>in {{ location.name }}{{#if verbiage.state_abbrev}}, {{verbiage.state_abbrev}}{{/if}}</span>
         <hr class="short-hr"></hr>
         <span class="about body-front">A report created by the Educational Opportunity Project<br>at Stanford University</span>
         <span class="date another-url-class-not-in-style-guide">Generated on {{ today }}</span>
@@ -101,15 +101,30 @@
     <!-- end page 3 -->
     <!-- Page 4 -->
     <div id="page_4" class="page pagebreak">
-      <span class="h2">Average Test Scores</span>
-      <p>{{ location.name }}, {{location.state_name}} provides [higher than/roughly/lower than] average educational opportunities. Average test scores are [number] grade level(s) [above / below] the national average.</p>
-      {{#if location.all_ses}}
-        <p>Socioeconomic status is [very far below / far below / below / at roughly / above / far above / very far above] the national average.</p>
-      {{/if}}
-      {{#if location.all_ses}}
-        <p>Socioeconomic status is [very far below / far below / below / at roughly / above / far above / very far above] the national average.</p>
-      {{/if}}
-      <p>Average scores are [number] grade levels [higher / lower] than {{verbiage.type_plural}} with similar socioeconomic status.</p>
+      <div class="chart">
+        <div class="background">
+          <div class="dot" style="left:100px;top:100px;"></div>
+        </div>
+      </div>
+      <div class="text">
+        <div class="parent">
+          <div class="head">
+            <div class="icon average"></div>
+            <div class="header">
+              <span class="title h5">AVERAGE TEST SCORES</span>
+              <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+            </div>
+          </div>
+          <p class="body-smaller">{{ location.name }}, {{location.state_name}} provides [higher than/roughly/lower than] average educational opportunities. Average test scores are [number] grade level(s) [above / below] the national average.      {{#if location.all_ses}} Socioeconomic status is [very far below / far below / below / at roughly / above / far above / very far above] the national average.{{/if}}{{#if location.all_ses}} Socioeconomic status is [very far below / far below / below / at roughly / above / far above / very far above] the national average. {{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} Average scores are [number] grade levels [higher / lower] than {{verbiage.type_plural}} with similar socioeconomic status.</p>
+          <p class="body-smaller">Average student test scores are influenced by children’s opportunities to learn in their homes, in their neighborhoods, in the childcare, preschool, and after-school programs they attend, from their peers and friends, and in their schools. Because of all these influences, average test scores are not a good way to assess how much children learn in schools. But they are a good way to assess the average set of educational opportunities available to children in a community. Where average scores are low, students have fewer opportunities to learn. Schools are better evaluated using Learning Rates, which measure how much student scores improve while they are in school.</p>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="wrapper">
+          <div class="logo"></div>
+          <a class="url" href="https://www.{{ infourl }}">{{ infourl }}</a>
+        </div>
+      </div>
     </div>
     <!-- Page 4 end -->
     <!-- Page 5 -->
