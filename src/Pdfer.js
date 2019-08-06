@@ -4,6 +4,17 @@ const Puppeteer = require('puppeteer')
 const Handlebars = require('handlebars')
 
 class Pdfer {
+
+  async getPlural(entity) {
+    console.log('getPlural');
+    switch (entity) {
+      case 'county':
+        return 'counties';
+      default:
+        return String(entity + 's');
+    }
+  }
+
   async html(data, templates) {
     // console.log('html()');
     try {
@@ -24,6 +35,9 @@ class Pdfer {
       const datestring = mm + '/' + dd + '/' + yy;
       jsonparse.today = datestring;
       jsonparse.infourl = 'EDOPPORTUNITY.ORG';
+      const _verbiage = {}; // JSON object for addl strings needed by template
+      _verbiage.type_plural = await this.getPlural(jsonparse.region);
+      jsonparse.verbiage = _verbiage;
       console.log(jsonparse);
       // Fetch the template.
       // console.log('template string');

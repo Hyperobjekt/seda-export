@@ -3,7 +3,7 @@
   "location": {
     "id": "22091",
     "name": "St. Helena Parish",
-    "state_name": "Louisianna",
+    "state_name": "Louisiana",
     "all_ses": -1.927,
     "w_ses": -2.022,
     "b_ses": -4.019,
@@ -38,5 +38,6 @@
     "wb_avg": 0.4,
     "w_avg": -2.741
   },
+  "url": "https://specific-view-selected.test",
   "others": null
 }
