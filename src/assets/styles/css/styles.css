@@ -203,6 +203,9 @@ p {
       top: 0;
       right: 0; }
 
+.footer .wrapper a {
+  padding-top: 40px; }
+
 .header {
   padding-top: 45px; }
 

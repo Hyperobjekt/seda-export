@@ -277,7 +277,14 @@ p {
       height: calc(55px * #{$vertical-ratio});
       top: 0;
       right: 0;
-      // right: calc((1274px - 1229px) * #{$horizontal-ratio});
+    }
+  }
+}
+
+.footer {
+  .wrapper {
+    a {
+      padding-top: 40px;
     }
   }
 }
