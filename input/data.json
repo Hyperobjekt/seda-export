@@ -36,7 +36,11 @@
     "np_avg": -2.228,
     "pn_avg": 0.916,
     "wb_avg": 0.4,
-    "w_avg": -2.741
+    "w_avg": -2.741,
+    "all_frl": 27,
+    "diff_avg": -1.244,
+    "diff_grd": -12,
+    "diff_coh": 1.34499
   },
   "url": "https://specific-view-selected.test",
   "others": null

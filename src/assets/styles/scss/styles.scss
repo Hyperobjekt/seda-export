@@ -284,7 +284,7 @@ p {
 .footer {
   .wrapper {
     a {
-      padding-top: 40px;
+      padding-top: 24px;
     }
   }
 }
@@ -465,7 +465,9 @@ p {
 }
 // Page 3 end
 // Page 4 start
-#page_4 {
+#page_4,
+#page_6,
+#page_8 {
   .chart {
     height: calc(839px * #{$vertical-ratio});
     display: flex;
@@ -509,6 +511,12 @@ p {
           background-position: center;
           &.average {
             background-image: $icon-average;
+          }
+          &.growth {
+            background-image: $icon-growth;
+          }
+          &.changes {
+            background-image: $icon-changes;
           }
         }
         .header {

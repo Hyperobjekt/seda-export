@@ -3,20 +3,116 @@ const Path = require('path')
 const Puppeteer = require('puppeteer')
 const Handlebars = require('handlebars')
 
+const _ats_hrl = [
+  {
+    range: [Number.NEGATIVE_INFINITY, -0.249999],
+    text: 'lower than'
+  },
+  {
+    range: [-0.25, 0.25],
+    text: 'roughly'
+  },
+  {
+    range: [0.2500001, Number.POSITIVE_INFINITY],
+    text: 'higher than'
+  }
+];
+
+const _ats_ab = [
+  {
+    range: [Number.NEGATIVE_INFINITY, -0.0000001],
+    text: 'below'
+  },
+  {
+    range: [0, Number.POSITIVE_INFINITY],
+    text: 'above'
+  }
+];
+
+const _ats_vfb = [
+  {
+    range: [Number.NEGATIVE_INFINITY, -2.4999999],
+    text: 'very far below'
+  },
+  {
+    range: [-2.5, -1.4999999],
+    text: 'far below'
+  },
+  {
+    range: [-1.5, -0.4999999],
+    text: 'below'
+  },
+  {
+    range: [-0.5, 0.5],
+    text: 'at roughly'
+  },
+  {
+    range: [0.50000001, 1.5],
+    text: 'above'
+  },
+  {
+    range: [1.50000001, 2.5],
+    text: 'far above'
+  },
+  {
+    range: [2.5000001, Number.POSITIVE_INFINITY],
+    text: 'very far above'
+  }
+];
+
+const _ats_ab = [
+  {
+    range: [Number.NEGATIVE_INFINITY, -0.0000001],
+    text: 'below'
+  },
+  {
+    range: [0, Number.POSITIVE_INFINITY],
+    text: 'above'
+  }
+];
+
 class Pdfer {
+
+  async getFixed(value, decimals) {
+    return value.toFixed(decimals);
+  }
+
+  async getPos(value) {
+    if (value < 0) {
+      return value * -1;
+    } else {
+      return value;
+    }
+  }
+
+  async getBoilerplate(value, arr) {
+    // console.log('getBoilerplate');
+    let str = null;
+    arr.some((el) => {
+      // console.log(el);
+      if (value >= el.range[0] && value <= el.range[1]) {
+        // console.log('value is in range');
+        str = el.text;
+        return true;
+      } else {
+        return false;
+      }
+    })
+    return str;
+  }
 
   async getPlural(entity) {
     // console.log('getPlural');
     switch (entity) {
       case 'county':
-      return 'counties';
+        return 'counties';
       default:
-      return String(entity + 's');
+        return String(entity + 's');
     }
   }
 
   async getStateAbbrev(state) {
-    console.log('getStateAbbrev');
+    // console.log('getStateAbbrev');
     switch (state) {
       case 'District of Columbia':
         return 'DC';
@@ -145,9 +241,27 @@ class Pdfer {
       const datestring = mm + '/' + dd + '/' + yy;
       jsonparse.today = datestring;
       jsonparse.infourl = 'EDOPPORTUNITY.ORG';
+      if (jsonparse.region === 'county' || jsonparse.region === 'district') {
+        jsonparse.showbarcharts = true;
+      } else {
+        jsonparse.showbarcharts = false;
+      }
       const _verbiage = {}; // JSON object for addl strings needed by template
       _verbiage.type_plural = await this.getPlural(jsonparse.region);
       _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
+      _verbiage.ats_avg_fixed = await this.getPos(
+        await this.getFixed(jsonparse.location.all_avg, 2)
+      );
+      _verbiage.ats_hrl = await this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
+      _verbiage.ats_ab = await this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
+      if (!!jsonparse.location.all_ses) {
+        _verbiage.ats_vfb = await this.getBoilerplate(jsonparse.location.all_ses, _ats_vfb);
+      }
+      if (!!jsonparse.location.diff_avg) {
+        _verbiage.ats_diff_fixed = await this.getPos(
+          await this.getFixed(jsonparse.location.diff_avg, 2)
+        );
+      }
       jsonparse.verbiage = _verbiage;
       console.log(jsonparse);
       // Fetch the template.
@@ -180,6 +294,7 @@ class Pdfer {
       // Return the handlebars template rendered with data
       return handlebars(jsonparse)
     } catch (error) {
+      console.log(error);
       throw new Error('Cannot create HTML template.')
     }
   }
