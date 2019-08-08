@@ -103,7 +103,7 @@
     <div id="page_4" class="page pagebreak">
       <div class="chart average">
         <div class="background">
-          <div class="dot" style="left:100px;top:100px;"></div>
+          <div class="dot" style="left:{{css.avg_left}};top:{{css.avg_top}};"></div>
         </div>
       </div>
       <div class="text">
@@ -115,7 +115,7 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ location.name }}, {{location.state_name}} provides {{ verbiage.ats_hrl }} average educational opportunities. Average test scores are {{ verbiage.ats_avg_fixed }} grade level(s) {{ verbiage.ats_ab }} the national average.{{#if location.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if location.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels [higher / lower] than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">{{ location.name }}, {{location.state_name}} provides {{ verbiage.ats_hrl }} average educational opportunities. Average test scores are {{ verbiage.ats_avg_fixed }} grade level(s) {{ verbiage.ats_ab }} the national average.{{#if location.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if location.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels {{ verbiage.ats_diff_hl }} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
           <p class="body-smaller">Average student test scores are influenced by children’s opportunities to learn in their homes, in their neighborhoods, in the childcare, preschool, and after-school programs they attend, from their peers and friends, and in their schools. Because of all these influences, average test scores are not a good way to assess how much children learn in schools. But they are a good way to assess the average set of educational opportunities available to children in a community. Where average scores are low, students have fewer opportunities to learn. Schools are better evaluated using Learning Rates, which measure how much student scores improve while they are in school.</p>
         </div>
       </div>
@@ -130,8 +130,25 @@
     <!-- Page 5, bar charts for average -->
     {{#if showbarcharts}}
     <div id="page_5" class="page pagebreak">
-      <p>bar charts</p>
-      <p>The bars in the By Demographic section show Average Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Average Test Scores between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      <div class="header">
+        <div class="wrapper">
+          <div class="logo"></div>
+          <a class="url" href="https://www.{{ infourl }}">{{ infourl }}</a>
+        </div>
+      </div>
+      <div class="text">
+        <div class="head">
+          <div class="icon average"></div>
+          <div class="header">
+            <span class="title h5">AVERAGE TEST SCORES</span>
+            <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+          </div>
+        </div>
+        <p class="body-smaller">The bars in the By Demographic section show Average Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p class="body-smaller">The bars in the Gaps section show differences in Average Test Scores between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      </div>
+      <div class="bars">
+
+      </div>
     </div>
     {{/if}}
     <!-- Page 5 end -->
@@ -139,7 +156,7 @@
     <div id="page_6" class="page pagebreak">
       <div class="chart average">
         <div class="background">
-          <div class="dot" style="left:100px;top:100px;"></div>
+          <div class="dot" style="left:{{css.grd_left}};top:{{css.grd_top}};"></div>
         </div>
       </div>
       <div class="text">
@@ -151,7 +168,7 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ location.name }}, {{location.state_name}} provides {{ verbiage.ats_hrl }} average educational opportunities. Average test scores are {{ verbiage.ats_avg_fixed }} grade level(s) {{ verbiage.ats_ab }} the national average.{{#if location.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if location.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels [higher / lower] than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">{{ location.name }}, {{location.state_name}} provides {{ verbiage.grd_hrl }} average educational opportunities while children are in school. Students learn {{ verbiage.grd_pct }} the U.S. average.{{#if location.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if location.diff_grd}} Learning rates are {{ verbiage.grd_diff_fixed }}% {{ verbiage.grd_diff_hl }} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
           <p class="body-smaller">Learning rates measure how much student scores improve each year while they are in school. This is a better way to assess what children learn in schools than average test scores, which are heavily influenced by factors outside of school. To understand the distinction, think of a hospital: We wouldn’t assess a hospital based on the health of its patients; rather, we’d judge it on how much its patients’ health improves as a result of their time in the hospital. Similarly, we shouldn’t evaluate a school based on the average scores of its students, but rather by how much their test scores improve while in school.</p>
         </div>
       </div>
@@ -166,7 +183,25 @@
     <!-- Page 7 -->
     {{#if showbarcharts}}
     <div id="page_7" class="page pagebreak">
-      <p>The bars in the By Demographic section show Learning Rates for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Learning Rates between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      <div class="header">
+        <div class="wrapper">
+          <div class="logo"></div>
+          <a class="url" href="https://www.{{ infourl }}">{{ infourl }}</a>
+        </div>
+      </div>
+      <div class="text">
+        <div class="head">
+          <div class="icon growth"></div>
+          <div class="header">
+            <span class="title h5">Learning Rates Bar Charts</span>
+            <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+          </div>
+        </div>
+        <p>The bars in the By Demographic section show Learning Rates for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Learning Rates between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      </div>
+      <div class="bars">
+
+      </div>
     </div>
     {{/if}}
     <!-- Page 7 end -->
@@ -174,7 +209,7 @@
     <div id="page_8" class="page pagebreak">
       <div class="chart average">
         <div class="background">
-          <div class="dot" style="left:100px;top:100px;"></div>
+          <div class="dot" style="left:{{css.coh_left}};top:{{css.coh_top}};"></div>
         </div>
       </div>
       <div class="text">
@@ -186,8 +221,8 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ location.name }}, {{location.state_name}} provides {{ verbiage.ats_hrl }} average educational opportunities. Average test scores are {{ verbiage.ats_avg_fixed }} grade level(s) {{ verbiage.ats_ab }} the national average.{{#if location.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if location.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels [higher / lower] than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
-          <p class="body-smaller">Average student test scores are influenced by children’s opportunities to learn in their homes, in their neighborhoods, in the childcare, preschool, and after-school programs they attend, from their peers and friends, and in their schools. Because of all these influences, average test scores are not a good way to assess how much children learn in schools. But they are a good way to assess the average set of educational opportunities available to children in a community. Where average scores are low, students have fewer opportunities to learn. Schools are better evaluated using Learning Rates, which measure how much student scores improve while they are in school.</p>
+          <p class="body-smaller">{{ location.name }}, {{location.state_name}} shows {{verbiage.coh_dri}} educational opportunity. Test scores {{verbiage.coh_id}} an average of {{verbiage.coh_grd}} grade levels each year from 2009-2016.{{#if location.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if location.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if location.diff_coh}} Average scores have {{verbiage.coh_diff_id}} by {{verbiage.coh_diff_fixed}} grade levels {{verbiage.coh_diff_ml}} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">Average student test scores are influenced by children’s home environments, early childhood experiences, community resources, and schools. The trend (or change) in average student test scores from one year to the next indicates whether educational opportunities are improving or declining in a community. Where the trend is positive, students’ opportunities to learn are improving. Opportunities may improve over time because of changes in school quality or because of changes in children’s family resources, home environments, early childhood experiences, and community resources.</p>
         </div>
       </div>
       <div class="footer">
@@ -201,8 +236,25 @@
     <!-- Page 9 -->
     {{#if showbarcharts}}
     <div id="page_9" class="page pagebreak">
-      <p>bar charts</p>
-      <p>The bars in the By Demographic section show Trends in Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Test Score Trends between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      <div class="header">
+        <div class="wrapper">
+          <div class="logo"></div>
+          <a class="url" href="https://www.{{ infourl }}">{{ infourl }}</a>
+        </div>
+      </div>
+      <div class="text">
+        <div class="head">
+          <div class="icon changes"></div>
+          <div class="header">
+            <span class="title h5">Trend in Test Scores Bar Charts</span>
+            <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+          </div>
+        </div>
+        <p>The bars in the By Demographic section show Trends in Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Test Score Trends between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      </div>
+      <div class="bars">
+
+      </div>
     </div>
     {{/if}}
     <!-- Page 9 end -->
