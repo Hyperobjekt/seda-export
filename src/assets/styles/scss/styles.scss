@@ -537,12 +537,44 @@ p {
 #page_5,
 #page_7,
 #page_9 {
+  .header,
+  .footer {
+    width: 100%;
+    // background-color: blue;
+    padding-top: calc(38px * #{$vertical-ratio});
+    .wrapper {
+      // background-color: red;
+      position: relative;
+      height: calc(55px * #{$vertical-ratio});
+      margin-right: calc(51px * #{$horizontal-ratio});
+      margin-left: calc(51px * #{$horizontal-ratio});
+      .logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        background-image: $new-logo-sm-2x;
+        background-repeat: no-repeat;
+        background-size: calc(31px * #{$vertical-ratio}) calc(33px * #{$vertical-ratio});
+        width: calc(31px * #{$horizontal-ratio});
+        height: calc(33px * #{$horizontal-ratio});
+      }
+      a {
+        // background-color: red;
+        position: absolute;
+        height: calc(55px * #{$vertical-ratio});
+        top: 0;
+        right: 0;
+      }
+    }
+  }
   .text {
     // height: calc((1535px - 839px) * #{$vertical-ratio});
     // .parent {
+    display: block;
     width: calc(900px * #{$horizontal-ratio});
-    height: calc((645px - 55px) * #{$vertical-ratio});
-    margin-left: calc(175px * #{$horizontal-ratio});
+    height: calc((214px - 140px) * #{$vertical-ratio}); // calc((645px - 55px) * #{$vertical-ratio});
+    margin-left: calc(112px * #{$horizontal-ratio});
     margin-right: auto;
     .head {
       padding-top: calc(50px * #{$vertical-ratio});
@@ -552,10 +584,10 @@ p {
       align-items: flex-start;
       .icon {
         flex: 0 0 auto;
-        width: calc(59.98px * #{$horizontal-ratio});
-        height: calc(59.94px * #{$horizontal-ratio});
+        width: calc(74px * #{$horizontal-ratio});
+        height: calc(74px * #{$horizontal-ratio});
         background-repeat: no-repeat;
-        background-size: calc(60px * #{$horizontal-ratio}) calc(60px * #{$horizontal-ratio});
+        background-size: calc(74px * #{$horizontal-ratio}) calc(74px * #{$horizontal-ratio});
         background-position: center;
         &.average {
           background-image: $icon-average;
@@ -569,24 +601,56 @@ p {
       }
       .header {
         flex: 0 1 auto;
-        padding-top: calc(15px * #{$vertical-ratio});
+        padding-top: calc(3px * #{$vertical-ratio});
         padding-left: calc(25px * #{$horizontal-ratio});
-        // height: calc((940px - 839px) * #{$vertical-ratio});
+        font-family: $sharpgrotesk-med-20;
+        font-size: calc(34px * #{$vertical-ratio});
+        line-height: calc(45px * #{$vertical-ratio});
+        letter-spacing: calc(0.44px * #{$vertical-ratio});
         .placename {
-          padding-top: calc(10px * #{$vertical-ratio});
+          font-size: calc(24px * #{$vertical-ratio});
+          line-height: calc(36px * #{$vertical-ratio});
+          letter-spacing: calc(0.37px * #{$vertical-ratio});
         }
       }
     }
-    p.body-smaller {
-      // font-size: calc(5px * #{$vertical-ratio});;
-      // line-height: calc(6px * #{$vertical-ratio});;
-    }
   }
   .bars {
-    background-color: $bg-white;
+    // background-color: $bg-white;
     width: 100%; // calc(1005px * #{$horizontal-ratio});
-    height: calc(1005px * #{$vertical-ratio});
-    bottom: 0;
+    // height: calc(1005px * #{$vertical-ratio});
+    p.body-smaller {
+      width: calc(830px * #{$horizontal-ratio});
+    }
+    .demographic-parent {
+      margin-left: calc(112px * #{$horizontal-ratio});
+      margin-right: calc(112px * #{$horizontal-ratio});
+      height: calc((1020px - 280px) * #{$vertical-ratio});
+      padding-top: calc(124px * #{$vertical-ratio});
+    }
+    .gaps-parent {
+      width: 100%;
+      height: calc(618px * #{$vertical-ratio});
+      background-color: $bg-white;
+      bottom: 0;
+      .gaps {
+        margin-left: calc(112px * #{$horizontal-ratio});
+        margin-right: calc(112px * #{$horizontal-ratio});
+      }
+    }
+    .demographic-parent,
+    .gaps-parent  {
+      td:nth-child(1),
+      td:nth-child(3) {
+        /* first column */
+        width: calc((276px - 112px) * #{$horizontal-ratio});
+      }
+      td:nth-child(2),
+      td:nth-child(4) {
+        /* second column */
+        width: calc((588px - 276px) * #{$horizontal-ratio});
+      }
+    }
   }
 }
 // Page 10
