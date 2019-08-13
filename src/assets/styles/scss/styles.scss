@@ -255,25 +255,69 @@ p {
 }
 
 // For use as header or footer in various contexts
+// .header,
+// .footer {
+//   width: 100%;
+//   // background-color: blue;
+//   .wrapper {
+//     position: relative;
+//     height: calc(55px * #{$vertical-ratio});
+//     margin-right: 45px; // calc(45px * #{$vertical-ratio});
+//     margin-left: 45px; // calc(45px * #{$vertical-ratio});
+//     .logo {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       display: inline-block;
+//       background-image: $new-logo-sm-2x; // $logo-sm;
+//       background-repeat: no-repeat;
+//       background-size: calc(55px * #{$vertical-ratio}) calc(53px * #{$vertical-ratio}); // 49px 51px;
+//       height: calc(55px * #{$vertical-ratio});
+//       width: calc(53px * #{$horizontal-ratio});
+//     }
+//     a {
+//       // background-color: red;
+//       position: absolute;
+//       height: calc(55px * #{$vertical-ratio});
+//       top: 0;
+//       right: 0;
+//     }
+//   }
+// }
+//
+// .footer {
+//   .wrapper {
+//     a {
+//       padding-top: 24px;
+//     }
+//   }
+// }
+//
+// .header {
+//   padding-top: 45px;
+// }
+
 .header,
 .footer {
   width: 100%;
   // background-color: blue;
+  height: calc(36px * #{$vertical-ratio});
   .wrapper {
+    // background-color: red;
     position: relative;
-    height: calc(55px * #{$vertical-ratio});
-    margin-right: 45px; // calc(45px * #{$vertical-ratio});
-    margin-left: 45px; // calc(45px * #{$vertical-ratio});
+    height: calc(36px * #{$vertical-ratio});
+    margin-right: calc(51px * #{$horizontal-ratio});
+    margin-left: calc(51px * #{$horizontal-ratio});
     .logo {
       position: absolute;
       top: 0;
       left: 0;
       display: inline-block;
-      background-image: $new-logo-sm-2x; // $logo-sm;
+      background-image: $new-logo-sm-2x;
       background-repeat: no-repeat;
-      background-size: calc(55px * #{$vertical-ratio}) calc(53px * #{$vertical-ratio}); // 49px 51px;
-      height: calc(55px * #{$vertical-ratio});
-      width: calc(53px * #{$horizontal-ratio});
+      background-size: calc(31px * #{$vertical-ratio}) calc(33px * #{$vertical-ratio});
+      width: calc(31px * #{$horizontal-ratio});
+      height: calc(33px * #{$horizontal-ratio});
     }
     a {
       // background-color: red;
@@ -286,19 +330,23 @@ p {
 }
 
 .footer {
+  // background: red;
+  padding-top: 20px;
   .wrapper {
     a {
-      padding-top: 24px;
+      padding-top: calc(18px * #{$vertical-ratio});
+    }
+    .logo {
+      top: auto;
+      bottom: 0;
+      left: 0;
     }
   }
 }
 
 .header {
-  padding-top: 45px;
-}
-
-.footer {
-
+  // padding-top: calc(50px * #{$vertical-ratio});
+  padding-top: calc(50px * #{$vertical-ratio});
 }
 
 .logo-sm {
@@ -383,7 +431,7 @@ p {
   .content-wrapper {
     position: absolute;
     width: 100%;
-    bottom: calc((1649px - 1513px) * #{$horizontal-ratio});
+    bottom: calc(70px * #{$horizontal-ratio});
     .content {
       width: calc(671px * #{$horizontal-ratio});
       margin-left: auto;
@@ -408,7 +456,7 @@ p {
   .content-wrapper {
     // background-color: blue;
     width: calc(859px * #{$horizontal-ratio});
-    margin-top: calc(40px * #{$vertical-ratio}); // calc((138px - 101px) * #{$vertical-ratio});
+    margin-top: calc(80px * #{$vertical-ratio}); // calc((138px - 101px) * #{$vertical-ratio});
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -541,37 +589,37 @@ p {
 #page_5,
 #page_7,
 #page_9 {
-  .header,
-  .footer {
-    width: 100%;
-    // background-color: blue;
-    padding-top: calc(38px * #{$vertical-ratio});
-    .wrapper {
-      // background-color: red;
-      position: relative;
-      height: calc(55px * #{$vertical-ratio});
-      margin-right: calc(51px * #{$horizontal-ratio});
-      margin-left: calc(51px * #{$horizontal-ratio});
-      .logo {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: inline-block;
-        background-image: $new-logo-sm-2x;
-        background-repeat: no-repeat;
-        background-size: calc(31px * #{$vertical-ratio}) calc(33px * #{$vertical-ratio});
-        width: calc(31px * #{$horizontal-ratio});
-        height: calc(33px * #{$horizontal-ratio});
-      }
-      a {
-        // background-color: red;
-        position: absolute;
-        height: calc(55px * #{$vertical-ratio});
-        top: 0;
-        right: 0;
-      }
-    }
-  }
+  // .header,
+  // .footer {
+  //   width: 100%;
+  //   // background-color: blue;
+  //   padding-top: calc(38px * #{$vertical-ratio});
+  //   .wrapper {
+  //     // background-color: red;
+  //     position: relative;
+  //     height: calc(55px * #{$vertical-ratio});
+  //     margin-right: calc(51px * #{$horizontal-ratio});
+  //     margin-left: calc(51px * #{$horizontal-ratio});
+  //     .logo {
+  //       position: absolute;
+  //       top: 0;
+  //       left: 0;
+  //       display: inline-block;
+  //       background-image: $new-logo-sm-2x;
+  //       background-repeat: no-repeat;
+  //       background-size: calc(31px * #{$vertical-ratio}) calc(33px * #{$vertical-ratio});
+  //       width: calc(31px * #{$horizontal-ratio});
+  //       height: calc(33px * #{$horizontal-ratio});
+  //     }
+  //     a {
+  //       // background-color: red;
+  //       position: absolute;
+  //       height: calc(55px * #{$vertical-ratio});
+  //       top: 0;
+  //       right: 0;
+  //     }
+  //   }
+  // }
   .text {
     // height: calc((1535px - 839px) * #{$vertical-ratio});
     // .parent {
