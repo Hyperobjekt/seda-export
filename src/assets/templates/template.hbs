@@ -5,7 +5,7 @@
     </style>
   </head>
   <body>
-    <span class="h1">This is a test heading h1</span>
+    {{!-- <span class="h1">This is a test heading h1</span>
     <span class="h2">This is a test h2</span>
     <span class="front" style="">This is a test h2 front class</span>
     <span class="h3">This is a test h3</span>
@@ -19,7 +19,7 @@
     <p>Paragraph testing testing. body body</p>
     <p class="body-smaller">Paragraph testing testing. body</p>
     <p class="body-smallest">Paragraph testing testing. body</p>
-    <div class="pagebreak"></div>
+    <div class="pagebreak"></div> --}}
     <!-- page 1 -->
     <div id="page_1" class="page pagebreak">
       <div class="front-top"></div>
@@ -148,166 +148,216 @@
       <div class="bars">
         <div class="demographic-parent">
           <span class="h7">By Demographic</span>
-          <p class="body-smaller">The bars in the By Demographic section show Average Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p>
+          <p class="body-smaller">The bars in the <strong>By Demographic</strong> section show Average Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p>
           <table class="demographic">
             <tr>
               <td class="label">ALL STUDENTS</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.all.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.all.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.all.num.neg}}</div>
+                    <div class="bar" style="{{avg.all.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.all.bar.pos.width}}"></div>
+                    <div class="num">{{avg.all.num.pos}}</div>
+                  </div>
                 </div>
               </td>
               <td class="label">MALE</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.m.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.m.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.m.num.neg}}</div>
+                    <div class="bar" style="{{avg.m.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.m.bar.pos.width}}"></div>
+                    <div class="num">{{avg.m.num.pos}}</div>
+                  </div>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="label">WHITE</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.w.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.w.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.w.num.neg}}</div>
+                    <div class="bar" style="{{avg.w.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.w.bar.pos.width}}"></div>
+                    <div class="num">{{avg.w.num.pos}}</div>
+                  </div>
                 </div>
               </td>
               <td class="label">FEMALE</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.f.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.f.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.f.num.neg}}</div>
+                    <div class="bar" style="{{avg.f.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.f.bar.pos.width}}"></div>
+                    <div class="num">{{avg.f.num.pos}}</div>
+                  </div>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="label">BLACK</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.b.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.b.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.b.num.neg}}</div>
+                    <div class="bar" style="{{avg.b.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.b.bar.pos.width}}"></div>
+                    <div class="num">{{avg.b.num.pos}}</div>
+                  </div>
                 </div>
               </td>
               <td class="label">POOR</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.p.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.p.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.p.num.neg}}</div>
+                    <div class="bar" style="{{avg.p.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.p.bar.pos.width}}"></div>
+                    <div class="num">{{avg.p.num.pos}}</div>
+                  </div>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="label">HISPANIC</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.h.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.h.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.h.num.neg}}</div>
+                    <div class="bar" style="{{avg.h.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.h.bar.pos.width}}"></div>
+                    <div class="num">{{avg.h.num.pos}}</div>
+                  </div>
                 </div>
               </td>
               <td class="label">NON-POOR</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.np.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.np.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.np.num.neg}}</div>
+                    <div class="bar" style="{{avg.np.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.np.bar.pos.width}}"></div>
+                    <div class="num">{{avg.np.num.pos}}</div>
+                  </div>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="label">ASIAN</td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
                 <div class="underlay">
-                  <div class="num neg">-4.56</div>
+                  <div class="num neg" style="{{avg.a.bar.neg.hide}}">-{{avg.minmax}}</div>
                   <div class="line neg"></div>
                   <div class="line pos"></div>
-                  <div class="num pos">4.56</div>
+                  <div class="num pos" style="{{avg.a.bar.pos.hide}}">+{{avg.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{avg.a.num.neg}}</div>
+                    <div class="bar" style="{{avg.a.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{avg.a.bar.pos.width}}"></div>
+                    <div class="num">{{avg.a.num.pos}}</div>
+                  </div>
                 </div>
               </td>
               <td class="label"></td>
               <td class="bar-parent">
-                <div class="overlay">
-                  <div class="num neg"></div>
-                  <div class="bar neg"></div>
-                  <div class="bar pos"></div>
-                  <div class="num pos"></div>
-                </div>
-                <div class="underlay">
-                  <div class="num neg"></div>
-                  <div class="line neg"></div>
-                  <div class="line pos"></div>
-                  <div class="num pos"></div>
-                </div>
+                  {{!-- <div class="underlay">
+                    <div class="num neg">-4.56</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos">+4.56</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">-2.98</div>
+                      <div class="bar"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar"></div>
+                      <div class="num">+2.87</div>
+                    </div>
+                  </div> --}}
               </td>
             </tr>
           </table>
@@ -315,69 +365,89 @@
         <div class="gaps-parent">
           <div class="gaps">
             <span class="h7">Gaps</span>
-            <p class="body-smaller">The bars in the Gaps section show differences in Average Test Scores between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
-            <table class="gaps">
+            <p class="body-smaller">The bars in the <strong>Gaps</strong> section show differences in Average Test Scores between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+            <table class="gaps-table">
               <tr>
                 <td class="label">WHITE /<br>BLACK</td>
                 <td class="bar-parent">
-                  <div class="overlay">
-                    <div class="num neg"></div>
-                    <div class="bar neg"></div>
-                    <div class="bar pos"></div>
-                    <div class="num pos"></div>
-                  </div>
                   <div class="underlay">
-                    <div class="num neg"></div>
+                    <div class="num neg" style="{{avg.wb.bar.neg.hide}}">-{{avg.gapminmax}}</div>
                     <div class="line neg"></div>
                     <div class="line pos"></div>
-                    <div class="num pos"></div>
+                    <div class="num pos" style="{{avg.wb.bar.pos.hide}}">+{{avg.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{avg.wb.num.neg}}</div>
+                      <div class="bar" style="{{avg.wb.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{avg.wb.bar.pos.width}}"></div>
+                      <div class="num">{{avg.wb.num.pos}}</div>
+                    </div>
                   </div>
                 </td>
                 <td class="label">WHITE /<br>ASIAN</td>
                 <td class="bar-parent">
-                  <div class="overlay">
-                    <div class="num neg"></div>
-                    <div class="bar neg"></div>
-                    <div class="bar pos"></div>
-                    <div class="num pos"></div>
-                  </div>
                   <div class="underlay">
-                    <div class="num neg">-4.56</div>
+                    <div class="num neg" style="{{avg.wa.bar.neg.hide}}">-{{avg.gapminmax}}</div>
                     <div class="line neg"></div>
                     <div class="line pos"></div>
-                    <div class="num pos">4.56</div>
+                    <div class="num pos" style="{{avg.wa.bar.pos.hide}}">+{{avg.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{avg.wa.num.neg}}</div>
+                      <div class="bar" style="{{avg.wa.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{avg.wa.bar.pos.width}}"></div>
+                      <div class="num">{{avg.wa.num.pos}}</div>
+                    </div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td class="label">WHITE /<br>HISPANIC</td>
                 <td class="bar-parent">
-                  <div class="overlay">
-                    <div class="num neg"></div>
-                    <div class="bar neg"></div>
-                    <div class="bar pos"></div>
-                    <div class="num pos"></div>
-                  </div>
                   <div class="underlay">
-                    <div class="num neg">-4.56</div>
+                    <div class="num neg" style="{{avg.wh.bar.neg.hide}}">-{{avg.gapminmax}}</div>
                     <div class="line neg"></div>
                     <div class="line pos"></div>
-                    <div class="num pos">4.56</div>
+                    <div class="num pos" style="{{avg.wh.bar.pos.hide}}">+{{avg.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{avg.wh.num.neg}}</div>
+                      <div class="bar" style="{{avg.wh.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{avg.wh.bar.pos.width}}"></div>
+                      <div class="num">{{avg.wh.num.pos}}</div>
+                    </div>
                   </div>
                 </td>
                 <td class="label">POOR /<br>NON-POOR</td>
                 <td class="bar-parent">
-                  <div class="overlay">
-                    <div class="num neg"></div>
-                    <div class="bar neg"></div>
-                    <div class="bar pos"></div>
-                    <div class="num pos"></div>
-                  </div>
                   <div class="underlay">
-                    <div class="num neg">-4.56</div>
+                    <div class="num neg" style="{{avg.pn.bar.neg.hide}}">-{{avg.gapminmax}}</div>
                     <div class="line neg"></div>
                     <div class="line pos"></div>
-                    <div class="num pos">4.56</div>
+                    <div class="num pos" style="{{avg.pn.bar.pos.hide}}">+{{avg.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{avg.pn.num.neg}}</div>
+                      <div class="bar" style="{{avg.pn.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{avg.pn.bar.pos.width}}"></div>
+                      <div class="num">{{avg.pn.num.pos}}</div>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -433,7 +503,316 @@
             <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
           </div>
         </div>
-        <p>The bars in the By Demographic section show Learning Rates for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Learning Rates between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+      </div>
+      <div class="bars">
+        <div class="demographic-parent">
+          <span class="h7">By Demographic</span>
+          <p class="body-smaller">The bars in the <strong>By Demographic</strong> section show Learning Rates for various demographic groups. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p>
+          <table class="demographic">
+            <tr>
+              <td class="label">ALL STUDENTS</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.all.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.all.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.all.num.neg}}</div>
+                    <div class="bar" style="{{grd.all.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.all.bar.pos.width}}"></div>
+                    <div class="num">{{grd.all.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">MALE</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.m.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.m.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.m.num.neg}}</div>
+                    <div class="bar" style="{{grd.m.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.m.bar.pos.width}}"></div>
+                    <div class="num">{{grd.m.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">WHITE</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.w.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.w.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.w.num.neg}}</div>
+                    <div class="bar" style="{{grd.w.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.w.bar.pos.width}}"></div>
+                    <div class="num">{{grd.w.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">FEMALE</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.f.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.f.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.f.num.neg}}</div>
+                    <div class="bar" style="{{grd.f.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.f.bar.pos.width}}"></div>
+                    <div class="num">{{grd.f.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">BLACK</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.b.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.b.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.b.num.neg}}</div>
+                    <div class="bar" style="{{grd.b.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.b.bar.pos.width}}"></div>
+                    <div class="num">{{grd.b.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">POOR</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.p.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.p.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.p.num.neg}}</div>
+                    <div class="bar" style="{{grd.p.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.p.bar.pos.width}}"></div>
+                    <div class="num">{{grd.p.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">HISPANIC</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.h.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.h.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.h.num.neg}}</div>
+                    <div class="bar" style="{{grd.h.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.h.bar.pos.width}}"></div>
+                    <div class="num">{{grd.h.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">NON-POOR</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.np.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.np.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.np.num.neg}}</div>
+                    <div class="bar" style="{{grd.np.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.np.bar.pos.width}}"></div>
+                    <div class="num">{{grd.np.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">ASIAN</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{grd.a.bar.neg.hide}}">{{grd.min}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{grd.a.bar.pos.hide}}">+{{grd.max}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{grd.a.num.neg}}</div>
+                    <div class="bar" style="{{grd.a.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{grd.a.bar.pos.width}}"></div>
+                    <div class="num">{{grd.a.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label"></td>
+              <td class="bar-parent">
+                  {{!-- <div class="underlay">
+                    <div class="num neg">-4.56</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos">+4.56</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">-2.98</div>
+                      <div class="bar"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar"></div>
+                      <div class="num">+2.87</div>
+                    </div>
+                  </div> --}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="gaps-parent">
+          <div class="gaps">
+            <span class="h7">Gaps</span>
+            <p class="body-smaller">The bars in the <strong>Gaps</strong> section show differences in Learning Rates between demographic groups. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+            <table class="gaps-table">
+              <tr>
+                <td class="label">WHITE /<br>BLACK</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{grd.wb.bar.neg.hide}}">-{{grd.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{grd.wb.bar.pos.hide}}">+{{grd.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{grd.wb.num.neg}}</div>
+                      <div class="bar" style="{{grd.wb.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{grd.wb.bar.pos.width}}"></div>
+                      <div class="num">{{grd.wb.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="label">WHITE /<br>ASIAN</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{grd.wa.bar.neg.hide}}">-{{grd.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{grd.wa.bar.pos.hide}}">+{{grd.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{grd.wa.num.neg}}</div>
+                      <div class="bar" style="{{grd.wa.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{grd.wa.bar.pos.width}}"></div>
+                      <div class="num">{{grd.wa.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">WHITE /<br>HISPANIC</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{grd.wh.bar.neg.hide}}">-{{grd.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{grd.wh.bar.pos.hide}}">+{{grd.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{grd.wh.num.neg}}</div>
+                      <div class="bar" style="{{grd.wh.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{grd.wh.bar.pos.width}}"></div>
+                      <div class="num">{{grd.wh.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="label">POOR /<br>NON-POOR</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{grd.pn.bar.neg.hide}}">-{{grd.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{grd.pn.bar.pos.hide}}">+{{grd.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{grd.pn.num.neg}}</div>
+                      <div class="bar" style="{{grd.pn.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{grd.pn.bar.pos.width}}"></div>
+                      <div class="num">{{grd.pn.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     {{/if}}
@@ -483,32 +862,316 @@
             <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
           </div>
         </div>
-        <p>The bars in the By Demographic section show Trends in Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p><p>The bars in the Gaps section show differences in Test Score Trends between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
       </div>
       <div class="bars">
-        <span class="h7">By Demographic</span>
-        <table class="demographic">
-          <tr>
-            <td class="label"></td>
-            <td class="bar-parent">
-              <div class="overlay">
-                <div class="num neg"></div>
-                <div class="bar neg"></div>
-                <div class="bar pos"></div>
-                <div class="num pos"></div>
-              </div>
-              <div class="underlay">
-                <div class="num neg"></div>
-                <div class="line neg"></div>
-                <div class="line pos"></div>
-                <div class="num pos"></div>
-              </div>
-            </td>
-            <td class=""></td>
-            <td></td>
-          </tr>
-        </table>
-        <span class="h7">Gaps</span>
+        <div class="demographic-parent">
+          <span class="h7">By Demographic</span>
+          <p class="body-smaller">The bars in the <strong>By Demographic</strong> section show Trends in Test Scores for various demographic groups. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p>
+          <table class="demographic">
+            <tr>
+              <td class="label">ALL STUDENTS</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.all.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.all.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.all.num.neg}}</div>
+                    <div class="bar" style="{{coh.all.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.all.bar.pos.width}}"></div>
+                    <div class="num">{{coh.all.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">MALE</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.m.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.m.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.m.num.neg}}</div>
+                    <div class="bar" style="{{coh.m.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.m.bar.pos.width}}"></div>
+                    <div class="num">{{coh.m.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">WHITE</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.w.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.w.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.w.num.neg}}</div>
+                    <div class="bar" style="{{coh.w.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.w.bar.pos.width}}"></div>
+                    <div class="num">{{coh.w.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">FEMALE</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.f.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.f.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.f.num.neg}}</div>
+                    <div class="bar" style="{{coh.f.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.f.bar.pos.width}}"></div>
+                    <div class="num">{{coh.f.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">BLACK</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.b.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.b.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.b.num.neg}}</div>
+                    <div class="bar" style="{{coh.b.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.b.bar.pos.width}}"></div>
+                    <div class="num">{{coh.b.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">POOR</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.p.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.p.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.p.num.neg}}</div>
+                    <div class="bar" style="{{coh.p.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.p.bar.pos.width}}"></div>
+                    <div class="num">{{coh.p.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">HISPANIC</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.h.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.h.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.h.num.neg}}</div>
+                    <div class="bar" style="{{coh.h.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.h.bar.pos.width}}"></div>
+                    <div class="num">{{coh.h.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label">NON-POOR</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.np.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.np.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.np.num.neg}}</div>
+                    <div class="bar" style="{{coh.np.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.np.bar.pos.width}}"></div>
+                    <div class="num">{{coh.np.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">ASIAN</td>
+              <td class="bar-parent">
+                <div class="underlay">
+                  <div class="num neg" style="{{coh.a.bar.neg.hide}}">-{{coh.minmax}}</div>
+                  <div class="line neg"></div>
+                  <div class="line pos"></div>
+                  <div class="num pos" style="{{coh.a.bar.pos.hide}}">+{{coh.minmax}}</div>
+                </div>
+                <div class="overlay">
+                  <div class="neg">
+                    <div class="num">{{coh.a.num.neg}}</div>
+                    <div class="bar" style="{{coh.a.bar.neg.width}}"></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="pos">
+                    <div class="bar" style="{{coh.a.bar.pos.width}}"></div>
+                    <div class="num">{{coh.a.num.pos}}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="label"></td>
+              <td class="bar-parent">
+                  {{!-- <div class="underlay">
+                    <div class="num neg">-4.56</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos">+4.56</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">-2.98</div>
+                      <div class="bar"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar"></div>
+                      <div class="num">+2.87</div>
+                    </div>
+                  </div> --}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="gaps-parent">
+          <div class="gaps">
+            <span class="h7">Gaps</span>
+            <p class="body-smaller">The bars in the <strong>Gaps</strong> section show differences in Test Score Trends between demographic groups in [location]. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+            <table class="gaps-table">
+              <tr>
+                <td class="label">WHITE /<br>BLACK</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{coh.wb.bar.neg.hide}}">-{{coh.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{coh.wb.bar.pos.hide}}">+{{coh.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{coh.wb.num.neg}}</div>
+                      <div class="bar" style="{{coh.wb.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{coh.wb.bar.pos.width}}"></div>
+                      <div class="num">{{coh.wb.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="label">WHITE /<br>ASIAN</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{coh.wa.bar.neg.hide}}">-{{coh.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{coh.wa.bar.pos.hide}}">+{{coh.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{coh.wa.num.neg}}</div>
+                      <div class="bar" style="{{coh.wa.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{coh.wa.bar.pos.width}}"></div>
+                      <div class="num">{{coh.wa.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">WHITE /<br>HISPANIC</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{coh.wh.bar.neg.hide}}">-{{coh.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{coh.wh.bar.pos.hide}}">+{{coh.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{coh.wh.num.neg}}</div>
+                      <div class="bar" style="{{coh.wh.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{coh.wh.bar.pos.width}}"></div>
+                      <div class="num">{{coh.wh.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="label">POOR /<br>NON-POOR</td>
+                <td class="bar-parent">
+                  <div class="underlay">
+                    <div class="num neg" style="{{coh.pn.bar.neg.hide}}">-{{coh.gapminmax}}</div>
+                    <div class="line neg"></div>
+                    <div class="line pos"></div>
+                    <div class="num pos" style="{{coh.pn.bar.pos.hide}}">+{{coh.gapminmax}}</div>
+                  </div>
+                  <div class="overlay">
+                    <div class="neg">
+                      <div class="num">{{coh.pn.num.neg}}</div>
+                      <div class="bar" style="{{coh.pn.bar.neg.width}}"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="pos">
+                      <div class="bar" style="{{coh.pn.bar.pos.width}}"></div>
+                      <div class="num">{{coh.pn.num.pos}}</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     {{/if}}

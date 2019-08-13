@@ -177,6 +177,19 @@ const formatPercentDiff = (v, from = 1) => {
   return formatPercent(v - from);
 }
 
+const vars = {};
+vars.barMax = 64;
+vars.avgBarHide = 48;
+vars.avgMax = 3;
+vars.avgGapMax = 6;
+vars.cohBarHide = 24;
+vars.cohMax = 0.33;
+vars.cohGapMax = 0.33;
+vars.grdBarHide = 48;
+vars.grdMin = -0.5;
+vars.grdMax = 1.5;
+vars.grdGapMax = 0.4;
+
 class Pdfer {
 
   async getPercentDiffBoilerplate(v, from = 1) {
@@ -231,6 +244,101 @@ class Pdfer {
         return 'counties';
       default:
         return String(entity + 's');
+    }
+  }
+
+  async constructGrdBar(val, valMin, valMax) {
+    console.log('constructBar()');
+    const obj = {};
+    obj.num = {};
+    obj.bar = {};
+    obj.bar.neg = {};
+    obj.bar.pos = {};
+    const barWidth = (val/valMax)*vars.barMax;
+    switch (true) {
+      case (val > 1):
+        obj.num.neg = '';
+        obj.num.pos = '+' + formatNumber(val, 2);
+        obj.bar.pos.width = 'width:' + barWidth + 'px;';
+        obj.bar.neg.width = '';
+        if (barWidth >= vars.barHide) {
+          obj.bar.pos.hide = 'visibility:hidden;';
+        }
+        // console.log(obj);
+        return obj;
+      case (val < 1):
+        obj.num.pos = '';
+        obj.num.neg = formatNumber(val, 2);
+        obj.bar.neg.width = 'width:' + barWidth*-1 + 'px;';
+        obj.bar.pos.width = '';
+        if (barWidth*-1 >= vars.barHide) {
+          obj.bar.neg.hide = 'visibility:hidden;';
+        }
+        // console.log(obj);
+        return obj;
+      default:
+        break;
+    }
+  }
+
+  /**
+   * [constructBar description]
+   * @param  {Number}  val              Value passed in, may be diff than value displayed
+   * @param  {Number}  valMax           Maximum of range
+   * @param  {Number}  valMin           Minimum of range
+   * @param  {Number}  barHide          Bar width beyond which underlying range label is hidden
+   * @param  {Number}  median           Median value, 0 or 1
+   * @param  {String}  format           'number' or 'percent'
+   * @return {Promise}                  [description]
+   */
+  async constructBar(val, valMax, valMin, barHide, median = 0, format = 'number') {
+    console.log('constructBar()');
+    const obj = {};
+    obj.num = {};
+    obj.bar = {};
+    obj.bar.neg = {};
+    obj.bar.pos = {};
+    // console.log('format = ' + format);
+    switch (true) {
+      case (val > median):
+        obj.num.neg = '';
+        let barWidth;
+        if (format === 'number') {
+          barWidth = (val/valMax) * vars.barMax;
+          obj.num.pos = '+' + formatNumber(val, 2);
+        } else {
+          barWidth = ((val - median)/(valMax - median)) * vars.barMax;
+          obj.num.pos = '+' + formatPercentDiff(val) + '%';
+        }
+        console.log('barWidth = ' + barWidth);
+        obj.bar.pos.width = 'width:' + barWidth + 'px;';
+        obj.bar.neg.width = '';
+        if (barWidth >= barHide) {
+          obj.bar.pos.hide = 'visibility:hidden;';
+        }
+        // console.log(obj);
+        return obj;
+      case (val < median):
+        obj.num.pos = '';
+        let negBarWidth;
+        if (format === 'number') {
+          negBarWidth = (val/valMin) * vars.barMax;
+          obj.num.neg = formatNumber(val, 2);
+        } else {
+          negBarWidth = ((1 - val)/(1 - valMin)) * vars.barMax;
+          obj.num.neg = formatPercentDiff(val) + '%';
+        }
+        // const negBarWidth = (val/valMin) * vars.barMax;
+        console.log('negBarWidth = ' + negBarWidth);
+        obj.bar.neg.width = 'width:' + negBarWidth + 'px;';
+        obj.bar.pos.width = '';
+        if (negBarWidth >= barHide) {
+          obj.bar.neg.hide = 'visibility:hidden;';
+        }
+        // console.log(obj);
+        return obj;
+      default:
+        break;
     }
   }
 
@@ -415,6 +523,59 @@ class Pdfer {
       _css.coh_left = '100px';
       _css.coh_top = '100px';
       jsonparse.css = _css;
+      const _avg = {}; // JSON object for average bar charts & conditionals
+      _avg.minmax = vars.avgMax;
+      _avg.gapminmax = vars.avgGapMax;
+      _avg.all = await this.constructBar(jsonparse.location.all_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.w = await this.constructBar(jsonparse.location.w_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.m = await this.constructBar(jsonparse.location.m_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.f = await this.constructBar(jsonparse.location.f_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.b = await this.constructBar(jsonparse.location.b_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.p = await this.constructBar(jsonparse.location.p_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.np = await this.constructBar(jsonparse.location.np_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.h = await this.constructBar(jsonparse.location.h_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.a = await this.constructBar(jsonparse.location.a_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
+      _avg.wb = await this.constructBar(jsonparse.location.wb_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
+      _avg.wa = await this.constructBar(jsonparse.location.wa_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
+      _avg.wh = await this.constructBar(jsonparse.location.wh_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
+      _avg.pn = await this.constructBar(jsonparse.location.pn_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
+      jsonparse.avg = _avg;
+      const _coh = {}; // JSON object for average bar charts & conditionals
+      _coh.minmax = vars.cohMax;
+      _coh.gapminmax = vars.cohGapMax;
+      _coh.all = await this.constructBar(jsonparse.location.all_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.w = await this.constructBar(jsonparse.location.w_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.m = await this.constructBar(jsonparse.location.m_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.f = await this.constructBar(jsonparse.location.f_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.b = await this.constructBar(jsonparse.location.b_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.p = await this.constructBar(jsonparse.location.p_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.np = await this.constructBar(jsonparse.location.np_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.h = await this.constructBar(jsonparse.location.h_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.a = await this.constructBar(jsonparse.location.a_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
+      _coh.wb = await this.constructBar(jsonparse.location.wb_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
+      _coh.wa = await this.constructBar(jsonparse.location.wa_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
+      _coh.wh = await this.constructBar(jsonparse.location.wh_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
+      _coh.pn = await this.constructBar(jsonparse.location.pn_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
+      jsonparse.coh = _coh;
+      const _grd = {}; // JSON object for average bar charts & conditionals
+      _grd.min = vars.grdMin;
+      _grd.max = vars.grdMax;
+      _grd.grdBarHide = vars.grdBarHide;
+      _grd.gapminmax = vars.grdGapMax;
+      _grd.all = await this.constructBar(jsonparse.location.all_grd, vars.grdMax, vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.w = await this.constructBar(jsonparse.location.w_grd, vars.grdMax, vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.m = await this.constructBar(jsonparse.location.m_grd, vars.grdMax, vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.f = await this.constructBar(jsonparse.location.f_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.b = await this.constructBar(jsonparse.location.b_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.p = await this.constructBar(jsonparse.location.p_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.np = await this.constructBar(jsonparse.location.np_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.h = await this.constructBar(jsonparse.location.h_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.a = await this.constructBar(jsonparse.location.a_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
+      _grd.wb = await this.constructBar(jsonparse.location.wb_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
+      _grd.wa = await this.constructBar(jsonparse.location.wa_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
+      _grd.wh = await this.constructBar(jsonparse.location.wh_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
+      _grd.pn = await this.constructBar(jsonparse.location.pn_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
+      jsonparse.grd = _grd;
       console.log(jsonparse);
       // Fetch the template.
       // console.log('template string');
