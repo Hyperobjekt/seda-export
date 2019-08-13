@@ -1,18 +1,16 @@
 {
-  "name": "test-pdf-export",
+  "name": "pdf-export",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "dev": "",
     "export": "node ./src/ExportPDF.js --data=./input/data.json --templates=./src/assets/templates --output=./output/result.pdf",
     "build-css": "node-sass --include-path ./src/assets/styles/scss ./src/assets/styles/scss/styles.scss ./src/assets/styles/css/styles.css",
     "dev": "nodemon -e js,scss,json,hbs --ignore 'src/assets/templates/styles.hbs' --ignore 'src/assets/templates/assets.hbs' -x \"npm run build-css && cp ./src/assets/styles/css/styles.css ./src/assets/templates/styles.hbs && npm run export\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amygroshek/test-pdf-export.git"
+    "url": "git+https://github.com/Hyperobjekt/seda-export.git"
   },
   "keywords": [
     "chromium",
