@@ -15,6 +15,8 @@
 @import "./about-chart-bg.scss";
 @import "./bar-graph-line-bg.scss";
 @import "./bar-graph-vert-bg.scss";
+@import "./chart-avg-bg.scss";
+@import "./avg-dot.scss";
 
 html, body {
   // font-size: 64%; // 62.5%;
@@ -534,12 +536,16 @@ p {
       .dot {
         display: block;
         position: absolute;
-        background-color: lighten($secondary-blue, 20%);
+        // background-color: lighten($secondary-blue, 20%);
         width: 10px;
         height: 10px;
-        border-radius: 7px;
-        border: 1px solid $secondary-blue;
-        box-shadow: .5px .5px 1px gray;
+        // border-radius: 7px;
+        // border: 1px solid $secondary-blue;
+        // box-shadow: .5px .5px 1px gray;
+        background: $avg-dot;
+        background-size: 100% 100%;
+        background-position: 0 0;
+        background-repeat: no-repeat;
       }
     }
   }
@@ -585,47 +591,44 @@ p {
   }
 }
 // Page 4 end
+#page_4 {
+  .chart {
+    .background {
+      background: $chart-avg-bg;
+      background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+      background-position: 0 0;
+      background-repeat: no-repeat;
+    }
+  }
+}
+#page_6 {
+  .chart {
+    .background {
+      background: $chart-avg-bg;
+      background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+      background-position: 0 0;
+      background-repeat: no-repeat;
+    }
+  }
+}
+#page_8 {
+  .chart {
+    .background {
+      background: $chart-avg-bg;
+      background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+      background-position: 0 0;
+      background-repeat: no-repeat;
+    }
+  }
+}
 // Page 5 start
 #page_5,
 #page_7,
 #page_9 {
-  // .header,
-  // .footer {
-  //   width: 100%;
-  //   // background-color: blue;
-  //   padding-top: calc(38px * #{$vertical-ratio});
-  //   .wrapper {
-  //     // background-color: red;
-  //     position: relative;
-  //     height: calc(55px * #{$vertical-ratio});
-  //     margin-right: calc(51px * #{$horizontal-ratio});
-  //     margin-left: calc(51px * #{$horizontal-ratio});
-  //     .logo {
-  //       position: absolute;
-  //       top: 0;
-  //       left: 0;
-  //       display: inline-block;
-  //       background-image: $new-logo-sm-2x;
-  //       background-repeat: no-repeat;
-  //       background-size: calc(31px * #{$vertical-ratio}) calc(33px * #{$vertical-ratio});
-  //       width: calc(31px * #{$horizontal-ratio});
-  //       height: calc(33px * #{$horizontal-ratio});
-  //     }
-  //     a {
-  //       // background-color: red;
-  //       position: absolute;
-  //       height: calc(55px * #{$vertical-ratio});
-  //       top: 0;
-  //       right: 0;
-  //     }
-  //   }
-  // }
   .text {
-    // height: calc((1535px - 839px) * #{$vertical-ratio});
-    // .parent {
     display: block;
     width: calc(900px * #{$horizontal-ratio});
-    height: calc((214px - 140px) * #{$vertical-ratio}); // calc((645px - 55px) * #{$vertical-ratio});
+    height: calc((214px - 140px) * #{$vertical-ratio});
     margin-left: calc(112px * #{$horizontal-ratio});
     margin-right: auto;
     .head {

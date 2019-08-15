@@ -189,14 +189,16 @@ vars.grdBarHide = 48;
 vars.grdMin = -0.5;
 vars.grdMax = 1.5;
 vars.grdGapMax = 0.4;
+vars.verticalRatio = 0.64;
+vars.horizontalRatio = 0.64;
 
 class Pdfer {
 
   async getPercentDiffBoilerplate(v, from = 1) {
-    console.log('getPercentDiffBoilerplate()');
+    // console.log('getPercentDiffBoilerplate()');
     if (!v && v !== 0) { return 'N/A' }
     const percent = formatPercent(v - from);
-    console.log(percent);
+    // console.log(percent);
     switch (true) {
       case (percent < 0):
         return (percent * -1) + '% less each grade than';
@@ -282,6 +284,30 @@ class Pdfer {
   }
 
   /**
+   * Returns object with left and top values for chart dot position
+   * @param  {[type]}  x            x axis value for dot
+   * @param  {[type]}  y            y axis value for dot
+   * @param  {Array}   xRange       Range of chart, lowest first
+   * @param  {[type]}  yRange       Range of chart, lowest first
+   * @param  {[type]}  width        Width of chart (at 96dip, multiply by vars.*Ratio if necessary)
+   * @param  {[type]}  height       Height of chart (at 96dip, multiply by vars.*Ratio if necessary)
+   * @param  {[type]}  xPadding     Width of chart space occupied for x axis and tick labels of chart
+   * @param  {[type]}  yPadding     Width of chart space occupied for y axis and tick labels of chart
+   * @return {Promise}              Return object with left and top values
+   */
+  async getChartCoords(x, y, xRange = [-3, 3], yRange, width, height, xPadding, yPadding) {
+    // console.log('getChartCoords()');
+    const obj = {};
+    const revisedWidth = width - xPadding;
+    const revisedHeight = height - yPadding;
+    // console.log('revisedHeight = ' + revisedHeight);
+    obj.left = Math.round(((xRange[0] - x) * revisedWidth)/(xRange[0] - xRange[1]));
+    obj.top = Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]));
+    // console.log(obj);
+    return obj;
+  }
+
+  /**
    * [constructBar description]
    * @param  {Number}  val              Value passed in, may be diff than value displayed
    * @param  {Number}  valMax           Maximum of range
@@ -292,7 +318,7 @@ class Pdfer {
    * @return {Promise}                  [description]
    */
   async constructBar(val, valMax, valMin, barHide, median = 0, format = 'number') {
-    console.log('constructBar()');
+    // console.log('constructBar()');
     const obj = {};
     obj.num = {};
     obj.bar = {};
@@ -310,7 +336,7 @@ class Pdfer {
           barWidth = ((val - median)/(valMax - median)) * vars.barMax;
           obj.num.pos = '+' + formatPercentDiff(val) + '%';
         }
-        console.log('barWidth = ' + barWidth);
+        // console.log('barWidth = ' + barWidth);
         obj.bar.pos.width = 'width:' + barWidth + 'px;';
         obj.bar.neg.width = '';
         if (barWidth >= barHide) {
@@ -329,7 +355,7 @@ class Pdfer {
           obj.num.neg = formatPercentDiff(val) + '%';
         }
         // const negBarWidth = (val/valMin) * vars.barMax;
-        console.log('negBarWidth = ' + negBarWidth);
+        // console.log('negBarWidth = ' + negBarWidth);
         obj.bar.neg.width = 'width:' + negBarWidth + 'px;';
         obj.bar.pos.width = '';
         if (negBarWidth >= barHide) {
@@ -515,14 +541,6 @@ class Pdfer {
         _verbiage.coh_diff_ml = await this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_ml);
       }
       jsonparse.verbiage = _verbiage;
-      const _css = {}; // JSON object for CSS attribs needed by template
-      _css.avg_left = '100px';
-      _css.avg_top = '100px';
-      _css.grd_left = '100px';
-      _css.grd_top = '100px';
-      _css.coh_left = '100px';
-      _css.coh_top = '100px';
-      jsonparse.css = _css;
       const _avg = {}; // JSON object for average bar charts & conditionals
       _avg.minmax = vars.avgMax;
       _avg.gapminmax = vars.avgGapMax;
@@ -539,8 +557,9 @@ class Pdfer {
       _avg.wa = await this.constructBar(jsonparse.location.wa_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
       _avg.wh = await this.constructBar(jsonparse.location.wh_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
       _avg.pn = await this.constructBar(jsonparse.location.pn_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
+      _avg.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_avg, jsonparse.location.range_ses, jsonparse.location.range_avg, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
       jsonparse.avg = _avg;
-      const _coh = {}; // JSON object for average bar charts & conditionals
+      const _coh = {}; // JSON object for coh bar charts & conditionals
       _coh.minmax = vars.cohMax;
       _coh.gapminmax = vars.cohGapMax;
       _coh.all = await this.constructBar(jsonparse.location.all_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
@@ -556,8 +575,9 @@ class Pdfer {
       _coh.wa = await this.constructBar(jsonparse.location.wa_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
       _coh.wh = await this.constructBar(jsonparse.location.wh_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
       _coh.pn = await this.constructBar(jsonparse.location.pn_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
+      _coh.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_coh, jsonparse.location.range_ses, jsonparse.location.range_coh, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
       jsonparse.coh = _coh;
-      const _grd = {}; // JSON object for average bar charts & conditionals
+      const _grd = {}; // JSON object for grd bar charts & conditionals
       _grd.min = vars.grdMin;
       _grd.max = vars.grdMax;
       _grd.grdBarHide = vars.grdBarHide;
@@ -575,6 +595,7 @@ class Pdfer {
       _grd.wa = await this.constructBar(jsonparse.location.wa_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
       _grd.wh = await this.constructBar(jsonparse.location.wh_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
       _grd.pn = await this.constructBar(jsonparse.location.pn_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
+      _grd.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_grd, jsonparse.location.range_ses, jsonparse.location.range_grd, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
       jsonparse.grd = _grd;
       console.log(jsonparse);
       // Fetch the template.

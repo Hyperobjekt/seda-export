@@ -15,7 +15,7 @@
     "wh_seg": 0,
     "np_seg": 0,
     "all_sz": 84.043,
-    "all_avg": 2,
+    "all_avg": -0.5,
     "all_grd": 0.941,
     "all_coh": 0.032,
     "b_avg": -2.248,
@@ -60,7 +60,12 @@
     "all_frl": 27,
     "diff_avg": -1.244,
     "diff_grd": -12,
-    "diff_coh": 1.34499
+    "diff_coh": 1.34499,
+    "range_ses": [-3, 3],
+    "range_avg": [-4.6, 2.15],
+    "range_grd": [-4.6, 2.15],
+    "range_coh": [-4.6, 2.15],
+    "range_frl": [-4.6, 2.15]
   },
   "url": "https://specific-view-selected.test",
   "others": null
