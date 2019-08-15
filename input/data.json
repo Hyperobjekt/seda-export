@@ -61,7 +61,7 @@
     "diff_avg": -1.244,
     "diff_grd": -12,
     "diff_coh": 1.34499,
-    "range_ses": [-3, 3],
+    "range_ses": [-4, 4],
     "range_avg": [-4.6, 2.15],
     "range_grd": [-4.6, 2.15],
     "range_coh": [-4.6, 2.15],
