@@ -5,9 +5,10 @@
 // It makes no difference how you set the puppeteer dimensions externally.
 
 @import "./front-page-bg.scss";
-@import "./logo-sm.scss";
-@import "./new-logo-sm.scss";
+// @import "./logo-sm.scss";
+// @import "./new-logo-sm.scss";
 @import "./new-logo-sm-2x.scss";
+@import "./new-thicker-logo.scss";
 @import "./about-the-data-bg.scss";
 @import "./icon-average.scss";
 @import "./icon-growth.scss";
@@ -16,7 +17,11 @@
 @import "./bar-graph-line-bg.scss";
 @import "./bar-graph-vert-bg.scss";
 @import "./chart-avg-bg.scss";
-@import "./avg-dot.scss";
+@import "./chart-grd-bg.scss";
+@import "./chart-coh-bg.scss";
+@import "./dot-avg.scss";
+@import "./dot-grd.scss";
+@import "./dot-coh.scss";
 
 html, body {
   // font-size: 64%; // 62.5%;
@@ -310,12 +315,13 @@ p {
     height: calc(36px * #{$vertical-ratio});
     margin-right: calc(51px * #{$horizontal-ratio});
     margin-left: calc(51px * #{$horizontal-ratio});
+    padding: 2px;
     .logo {
       position: absolute;
       top: 0;
       left: 0;
       display: inline-block;
-      background-image: $new-logo-sm-2x;
+      background-image: $new-thicker-logo; //$new-logo-sm-2x;
       background-repeat: no-repeat;
       background-size: calc(31px * #{$vertical-ratio}) calc(33px * #{$vertical-ratio});
       width: calc(31px * #{$horizontal-ratio});
@@ -352,9 +358,9 @@ p {
 }
 
 .logo-sm {
-  background-image: $new-logo-sm-2x; // $new-logo-sm; // $logo-sm;
+  background-image: $new-thicker-logo; // $new-logo-sm-2x; // $new-logo-sm; // $logo-sm;
   background-repeat: no-repeat;
-  background-size: calc(76px * #{$vertical-ratio}) calc(79px * #{$vertical-ratio}); // 49px 51px;
+  background-size: calc(74px * #{$vertical-ratio}) calc(79px * #{$vertical-ratio}); // 49px 51px;
   width: calc(76px * #{$vertical-ratio}); // 49px; // 76px;
   height: calc(79px * #{$vertical-ratio}); // 51px; // 79px;
   display: block;
@@ -542,7 +548,7 @@ p {
         // border-radius: 7px;
         // border: 1px solid $secondary-blue;
         // box-shadow: .5px .5px 1px gray;
-        background: $avg-dot;
+        background: $dot-avg;
         background-size: 100% 100%;
         background-position: 0 0;
         background-repeat: no-repeat;
@@ -604,20 +610,32 @@ p {
 #page_6 {
   .chart {
     .background {
-      background: $chart-avg-bg;
+      background: $chart-grd-bg;
       background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
       background-position: 0 0;
       background-repeat: no-repeat;
+      .dot {
+        background: $dot-grd;
+        background-size: 100% 100%;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+      }
     }
   }
 }
 #page_8 {
   .chart {
     .background {
-      background: $chart-avg-bg;
+      background: $chart-coh-bg;
       background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
       background-position: 0 0;
       background-repeat: no-repeat;
+      .dot {
+        background: $dot-coh;
+        background-size: 100% 100%;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+      }
     }
   }
 }
