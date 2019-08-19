@@ -460,6 +460,25 @@ p {
   width: 100%;
 }
 
+@mixin update-metric-headers {
+  font-family: $sharpgrotesk-med-20;
+  font-size: calc(32px * #{$vertical-ratio});
+  line-height: calc(48px * #{$vertical-ratio});
+  letter-spacing: calc(0.42px * #{$vertical-ratio});
+  text-transform: none;
+  // color: $primary-dark;
+  // display: block;
+  // width: 100%;
+}
+
+@mixin update-placename {
+  font-family: $sharpgrotesk-med-20;
+  font-size: calc(24px * #{$vertical-ratio});
+  line-height: calc(36px * #{$vertical-ratio});
+  letter-spacing: calc(0.37px * #{$vertical-ratio});
+  text-transform: none;
+}
+
 #page_3 {
   .content-wrapper {
     // background-color: blue;
@@ -494,8 +513,9 @@ p {
           .title {
             width: auto;
             // border: 1px solid black;
-            padding: 3px 0 0 calc((331px - 313px) * #{$horizontal-ratio});
+            padding: 5px 0 0 calc((331px - 313px) * #{$horizontal-ratio});
             margin: 0;
+            @include update-metric-headers;
           }
           .icon {
             width: calc(59.98px * #{$horizontal-ratio});
@@ -585,11 +605,16 @@ p {
         }
         .header {
           flex: 0 1 auto;
-          padding-top: calc(15px * #{$vertical-ratio});
+          padding-top: 0; // calc(10px * #{$vertical-ratio});
           padding-left: calc(25px * #{$horizontal-ratio});
           height: calc((940px - 839px) * #{$vertical-ratio});
+          .title {
+            @include update-metric-headers;
+            line-height: calc(34px * #{$vertical-ratio});
+          }
           .placename {
-            padding-top: calc(10px * #{$vertical-ratio});
+            @include update-placename;
+            padding-top: 0; // calc(10px * #{$vertical-ratio});
           }
         }
       }
@@ -674,12 +699,16 @@ p {
       }
       .header {
         flex: 0 1 auto;
-        padding-top: calc(3px * #{$vertical-ratio});
+        padding-top: 0; // calc(3px * #{$vertical-ratio});
         padding-left: calc(25px * #{$horizontal-ratio});
         font-family: $sharpgrotesk-med-20;
         font-size: calc(34px * #{$vertical-ratio});
         line-height: calc(45px * #{$vertical-ratio});
         letter-spacing: calc(0.44px * #{$vertical-ratio});
+        .title {
+          @include update-metric-headers;
+          line-height: calc(34px * #{$vertical-ratio});
+        }
         .placename {
           font-size: calc(24px * #{$vertical-ratio});
           line-height: calc(36px * #{$vertical-ratio});
