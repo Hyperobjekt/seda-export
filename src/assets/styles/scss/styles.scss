@@ -605,7 +605,7 @@ p {
         }
         .header {
           flex: 0 1 auto;
-          padding-top: 0; // calc(10px * #{$vertical-ratio});
+          padding-top: calc(2px * #{$vertical-ratio});
           padding-left: calc(25px * #{$horizontal-ratio});
           height: calc((940px - 839px) * #{$vertical-ratio});
           .title {
@@ -617,6 +617,9 @@ p {
             padding-top: 0; // calc(10px * #{$vertical-ratio});
           }
         }
+      }
+      p.body-smaller {
+        width: calc(830px * #{$horizontal-ratio});
       }
     }
   }
@@ -699,7 +702,7 @@ p {
       }
       .header {
         flex: 0 1 auto;
-        padding-top: 0; // calc(3px * #{$vertical-ratio});
+        padding-top: calc(5px * #{$vertical-ratio});
         padding-left: calc(25px * #{$horizontal-ratio});
         font-family: $sharpgrotesk-med-20;
         font-size: calc(34px * #{$vertical-ratio});
@@ -743,6 +746,7 @@ p {
     .gaps-parent {
       .h7 {
         padding-top: calc(60px * #{$vertical-ratio});
+        color: $primary-dark;
       }
       tr > td {
         padding-top: calc(26px * #{$vertical-ratio});
