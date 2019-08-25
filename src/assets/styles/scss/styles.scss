@@ -746,6 +746,8 @@ p {
     .gaps-parent {
       .h7 {
         padding-top: calc(60px * #{$vertical-ratio});
+        letter-spacing: calc(1.24px * #{$vertical-ratio});
+        font-size: calc(24px * #{$vertical-ratio});
         color: $primary-dark;
       }
       tr > td {

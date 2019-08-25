@@ -561,6 +561,8 @@ p {
   #page_9 .bars .demographic-parent .h7,
   #page_9 .bars .gaps-parent .h7 {
     padding-top: calc(60px * 0.64);
+    letter-spacing: calc(1.24px * 0.64);
+    font-size: calc(24px * 0.64);
     color: #031232; }
   #page_5 .bars .demographic-parent tr > td,
   #page_5 .bars .gaps-parent tr > td,
