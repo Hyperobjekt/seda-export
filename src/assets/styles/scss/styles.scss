@@ -16,12 +16,23 @@
 @import "./about-chart-bg.scss";
 @import "./bar-graph-line-bg.scss";
 @import "./bar-graph-vert-bg.scss";
-@import "./chart-avg-bg.scss";
-@import "./chart-grd-bg.scss";
-@import "./chart-coh-bg.scss";
+// @import "./chart-avg-bg.scss";
+// @import "./chart-grd-bg.scss";
+// @import "./chart-coh-bg.scss";
 @import "./dot-avg.scss";
 @import "./dot-grd.scss";
 @import "./dot-coh.scss";
+@import "./chart-overlay.scss";
+@import "./counties-avg.scss";
+@import "./counties-grd.scss";
+@import "./counties-coh.scss";
+@import "./districts-avg.scss";
+@import "./districts-grd.scss";
+@import "./districts-coh.scss";
+@import "./schools-avg.scss";
+@import "./schools-grd.scss";
+@import "./schools-coh.scss";
+
 
 html, body {
   // font-size: 64%; // 62.5%;
@@ -559,19 +570,34 @@ p {
       width: calc(1017px * #{$horizontal-ratio});
       margin-top: calc(72px * #{$vertical-ratio});
       position: relative;
-      .dot {
-        display: block;
+      .overlay {
+        // background-color: rgba(0, 119, 204, 0.25);
         position: absolute;
-        // background-color: lighten($secondary-blue, 20%);
-        width: 10px;
-        height: 10px;
-        // border-radius: 7px;
-        // border: 1px solid $secondary-blue;
-        // box-shadow: .5px .5px 1px gray;
-        background: $dot-avg;
-        background-size: 100% 100%;
-        background-position: 0 0;
-        background-repeat: no-repeat;
+        top: 12.820512820512821%;
+        left: 2.359882005899705%;
+        bottom: 14.102564102564103%;
+        right: 14.159292%;
+        .overlay-child {
+          position: relative;
+          width: 100%;
+          display: block;
+          // background-color: rgba(0, 119, 204, 0.25);
+          height: 100%;
+          .dot {
+            display: block;
+            position: absolute;
+            // background-color: lighten($secondary-blue, 20%);
+            width: 10px;
+            height: 10px;
+            // border-radius: 7px;
+            // border: 1px solid $secondary-blue;
+            // box-shadow: .5px .5px 1px gray;
+            background: $dot-avg;
+            background-size: 100% 100%;
+            background-position: 0 0;
+            background-repeat: no-repeat;
+          }
+        }
       }
     }
   }
@@ -625,44 +651,143 @@ p {
   }
 }
 // Page 4 end
-#page_4 {
-  .chart {
-    .background {
-      background: $chart-avg-bg;
-      background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
-      background-position: 0 0;
-      background-repeat: no-repeat;
+// County backgrounds
+body.location-type-county {
+  #page_4 {
+    .chart {
+      .background {
+        background: $counties-avg; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        .dot {
+          background: $dot-avg;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+  #page_6 {
+    .chart {
+      .background {
+        background: $counties-grd; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        .dot {
+          background: $dot-grd;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+  #page_8 {
+    .chart {
+      .background {
+        background: $counties-coh;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        .dot {
+          background: $dot-coh;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+      }
     }
   }
 }
-#page_6 {
-  .chart {
-    .background {
-      background: $chart-grd-bg;
-      background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
-      background-position: 0 0;
-      background-repeat: no-repeat;
-      .dot {
-        background: $dot-grd;
-        background-size: 100% 100%;
+// District backgrounds
+body.location-type-district {
+  #page_4 {
+    .chart {
+      .background {
+        background: $districts-avg; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
       }
     }
   }
-}
-#page_8 {
-  .chart {
-    .background {
-      background: $chart-coh-bg;
-      background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
-      background-position: 0 0;
-      background-repeat: no-repeat;
-      .dot {
-        background: $dot-coh;
-        background-size: 100% 100%;
+  #page_6 {
+    .chart {
+      .background {
+        background: $districts-grd; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
+        .dot {
+          background: $dot-grd;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+  #page_8 {
+    .chart {
+      .background {
+        background: $districts-coh; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        .dot {
+          background: $dot-coh;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+}
+// School backgrounds
+body.location-type-school {
+  #page_4 {
+    .chart {
+      .background {
+        background: $schools-avg; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  #page_6 {
+    .chart {
+      .background {
+        background: $schools-grd; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        .dot {
+          background: $dot-grd;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+  #page_8 {
+    .chart {
+      .background {
+        background: $schools-coh; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        .dot {
+          background: $dot-coh;
+          background-size: 100% 100%;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
       }
     }
   }

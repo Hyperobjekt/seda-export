@@ -192,6 +192,31 @@ vars.grdGapMax = 0.4;
 vars.verticalRatio = 0.64;
 vars.horizontalRatio = 0.64;
 
+const chartRanges = {
+  "avg": {
+    "counties": [ -4.5, 2.5 ],
+    "districts": [ -4.5, 4.5 ],
+    "schools": [ -8, 7 ]
+  },
+  "grd": {
+    "counties": [ 0.4, 1.6 ],
+    "districts": [ 0.4, 1.6 ],
+    "schools": [ -0.2, 2.6 ],
+  },
+  "coh": {
+    "counties": [ -0.5, 0.5 ],
+    "districts": [ -0.5, 0.5 ],
+    "schools": [-1, 1],
+  },
+  "ses": {
+    "counties": [-4, 3],
+    "districts": [ -5, 4 ],
+  },
+  "frl": {
+    "schools": [ 0, 1 ],
+  }
+};
+
 class Pdfer {
 
   async getPercentDiffBoilerplate(v, from = 1) {
