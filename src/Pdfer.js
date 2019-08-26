@@ -194,28 +194,51 @@ vars.horizontalRatio = 0.64;
 
 const chartRanges = {
   "avg": {
-    "counties": [ -4.5, 2.5 ],
-    "districts": [ -4.5, 4.5 ],
-    "schools": [ -8, 7 ]
+    "county": [ -4.5, 2.5 ],
+    "district": [ -4.5, 4.5 ],
+    "school": [ -8, 7 ]
   },
   "grd": {
-    "counties": [ 0.4, 1.6 ],
-    "districts": [ 0.4, 1.6 ],
-    "schools": [ -0.2, 2.6 ],
+    "county": [ 0.4, 1.6 ],
+    "district": [ 0.4, 1.6 ],
+    "school": [ -0.2, 2.6 ],
   },
   "coh": {
-    "counties": [ -0.5, 0.5 ],
-    "districts": [ -0.5, 0.5 ],
-    "schools": [-1, 1],
+    "county": [ -0.5, 0.5 ],
+    "district": [ -0.5, 0.5 ],
+    "school": [-1, 1],
   },
   "ses": {
-    "counties": [-4, 3],
-    "districts": [ -5, 4 ],
+    "county": [-4, 3],
+    "district": [ -5, 4 ],
   },
   "frl": {
-    "schools": [ 0, 1 ],
+    "school": [ 0, 1 ],
   }
 };
+
+const _ranges = {
+  county: {
+    "range_avg": [ -4.5, 2.5 ],
+    "range_grd": [ 0.4, 1.6 ],
+    "range_coh": [ -0.5, 0.5 ],
+    "range_ses": [-4, 3],
+  },
+  district: {
+    "range_avg": [ -4.5, 4.5 ],
+    "range_grd": [ 0.4, 1.6 ],
+    "range_coh": [ -0.5, 0.5 ],
+    "range_ses": [ -5, 4 ],
+  },
+  school: {
+    "range_avg": [ -8, 7 ],
+    "range_grd": [ -0.2, 2.6 ],
+    "range_coh": [-1, 1],
+    "range_frl": [ 0, 1 ],
+  }
+}
+
+const DEV = true; // TODO: For live implementation change this to false.
 
 class Pdfer {
 
@@ -314,20 +337,67 @@ class Pdfer {
    * @param  {[type]}  y            y axis value for dot
    * @param  {Array}   xRange       Range of chart, lowest first
    * @param  {[type]}  yRange       Range of chart, lowest first
-   * @param  {[type]}  width        Width of chart (at 96dip, multiply by vars.*Ratio if necessary)
-   * @param  {[type]}  height       Height of chart (at 96dip, multiply by vars.*Ratio if necessary)
-   * @param  {[type]}  xPadding     Width of chart space occupied for x axis and tick labels of chart
-   * @param  {[type]}  yPadding     Width of chart space occupied for y axis and tick labels of chart
    * @return {Promise}              Return object with left and top values
    */
-  async getChartCoords(x, y, xRange = [-3, 3], yRange, width, height, xPadding, yPadding) {
+  async getChartCoords(data, chartType) {
+    // x, y, xRange = [-3, 3], yRange
     // console.log('getChartCoords()');
     const obj = {};
-    const revisedWidth = width - xPadding;
-    const revisedHeight = height - yPadding;
+    // const revisedWidth = width - xPadding;
+    // const revisedHeight = height - yPadding;
     // console.log('revisedHeight = ' + revisedHeight);
-    obj.left = Math.round(((xRange[0] - x) * revisedWidth)/(xRange[0] - xRange[1]));
-    obj.top = Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]));
+    // obj.left = Math.round(((xRange[0] - x) * revisedWidth)/(xRange[0] - xRange[1]));
+    // obj.top = Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]));
+    // xLen = xRange[0] - xRange[1];
+    // yLen =
+    console.log(data.region);
+    console.log(chartType);
+    const region = data.region;
+    let x = null;
+    let y = null;
+    let xRange = {};
+    let yRange = {};
+    switch (region) {
+      case 'county' || 'district':
+        console.log('it\'s a county or district');
+        // Set x and y value
+        x = data.location['all_ses'];
+        y = data.location['all_' + chartType];
+        // Establish ranges
+        xRange =  data.ranges['range_ses'];
+        yRange = data.ranges['range_' + chartType];
+        break;
+      case 'school':
+        console.log('it\'s a school');
+        // Set x and y value
+        x = data.location['all_frl'];
+        y = data.location['all_' + chartType];
+        // Establish ranges
+        xRange =  data.ranges['range_frl'];
+        yRange = data.ranges['range_' + chartType];
+        break;
+      default:
+        // Set x and y value
+        x = data.location['all_ses'];
+        y = data.location['all_' + chartType];
+        // Establish ranges
+        xRange =  data.ranges['range_ses'];
+        yRange = data.ranges['range_' + chartType];
+        break;
+    }
+    console.log(x);
+    console.log(y);
+    console.log(xRange);
+    console.log(yRange);
+    // (Length from left to dot divided by length from left to right) * 100
+    obj.left = String((Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100) + '%';
+    console.log(obj.left);
+    // (Length from top to dot divided by length from top to bottom) * 100
+    obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
+    obj.displayX = x.toFixed(2);
+    obj.displayY = y.toFixed(2);
+    console.log(obj);
+    // obj.top = String(Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]))) + '%';
     // console.log(obj);
     return obj;
   }
@@ -528,6 +598,11 @@ class Pdfer {
       } else {
         jsonparse.showbarcharts = false;
       }
+      // Set up necessary ranges if in dev and not being passed a live JSON object
+      if (!!DEV) {
+        jsonparse.ranges = _ranges[jsonparse.region];
+      }
+      console.log(jsonparse.ranges);
       const _verbiage = {}; // JSON object for addl strings needed by template
       _verbiage.type_plural = await this.getPlural(jsonparse.region);
       _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
@@ -582,7 +657,8 @@ class Pdfer {
       _avg.wa = await this.constructBar(jsonparse.location.wa_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
       _avg.wh = await this.constructBar(jsonparse.location.wh_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
       _avg.pn = await this.constructBar(jsonparse.location.pn_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
-      _avg.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_avg, jsonparse.location.range_ses, jsonparse.location.range_avg, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      // _avg.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_avg, jsonparse.location.range_ses, jsonparse.location.range_avg, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      _avg.chart = await this.getChartCoords(jsonparse, 'avg');
       jsonparse.avg = _avg;
       const _coh = {}; // JSON object for coh bar charts & conditionals
       _coh.minmax = vars.cohMax;
@@ -600,7 +676,8 @@ class Pdfer {
       _coh.wa = await this.constructBar(jsonparse.location.wa_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
       _coh.wh = await this.constructBar(jsonparse.location.wh_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
       _coh.pn = await this.constructBar(jsonparse.location.pn_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
-      _coh.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_coh, jsonparse.location.range_ses, jsonparse.location.range_coh, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      // _coh.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_coh, jsonparse.location.range_ses, jsonparse.location.range_coh, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      _coh.chart = await this.getChartCoords(jsonparse, 'coh');
       jsonparse.coh = _coh;
       const _grd = {}; // JSON object for grd bar charts & conditionals
       _grd.min = vars.grdMin;
@@ -620,9 +697,12 @@ class Pdfer {
       _grd.wa = await this.constructBar(jsonparse.location.wa_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
       _grd.wh = await this.constructBar(jsonparse.location.wh_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
       _grd.pn = await this.constructBar(jsonparse.location.pn_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
-      _grd.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_grd, jsonparse.location.range_ses, jsonparse.location.range_grd, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      // _grd.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_grd, jsonparse.location.range_ses, jsonparse.location.range_grd, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      _grd.chart = await this.getChartCoords(jsonparse, 'grd');
       jsonparse.grd = _grd;
-      console.log(jsonparse);
+      // console.log(jsonparse);
+      console.log(jsonparse.region);
+      console.log(chartRanges.avg[jsonparse.region]);
       // Fetch the template.
       // console.log('template string');
       // console.log(templates);

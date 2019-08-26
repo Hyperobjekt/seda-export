@@ -106,7 +106,10 @@
           {{!-- <div class="dot" style="{{avg.chart.left}}{{avg.chart.top}}"></div> --}}
           <div class="overlay">
             <div class="overlay-child">
-              <div class="dot" style="left:{{avg.chart.left}};top:{{avg.chart.top}};"></div>
+              <div class="dot" style="left:{{avg.chart.left}};top:{{avg.chart.top}};">
+                <div class="dot-icon"></div>
+                <div class="dot-label">X: {{avg.chart.displayX}}, Y: {{avg.chart.displayY}}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -469,7 +472,10 @@
         <div class="background">
           <div class="overlay">
             <div class="overlay-child">
-              <div class="dot" style="left:{{grd.chart.left}}px;top:{{grd.chart.top}}px;"></div>
+              <div class="dot" style="left:{{grd.chart.left}};top:{{grd.chart.top}};">
+                <div class="dot-icon"></div>
+                <div class="dot-label">X: {{grd.chart.displayX}}, Y: {{grd.chart.top}}%</div>
+              </div>
             </div>
           </div>
         </div>
@@ -832,7 +838,10 @@
         <div class="background">
           <div class="overlay">
             <div class="overlay-child">
-              <div class="dot" style="left:{{coh.chart.left}}px;top:{{coh.chart.top}}px;"></div>
+              <div class="dot" style="left:{{coh.chart.left}};top:{{coh.chart.top}};">
+                <div class="dot-icon"></div>
+                <div class="dot-label">X: {{coh.chart.displayX}}, Y: {{coh.chart.displayY}}</div>
+              </div>
             </div>
           </div>
         </div>
