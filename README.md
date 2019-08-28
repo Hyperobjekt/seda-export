@@ -18,6 +18,14 @@ npm run dev
 
 For additional details on the file locations assumed for input and output for the node export command, see package.json.
 
+# Testing different region types
+
+There are 3 region-specific json data src files with values corresponding to their prospective ranges. Toggle region types by editing the input value in the `export` script in package.json:
+
+```
+--data=./input/data-district.json
+```
+
 
 # Chart overlays
 

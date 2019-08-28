@@ -585,24 +585,14 @@ p {
           // width: 100%;
           display: block;
           // background-color: rgba(0, 119, 204, 0.25);
-          width: 548px;
-          height: 289px;
+          width: 543px;
+          height: 292px;
           // height: 100%;
           .dot {
             display: block;
             position: absolute;
-            // background-color: lighten($secondary-blue, 20%);
             width: 10px;
             height: 10px;
-            // border: 1px solid black;
-            // border-radius: 7px;
-            // border: 1px solid $secondary-blue;
-            // box-shadow: .5px .5px 1px gray;
-            // background: $dot;
-            // background-size: 100% 100%;
-            // background-position: 0 0;
-            // background-repeat: no-repeat;
-            // overflow: visible;
             .dot-icon {
               display: block;
               width: 10px;
@@ -618,15 +608,15 @@ p {
               overflow: visible;
             }
             .dot-label {
-              width: 84px;
+              width: 74px;
               margin-top: 5px;
-              margin-left: calc(-50% + -42px);
+              margin-left: calc(-50% + -36px);
               border-radius: 1.5px;
-              padding: 5px 4px 3px;
+              padding: 5px 5px 3px 5px;
               background-color: $primary-dark;
               opacity: 0.8;
               color: #fff;
-              font-family: $sharpgrotesk-med-20;
+              font-family: $maisonneue-bold; // $sharpgrotesk-med-20;
               font-size: calc(14px * #{$vertical-ratio});
               line-height: calc(14px * #{$vertical-ratio});
               letter-spacing: calc(0.37px * #{$vertical-ratio});
@@ -692,7 +682,7 @@ body.location-type-county {
   #page_4 {
     .chart {
       .background {
-        background:  $counties-avg; // $chart-overlay;
+        background:  $counties-avg; // $chart-overlay; //
         background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
@@ -757,12 +747,12 @@ body.location-type-district {
         background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
-        .dot {
-          background: $dot-grd;
-          background-size: 100% 100%;
-          background-position: 0 0;
-          background-repeat: no-repeat;
-        }
+        // .dot {
+        //   background: $dot-grd;
+        //   background-size: 100% 100%;
+        //   background-position: 0 0;
+        //   background-repeat: no-repeat;
+        // }
       }
     }
   }
@@ -773,12 +763,12 @@ body.location-type-district {
         background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
-        .dot {
-          background: $dot-coh;
-          background-size: 100% 100%;
-          background-position: 0 0;
-          background-repeat: no-repeat;
-        }
+        // .dot {
+        //   background: $dot-coh;
+        //   background-size: 100% 100%;
+        //   background-position: 0 0;
+        //   background-repeat: no-repeat;
+        // }
       }
     }
   }
@@ -802,12 +792,12 @@ body.location-type-school {
         background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
-        .dot {
-          background: $dot-grd;
-          background-size: 100% 100%;
-          background-position: 0 0;
-          background-repeat: no-repeat;
-        }
+        // .dot {
+        //   background: $dot-grd;
+        //   background-size: 100% 100%;
+        //   background-position: 0 0;
+        //   background-repeat: no-repeat;
+        // }
       }
     }
   }
@@ -818,12 +808,12 @@ body.location-type-school {
         background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
-        .dot {
-          background: $dot-coh;
-          background-size: 100% 100%;
-          background-position: 0 0;
-          background-repeat: no-repeat;
-        }
+        // .dot {
+        //   background: $dot-coh;
+        //   background-size: 100% 100%;
+        //   background-position: 0 0;
+        //   background-repeat: no-repeat;
+        // }
       }
     }
   }

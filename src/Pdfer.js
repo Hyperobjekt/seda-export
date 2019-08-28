@@ -192,31 +192,6 @@ vars.grdGapMax = 0.4;
 vars.verticalRatio = 0.64;
 vars.horizontalRatio = 0.64;
 
-const chartRanges = {
-  "avg": {
-    "county": [ -4.5, 2.5 ],
-    "district": [ -4.5, 4.5 ],
-    "school": [ -8, 7 ]
-  },
-  "grd": {
-    "county": [ 0.4, 1.6 ],
-    "district": [ 0.4, 1.6 ],
-    "school": [ -0.2, 2.6 ],
-  },
-  "coh": {
-    "county": [ -0.5, 0.5 ],
-    "district": [ -0.5, 0.5 ],
-    "school": [-1, 1],
-  },
-  "ses": {
-    "county": [-4, 3],
-    "district": [ -5, 4 ],
-  },
-  "frl": {
-    "school": [ 0, 1 ],
-  }
-};
-
 const _ranges = {
   county: {
     "range_avg": [ -4.5, 2.5 ],
@@ -297,6 +272,25 @@ class Pdfer {
     }
   }
 
+  async getCustomPercentDiff(val, range, midpoint = 1) {
+    // const half = (range[1] - range[0])/2;
+    // let midpoint = yRange[1] - half;
+    let total = null;
+    let diff = null;
+    if (val === midpoint) {
+      return 0;
+    } else if (val > midpoint) {
+      total = Math.abs(range[1] - midpoint);
+      diff = Math.abs(val - midpoint);
+      return (diff/total)*100;
+    } else {
+      total = Math.abs(midpoint - range[0]);
+      diff = Math.abs(midpoint - val);
+      return (diff/total)*100;
+    }
+    // let customPercDiff = ((y - midpoint)/half)*100;
+  }
+
   async constructGrdBar(val, valMin, valMax) {
     console.log('constructBar()');
     const obj = {};
@@ -357,45 +351,52 @@ class Pdfer {
     let y = null;
     let xRange = {};
     let yRange = {};
+    let _left = null;
     switch (region) {
-      case 'county' || 'district':
-        console.log('it\'s a county or district');
-        // Set x and y value
-        x = data.location['all_ses'];
-        y = data.location['all_' + chartType];
-        // Establish ranges
-        xRange =  data.ranges['range_ses'];
-        yRange = data.ranges['range_' + chartType];
-        break;
       case 'school':
         console.log('it\'s a school');
         // Set x and y value
         x = data.location['all_frl'];
         y = data.location['all_' + chartType];
+        console.log('y = ' + y);
         // Establish ranges
         xRange =  data.ranges['range_frl'];
         yRange = data.ranges['range_' + chartType];
+        // Set obj values
+        // frl is different, because the axis goes from high (1) to low (0)
+        _left = (Math.abs(xRange[1] - x)/Math.abs(xRange[1] - xRange[0]))*100;
+        obj.left = String(_left) + '%';
+        obj.displayX = formatPercentDiff(x, 0) + '%';
+        obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
+        obj.displayY = chartType === 'grd' ? formatPercentDiff(y, 1) + '%' : y.toFixed(2);
         break;
       default:
+        console.log('it\'s a county or district, not a school');
         // Set x and y value
         x = data.location['all_ses'];
         y = data.location['all_' + chartType];
         // Establish ranges
         xRange =  data.ranges['range_ses'];
         yRange = data.ranges['range_' + chartType];
+        // Set obj values
+        _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
+        obj.left = String(_left) + '%';
+        // (Length from top to dot divided by length from top to bottom) * 100
+        obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
+        obj.displayX = x.toFixed(2);
+        obj.displayY = chartType === 'grd' ? formatPercentDiff(y, 1) + '%' : y.toFixed(2);
         break;
     }
-    console.log(x);
-    console.log(y);
-    console.log(xRange);
-    console.log(yRange);
     // (Length from left to dot divided by length from left to right) * 100
-    obj.left = String((Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100) + '%';
-    console.log(obj.left);
-    // (Length from top to dot divided by length from top to bottom) * 100
-    obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-    obj.displayX = x.toFixed(2);
-    obj.displayY = y.toFixed(2);
+    // let _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
+    // obj.left = String(_left) + '%';
+    // // console.log(obj.left);
+    // // (Length from top to dot divided by length from top to bottom) * 100
+    // obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
+    // Set labels
+    // obj.displayX = x.toFixed(2);
+    // obj.displayX = data.region === 'school' ? String(100-_left) + '%' : x.toFixed(2);
+    // obj.displayY = y.toFixed(2);
     console.log(obj);
     // obj.top = String(Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]))) + '%';
     // console.log(obj);
@@ -702,7 +703,7 @@ class Pdfer {
       jsonparse.grd = _grd;
       // console.log(jsonparse);
       console.log(jsonparse.region);
-      console.log(chartRanges.avg[jsonparse.region]);
+      // console.log(chartRanges.avg[jsonparse.region]);
       // Fetch the template.
       // console.log('template string');
       // console.log(templates);
