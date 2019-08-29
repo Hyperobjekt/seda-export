@@ -346,66 +346,15 @@ class Pdfer {
   }
 
   /**
-   * [constructBar description]
-   * @param  {Number}  val              Value passed in, may be diff than value displayed
-   * @param  {Number}  valMax           Maximum of range
-   * @param  {Number}  valMin           Minimum of range
-   * @param  {Number}  barHide          Bar width beyond which underlying range label is hidden
-   * @param  {Number}  median           Median value, 0 or 1
-   * @param  {String}  format           'number' or 'percent'
-   * @return {Promise}                  [description]
+   * constructBar  Constructs the object of values for an individual bar chart.
+   * @param  {Number}  val                    Original value
+   * @param  {Array}  range                   Array of the format [min, max]
+   * @param  {Number}  [barDecimals=0]        Number of decimals
+   * @param  {Number}  [median=0]             Median value from which to calculate bar width (1 for percent diff, for *_grd values)
+   * @param  {String}  [format='number']      Format of bar value display, "number" or "percent"
+   * @param  {Number}  [barHide=vars.barHide] Width at which to hide the bar min or max value
+   * @return {Promise}                        Returns object
    */
-  async oldConstructBar(val, valMax, valMin, barHide, median = 0, format = 'number') {
-    // console.log('constructBar()');
-    const obj = {};
-    obj.num = {};
-    obj.bar = {};
-    obj.bar.neg = {};
-    obj.bar.pos = {};
-    // console.log('format = ' + format);
-    switch (true) {
-      case (val > median):
-        obj.num.neg = '';
-        let barWidth;
-        if (format === 'number') {
-          barWidth = (val/valMax) * vars.barMax;
-          obj.num.pos = '+' + formatNumber(val, 2);
-        } else {
-          barWidth = ((val - median)/(valMax - median)) * vars.barMax;
-          obj.num.pos = '+' + formatPercentDiff(val) + '%';
-        }
-        // console.log('barWidth = ' + barWidth);
-        obj.bar.pos.width = 'width:' + barWidth + 'px;';
-        obj.bar.neg.width = '';
-        if (barWidth >= barHide) {
-          obj.bar.pos.hide = 'visibility:hidden;';
-        }
-        // console.log(obj);
-        return obj;
-      case (val < median):
-        obj.num.pos = '';
-        let negBarWidth;
-        if (format === 'number') {
-          negBarWidth = (val/valMin) * vars.barMax;
-          obj.num.neg = formatNumber(val, 2);
-        } else {
-          negBarWidth = ((1 - val)/(1 - valMin)) * vars.barMax;
-          obj.num.neg = formatPercentDiff(val) + '%';
-        }
-        // const negBarWidth = (val/valMin) * vars.barMax;
-        // console.log('negBarWidth = ' + negBarWidth);
-        obj.bar.neg.width = 'width:' + negBarWidth + 'px;';
-        obj.bar.pos.width = '';
-        if (negBarWidth >= barHide) {
-          obj.bar.neg.hide = 'visibility:hidden;';
-        }
-        // console.log(obj);
-        return obj;
-      default:
-        break;
-    }
-  }
-
   async constructBar(val, range, barDecimals = 0, median = 0, format = 'number', barHide = vars.barHide) {
     // console.log('constructBar()');
     const obj = {};
