@@ -3,6 +3,8 @@ const Path = require('path')
 const Puppeteer = require('puppeteer')
 const Handlebars = require('handlebars')
 
+// These arrays contain collections of strings
+// to be used when values fall within the given ranges.
 const _ats_hrl = [
   {
     range: [Number.NEGATIVE_INFINITY, -0.249999],
@@ -172,25 +174,14 @@ const formatPercent = (v, decimals = 0) => {
  * @param {number} v the value to format
  * @param {number} from the point of reference to determine what the % diff is
  */
-const formatPercentDiff = (v, from = 1) => {
+const formatPercentDiff = (v, from = 1, decimals = 0) => {
   if (!v && v !== 0) { return 'N/A' }
-  return formatPercent(v - from);
+  return formatPercent(v - from, decimals);
 }
 
 const vars = {};
-vars.barMax = 64;
-vars.avgBarHide = 48;
-vars.avgMax = 3;
-vars.avgGapMax = 6;
-vars.cohBarHide = 24;
-vars.cohMax = 0.33;
-vars.cohGapMax = 0.33;
-vars.grdBarHide = 48;
-vars.grdMin = -0.5;
-vars.grdMax = 1.5;
-vars.grdGapMax = 0.4;
-vars.verticalRatio = 0.64;
-vars.horizontalRatio = 0.64;
+vars.barMax = 66;
+vars.barHide = 24;
 
 const _ranges = {
   county: {
@@ -272,57 +263,31 @@ class Pdfer {
     }
   }
 
-  async getCustomPercentDiff(val, range, midpoint = 1) {
-    // const half = (range[1] - range[0])/2;
-    // let midpoint = yRange[1] - half;
-    let total = null;
-    let diff = null;
-    if (val === midpoint) {
-      return 0;
-    } else if (val > midpoint) {
-      total = Math.abs(range[1] - midpoint);
-      diff = Math.abs(val - midpoint);
-      return (diff/total)*100;
-    } else {
-      total = Math.abs(midpoint - range[0]);
-      diff = Math.abs(midpoint - val);
-      return (diff/total)*100;
-    }
-    // let customPercDiff = ((y - midpoint)/half)*100;
+  async getMin(range) {
+    return Math.min(...range);
   }
 
-  async constructGrdBar(val, valMin, valMax) {
-    console.log('constructBar()');
-    const obj = {};
-    obj.num = {};
-    obj.bar = {};
-    obj.bar.neg = {};
-    obj.bar.pos = {};
-    const barWidth = (val/valMax)*vars.barMax;
-    switch (true) {
-      case (val > 1):
-        obj.num.neg = '';
-        obj.num.pos = '+' + formatNumber(val, 2);
-        obj.bar.pos.width = 'width:' + barWidth + 'px;';
-        obj.bar.neg.width = '';
-        if (barWidth >= vars.barHide) {
-          obj.bar.pos.hide = 'visibility:hidden;';
-        }
-        // console.log(obj);
-        return obj;
-      case (val < 1):
-        obj.num.pos = '';
-        obj.num.neg = formatNumber(val, 2);
-        obj.bar.neg.width = 'width:' + barWidth*-1 + 'px;';
-        obj.bar.pos.width = '';
-        if (barWidth*-1 >= vars.barHide) {
-          obj.bar.neg.hide = 'visibility:hidden;';
-        }
-        // console.log(obj);
-        return obj;
-      default:
-        break;
+  async getMax(range) {
+    return Math.max(...range);
+  }
+
+  /**
+   * getMinMax Get array of minimum and maximum values from array of passed values
+   * @param  {Array}  range             Array of numerical values
+   * @param  {Boolean} [isPercent=false] isPercent, true if the result is based on percent diff from 1
+   * @return {Promise}                   Two-item array of numerical values, lowest first
+   */
+  async getMinMax(range, isPercent = false) {
+    // console.log('getMinMax()');
+    let max = null;
+    if (!isPercent) {
+      max = Math.max(...range.map(a => Math.abs(a)));
+    } else {
+      max = Math.max(...range.map(a => Math.abs(formatPercentDiff(a, 1, 0))));
     }
+    const arr = [(max * -1), max];
+    // console.log(arr);
+    return arr;
   }
 
   /**
@@ -334,18 +299,8 @@ class Pdfer {
    * @return {Promise}              Return object with left and top values
    */
   async getChartCoords(data, chartType) {
-    // x, y, xRange = [-3, 3], yRange
     // console.log('getChartCoords()');
     const obj = {};
-    // const revisedWidth = width - xPadding;
-    // const revisedHeight = height - yPadding;
-    // console.log('revisedHeight = ' + revisedHeight);
-    // obj.left = Math.round(((xRange[0] - x) * revisedWidth)/(xRange[0] - xRange[1]));
-    // obj.top = Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]));
-    // xLen = xRange[0] - xRange[1];
-    // yLen =
-    console.log(data.region);
-    console.log(chartType);
     const region = data.region;
     let x = null;
     let y = null;
@@ -354,7 +309,7 @@ class Pdfer {
     let _left = null;
     switch (region) {
       case 'school':
-        console.log('it\'s a school');
+        // console.log('it\'s a school');
         // Set x and y value
         x = data.location['all_frl'];
         y = data.location['all_' + chartType];
@@ -364,14 +319,13 @@ class Pdfer {
         yRange = data.ranges['range_' + chartType];
         // Set obj values
         // frl is different, because the axis goes from high (1) to low (0)
-        _left = (Math.abs(xRange[1] - x)/Math.abs(xRange[1] - xRange[0]))*100;
-        obj.left = String(_left) + '%';
+        obj.left = String((Math.abs(xRange[1] - x)/Math.abs(xRange[1] - xRange[0]))*100) + '%';
         obj.displayX = formatPercentDiff(x, 0) + '%';
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
         obj.displayY = chartType === 'grd' ? formatPercentDiff(y, 1) + '%' : y.toFixed(2);
         break;
       default:
-        console.log('it\'s a county or district, not a school');
+        // console.log('it\'s a county or district, not a school');
         // Set x and y value
         x = data.location['all_ses'];
         y = data.location['all_' + chartType];
@@ -387,18 +341,6 @@ class Pdfer {
         obj.displayY = chartType === 'grd' ? formatPercentDiff(y, 1) + '%' : y.toFixed(2);
         break;
     }
-    // (Length from left to dot divided by length from left to right) * 100
-    // let _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
-    // obj.left = String(_left) + '%';
-    // // console.log(obj.left);
-    // // (Length from top to dot divided by length from top to bottom) * 100
-    // obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-    // Set labels
-    // obj.displayX = x.toFixed(2);
-    // obj.displayX = data.region === 'school' ? String(100-_left) + '%' : x.toFixed(2);
-    // obj.displayY = y.toFixed(2);
-    console.log(obj);
-    // obj.top = String(Math.round(((yRange[1] - y) * revisedHeight)/(yRange[1] - yRange[0]))) + '%';
     // console.log(obj);
     return obj;
   }
@@ -413,7 +355,7 @@ class Pdfer {
    * @param  {String}  format           'number' or 'percent'
    * @return {Promise}                  [description]
    */
-  async constructBar(val, valMax, valMin, barHide, median = 0, format = 'number') {
+  async oldConstructBar(val, valMax, valMin, barHide, median = 0, format = 'number') {
     // console.log('constructBar()');
     const obj = {};
     obj.num = {};
@@ -462,6 +404,66 @@ class Pdfer {
       default:
         break;
     }
+  }
+
+  async constructBar(val, range, barDecimals = 0, median = 0, format = 'number', barHide = vars.barHide) {
+    // console.log('constructBar()');
+    const obj = {};
+    obj.num = {};
+    obj.bar = {};
+    obj.bar.neg = {};
+    obj.bar.pos = {};
+    // console.log('format = ' + format)
+    switch (true) {
+      case (val >= median):
+        obj.num.neg = '';
+        let barWidth;
+        if (format === 'number') {
+          barWidth = (val/(range[1] - median)) * vars.barMax;
+          obj.num.pos = '+' + formatNumber(val, 2);
+        } else {
+          barWidth = (((val - median)/(range[1] - median)) * vars.barMax) * 100;
+          obj.num.pos = '+' + formatPercentDiff(val) + '%';
+        }
+        obj.bar.pos.width = 'width:' + barWidth + 'px;';
+        obj.bar.neg.width = '';
+        if (barWidth >= barHide) {
+          obj.bar.pos.hide = 'visibility:hidden;';
+        }
+        break;
+      // case (val < median):
+      default:
+        obj.num.pos = '';
+        let negBarWidth;
+        if (format === 'number') {
+          negBarWidth = ((median - val)/(median - range[0])) * vars.barMax;
+          obj.num.neg = formatNumber(val, 2);
+        } else {
+          negBarWidth = (((1 - val)/(1 - range[0])) * vars.barMax) * 100;
+          obj.num.neg = formatPercentDiff(val, 1) + '%';
+        }
+        obj.bar.neg.width = 'width:' + negBarWidth + 'px;';
+        obj.bar.pos.width = '';
+        if (negBarWidth >= barHide) {
+          obj.bar.neg.hide = 'visibility:hidden;';
+        }
+        break;
+      // default:
+      //   break;
+    }
+    // Bar labels for min and max
+    if (format === 'number') {
+      // console.log('formatting minmax for ranges');
+      obj.bar.min = formatNumber(range[0], barDecimals);
+      obj.bar.max = '+' + formatNumber(range[1], barDecimals);
+    } else {
+      // Percent formats for bar min and max labels
+      // console.log('formatting percentdiff for ranges');
+      obj.bar.min = range[0] + '%';
+      obj.bar.max = '+' + range[1] + '%';
+    }
+    // console.log(obj);
+    return obj;
   }
 
   async getStateAbbrev(state) {
@@ -603,7 +605,6 @@ class Pdfer {
       if (!!DEV) {
         jsonparse.ranges = _ranges[jsonparse.region];
       }
-      console.log(jsonparse.ranges);
       const _verbiage = {}; // JSON object for addl strings needed by template
       _verbiage.type_plural = await this.getPlural(jsonparse.region);
       _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
@@ -643,70 +644,113 @@ class Pdfer {
       }
       jsonparse.verbiage = _verbiage;
       const _avg = {}; // JSON object for average bar charts & conditionals
-      _avg.minmax = vars.avgMax;
-      _avg.gapminmax = vars.avgGapMax;
-      _avg.all = await this.constructBar(jsonparse.location.all_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.w = await this.constructBar(jsonparse.location.w_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.m = await this.constructBar(jsonparse.location.m_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.f = await this.constructBar(jsonparse.location.f_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.b = await this.constructBar(jsonparse.location.b_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.p = await this.constructBar(jsonparse.location.p_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.np = await this.constructBar(jsonparse.location.np_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.h = await this.constructBar(jsonparse.location.h_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.a = await this.constructBar(jsonparse.location.a_avg, vars.avgMax, -vars.avgMax, vars.avgBarHide);
-      _avg.wb = await this.constructBar(jsonparse.location.wb_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
-      _avg.wa = await this.constructBar(jsonparse.location.wa_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
-      _avg.wh = await this.constructBar(jsonparse.location.wh_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
-      _avg.pn = await this.constructBar(jsonparse.location.pn_avg, vars.avgGapMax, -vars.avgGapMax, vars.avgBarHide);
-      // _avg.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_avg, jsonparse.location.range_ses, jsonparse.location.range_avg, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      const avgSeries = [
+        jsonparse.location.all_avg,
+        jsonparse.location.w_avg,
+        jsonparse.location.m_avg,
+        jsonparse.location.f_avg,
+        jsonparse.location.b_avg,
+        jsonparse.location.p_avg,
+        jsonparse.location.np_avg,
+        jsonparse.location.h_avg,
+        jsonparse.location.a_avg
+      ];
+      const avgGapSeries = [
+        jsonparse.location.wb_avg,
+        jsonparse.location.wa_avg,
+        jsonparse.location.wh_avg,
+        jsonparse.location.pn_avg
+      ];
+      const avgRange = await this.getMinMax(avgSeries);
+      const avgGapRange = await this.getMinMax(avgGapSeries);
+      _avg.all = await this.constructBar(jsonparse.location.all_avg, avgRange, 2);
+      _avg.w = await this.constructBar(jsonparse.location.w_avg, avgRange, 2);
+      _avg.m = await this.constructBar(jsonparse.location.m_avg, avgRange, 2);
+      _avg.f = await this.constructBar(jsonparse.location.f_avg, avgRange, 2);
+      _avg.b = await this.constructBar(jsonparse.location.b_avg, avgRange, 2);
+      _avg.p = await this.constructBar(jsonparse.location.p_avg, avgRange, 2);
+      _avg.np = await this.constructBar(jsonparse.location.np_avg, avgRange, 2);
+      _avg.h = await this.constructBar(jsonparse.location.h_avg, avgRange, 2);
+      _avg.a = await this.constructBar(jsonparse.location.a_avg, avgRange, 2);
+      _avg.wb = await this.constructBar(jsonparse.location.wb_avg, avgGapRange, 2);
+      _avg.wa = await this.constructBar(jsonparse.location.wa_avg, avgGapRange, 2);
+      _avg.wh = await this.constructBar(jsonparse.location.wh_avg, avgGapRange, 2);
+      _avg.pn = await this.constructBar(jsonparse.location.pn_avg, avgGapRange, 2);
       _avg.chart = await this.getChartCoords(jsonparse, 'avg');
       jsonparse.avg = _avg;
       const _coh = {}; // JSON object for coh bar charts & conditionals
-      _coh.minmax = vars.cohMax;
-      _coh.gapminmax = vars.cohGapMax;
-      _coh.all = await this.constructBar(jsonparse.location.all_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.w = await this.constructBar(jsonparse.location.w_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.m = await this.constructBar(jsonparse.location.m_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.f = await this.constructBar(jsonparse.location.f_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.b = await this.constructBar(jsonparse.location.b_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.p = await this.constructBar(jsonparse.location.p_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.np = await this.constructBar(jsonparse.location.np_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.h = await this.constructBar(jsonparse.location.h_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.a = await this.constructBar(jsonparse.location.a_coh, vars.cohMax, -vars.cohMax, vars.cohBarHide);
-      _coh.wb = await this.constructBar(jsonparse.location.wb_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
-      _coh.wa = await this.constructBar(jsonparse.location.wa_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
-      _coh.wh = await this.constructBar(jsonparse.location.wh_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
-      _coh.pn = await this.constructBar(jsonparse.location.pn_coh, vars.cohGapMax, -vars.cohGapMax, vars.cohBarHide);
-      // _coh.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_coh, jsonparse.location.range_ses, jsonparse.location.range_coh, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      const cohSeries = [
+        jsonparse.location.all_coh,
+        jsonparse.location.w_coh,
+        jsonparse.location.m_coh,
+        jsonparse.location.f_coh,
+        jsonparse.location.b_coh,
+        jsonparse.location.p_coh,
+        jsonparse.location.np_coh,
+        jsonparse.location.h_coh,
+        jsonparse.location.a_coh
+      ];
+      const cohGapSeries = [
+        jsonparse.location.wb_coh,
+        jsonparse.location.wa_coh,
+        jsonparse.location.wh_coh,
+        jsonparse.location.pn_coh
+      ];
+      const cohRange = await this.getMinMax(cohSeries);
+      const cohGapRange = await this.getMinMax(cohGapSeries);
+      _coh.all = await this.constructBar(jsonparse.location.all_coh, cohRange, 2);
+      _coh.w = await this.constructBar(jsonparse.location.w_coh, cohRange, 2);
+      _coh.m = await this.constructBar(jsonparse.location.m_coh, cohRange, 2);
+      _coh.f = await this.constructBar(jsonparse.location.f_coh, cohRange, 2);
+      _coh.b = await this.constructBar(jsonparse.location.b_coh, cohRange, 2);
+      _coh.p = await this.constructBar(jsonparse.location.p_coh, cohRange, 2);
+      _coh.np = await this.constructBar(jsonparse.location.np_coh, cohRange, 2);
+      _coh.h = await this.constructBar(jsonparse.location.h_coh, cohRange, 2);
+      _coh.a = await this.constructBar(jsonparse.location.a_coh, cohRange, 2);
+      _coh.wb = await this.constructBar(jsonparse.location.wb_coh, cohGapRange, 2);
+      _coh.wa = await this.constructBar(jsonparse.location.wa_coh, cohGapRange, 2);
+      _coh.wh = await this.constructBar(jsonparse.location.wh_coh, cohGapRange, 2);
+      _coh.pn = await this.constructBar(jsonparse.location.pn_coh, cohGapRange, 2);
       _coh.chart = await this.getChartCoords(jsonparse, 'coh');
       jsonparse.coh = _coh;
       const _grd = {}; // JSON object for grd bar charts & conditionals
-      _grd.min = vars.grdMin;
-      _grd.max = vars.grdMax;
-      _grd.grdBarHide = vars.grdBarHide;
-      _grd.gapminmax = vars.grdGapMax;
-      _grd.all = await this.constructBar(jsonparse.location.all_grd, vars.grdMax, vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.w = await this.constructBar(jsonparse.location.w_grd, vars.grdMax, vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.m = await this.constructBar(jsonparse.location.m_grd, vars.grdMax, vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.f = await this.constructBar(jsonparse.location.f_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.b = await this.constructBar(jsonparse.location.b_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.p = await this.constructBar(jsonparse.location.p_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.np = await this.constructBar(jsonparse.location.np_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.h = await this.constructBar(jsonparse.location.h_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.a = await this.constructBar(jsonparse.location.a_grd, vars.grdMax,  vars.grdMin, vars.grdBarHide, 1, 'percent');
-      _grd.wb = await this.constructBar(jsonparse.location.wb_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
-      _grd.wa = await this.constructBar(jsonparse.location.wa_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
-      _grd.wh = await this.constructBar(jsonparse.location.wh_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
-      _grd.pn = await this.constructBar(jsonparse.location.pn_grd, vars.grdGapMax, -vars.grdGapMax, vars.grdBarHide);
-      // _grd.chart = await this.getChartCoords(jsonparse.location.all_ses, jsonparse.location.all_grd, jsonparse.location.range_ses, jsonparse.location.range_grd, (1017*0.64), (624*0.64), (123*0.64), (66*0.64));
+      const grdSeries = [
+        jsonparse.location.all_grd,
+        jsonparse.location.w_grd,
+        jsonparse.location.m_grd,
+        jsonparse.location.f_grd,
+        jsonparse.location.b_grd,
+        jsonparse.location.p_grd,
+        jsonparse.location.np_grd,
+        jsonparse.location.h_grd,
+        jsonparse.location.a_grd
+      ];
+      const grdGapSeries = [
+        jsonparse.location.wb_grd,
+        jsonparse.location.wa_grd,
+        jsonparse.location.wh_grd,
+        jsonparse.location.pn_grd
+      ];
+      const grdRange = await this.getMinMax(grdSeries, true);
+      const grdGapRange = await this.getMinMax(grdGapSeries, false);
+      const grdBarHide = 42;
+      _grd.all = await this.constructBar(jsonparse.location.all_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.w = await this.constructBar(jsonparse.location.w_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.m = await this.constructBar(jsonparse.location.m_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.f = await this.constructBar(jsonparse.location.f_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.b = await this.constructBar(jsonparse.location.b_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.p = await this.constructBar(jsonparse.location.p_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.np = await this.constructBar(jsonparse.location.np_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.h = await this.constructBar(jsonparse.location.h_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.a = await this.constructBar(jsonparse.location.a_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.wb = await this.constructBar(jsonparse.location.wb_grd, grdGapRange, 2);
+      _grd.wa = await this.constructBar(jsonparse.location.wa_grd, grdGapRange, 2);
+      _grd.wh = await this.constructBar(jsonparse.location.wh_grd, grdGapRange, 2);
+      _grd.pn = await this.constructBar(jsonparse.location.pn_grd, grdGapRange, 2);
       _grd.chart = await this.getChartCoords(jsonparse, 'grd');
       jsonparse.grd = _grd;
       // console.log(jsonparse);
-      console.log(jsonparse.region);
-      // console.log(chartRanges.avg[jsonparse.region]);
       // Fetch the template.
-      // console.log('template string');
-      // console.log(templates);
       let t = templates + '/template.hbs';
       const templatePath = Path.resolve(t);
       let content;
