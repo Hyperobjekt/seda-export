@@ -528,16 +528,24 @@ class Pdfer {
   async html(data, templates) {
     // console.log('html()');
     try {
-      // Fetch and parse the JSON.
       let json;
-      const dataPath = Path.resolve(data)
-      try {
-        json = Fs.readFileSync(dataPath, { encoding: 'utf8' });
-      } catch (err) {
-        // An error occurred fetching template file
-        console.error(err);
+      let jsonparse;
+
+      // data is a path to json file, so fetch and parse
+      if (typeof data === 'string') {
+        const dataPath = Path.resolve(data)
+        try {
+          json = Fs.readFileSync(dataPath, { encoding: 'utf8' });
+        } catch (err) {
+          // An error occurred fetching template file
+          console.error(err);
+        }
+        jsonparse = JSON.parse(json)
+
+      // data is json
+      } else {
+        jsonparse = data
       }
-      const jsonparse = JSON.parse(json);
       const today = new Date();
       const dd = String(today.getDate()).padStart(2, '0');
       const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -754,12 +762,11 @@ class Pdfer {
     });
     await page.setContent(html);
     // await page.waitForNavigation();
-    await page.pdf({
+    return await page.pdf({
       path: output,
       format: 'Letter',
       printBackground: true
     })
-    process.exit()
   }
 }
 
