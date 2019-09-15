@@ -746,7 +746,7 @@ class Pdfer {
     // console.log(html)
     const browser = await Puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
     });
     const page = await browser.newPage()
     await page.emulateMedia('print')
