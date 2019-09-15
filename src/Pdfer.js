@@ -744,7 +744,10 @@ class Pdfer {
     // console.log('pdf()');
     const html = await this.html(data, templates)
     // console.log(html)
-    const browser = await Puppeteer.launch()
+    const browser = await Puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage()
     await page.emulateMedia('print')
     // await page.setViewport({
