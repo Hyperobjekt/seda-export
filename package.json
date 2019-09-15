@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node ./server.js",
+    "start": "node ./server.js",
     "export": "node ./src/ExportPDF.js --data=./input/data-county.json --templates=./src/assets/templates --output=./output/result.pdf",
     "build-css": "node-sass --include-path ./src/assets/styles/scss ./src/assets/styles/scss/styles.scss ./src/assets/styles/css/styles.css",
     "dev": "nodemon -e js,scss,json,hbs --ignore 'src/assets/templates/styles.hbs' --ignore 'src/assets/templates/assets.hbs' -x \"npm run build-css && cp ./src/assets/styles/css/styles.css ./src/assets/templates/styles.hbs && npm run export\""
