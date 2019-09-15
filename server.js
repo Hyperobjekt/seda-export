@@ -45,4 +45,7 @@ app.post('/', async function(req, res, next) {
   }
 })
 
+/** Send OK for health check */
+app.get('/', (req, res) => res.sendStatus(200))
+
 app.listen(port, () => console.log(`PDF generator listening on port ${port}!`))
