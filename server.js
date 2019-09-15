@@ -8,7 +8,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-const port = 3001
+const port = 80
 
 const getValidationErrors = (data) => {
   if (!data || !data.location) 
@@ -30,6 +30,7 @@ app.post('/', async function(req, res, next) {
   if (error) {
     res.send(error)
   } else {
+    console.log(`generating pdf for ${pdfData.location.id}`)
     var filename = pdfData.location.id + ".pdf"; 
     filename = encodeURIComponent(filename);
 
@@ -44,4 +45,4 @@ app.post('/', async function(req, res, next) {
   }
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`PDF generator listening on port ${port}!`))
