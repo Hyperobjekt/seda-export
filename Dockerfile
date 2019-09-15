@@ -16,6 +16,8 @@ RUN chmod +x /usr/local/bin/dumb-init
 
 WORKDIR /app
 COPY . .
+COPY ./src/assets/font/*.* /usr/share/fonts/truetype/
+RUN mkfontscale && mkfontdir && fc-cache
 
 RUN npm install
 RUN npm install puppeteer
