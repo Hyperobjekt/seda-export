@@ -34,18 +34,24 @@ app.post('/', async function(req, res, next) {
     var filename = pdfData.location.id + ".pdf"; 
     filename = encodeURIComponent(filename);
 
-    var pdfer = new Pdfer();
-    await pdfer.pdf(pdfData, './src/assets/templates', './output/' + filename);
-    var stream = fs.createReadStream('./output/' + filename);
-
-    res.setHeader('Content-disposition', 'inline; filename="' + filename + '"');
-    res.setHeader('Content-type', 'application/pdf');
-  
-    stream.pipe(res);
+    try {
+      var pdfer = new Pdfer();
+      await pdfer.pdf(pdfData, './src/assets/templates', './output/' + filename);
+      var stream = fs.createReadStream('./output/' + filename);
+      res.setHeader('Content-disposition', 'inline; filename="' + filename + '"');
+      res.setHeader('Content-type', 'application/pdf');
+      stream.pipe(res);
+    } catch (error) {
+      res.status(400).send({
+        message: 'Error generating PDF'
+      });
+      server.close()
+      process.exit()
+    }
   }
 })
 
 /** Send OK for health check */
 app.get('/', (req, res) => res.sendStatus(200))
 
-app.listen(port, () => console.log(`PDF generator listening on port ${port}!`))
+var server = app.listen(port, () => console.log(`PDF generator listening on port ${port}!`))
