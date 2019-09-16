@@ -281,9 +281,9 @@ class Pdfer {
     // console.log('getMinMax()');
     let max = null;
     if (!isPercent) {
-      max = Math.max(...range.map(a => Math.abs(a)));
+      max = Math.max(...range.filter(v => parseInt(v) !== -999).map(a => Math.abs(a)));
     } else {
-      max = Math.max(...range.map(a => Math.abs(formatPercentDiff(a, 1, 0))));
+      max = Math.max(...range.filter(v => parseInt(v) !== -999).map(a => Math.abs(formatPercentDiff(a, 1, 0))));
     }
     const arr = [(max * -1), max];
     // console.log(arr);
@@ -384,24 +384,37 @@ class Pdfer {
       default:
         obj.num.pos = '';
         let negBarWidth;
-        if (format === 'number') {
-          negBarWidth = ((median - val)/(median - range[0])) * vars.barMax;
-          obj.num.neg = formatNumber(val, 2);
+        if (val === -999 || (!val && val !== 0)) {
+          // no value
+          negBarWidth = ((median)/(median - range[0])) * vars.barMax;
+          obj.bar.neg.hide = '';
+          obj.bar.neg.width = 'width:0px;visibility:hidden;';
+          obj.num.neg = 'UNAVAILABLE';
+          obj.bar.pos.width = '';
         } else {
-          negBarWidth = (((1 - val)/(1 - range[0])) * vars.barMax) * 100;
-          obj.num.neg = formatPercentDiff(val, 1) + '%';
-        }
-        obj.bar.neg.width = 'width:' + negBarWidth + 'px;';
-        obj.bar.pos.width = '';
-        if (negBarWidth >= barHide) {
-          obj.bar.neg.hide = 'visibility:hidden;';
+          if (format === 'number') {
+            negBarWidth = ((median - val)/(median - range[0])) * vars.barMax;
+            obj.num.neg = formatNumber(val, 2);
+          } else {
+            negBarWidth = (((1 - val)/(1 - range[0])) * vars.barMax) * 100;
+            obj.num.neg = formatPercentDiff(val, 1) + '%';
+          }
+          obj.bar.neg.width = 'width:' + negBarWidth + 'px;';
+          obj.bar.pos.width = '';
+          if (negBarWidth >= barHide) {
+            obj.bar.neg.hide = 'visibility:hidden;';
+          }
         }
         break;
       // default:
       //   break;
     }
     // Bar labels for min and max
-    if (format === 'number') {
+    if (val === -999 || (!val && val !== 0)) {
+      // no value, no label
+      obj.bar.min = '-';
+      obj.bar.max = '+';
+    } else if (format === 'number') {
       // console.log('formatting minmax for ranges');
       obj.bar.min = formatNumber(range[0], barDecimals);
       obj.bar.max = '+' + formatNumber(range[1], barDecimals);
@@ -749,6 +762,7 @@ class Pdfer {
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
     });
     const page = await browser.newPage()
+    
     await page.emulateMedia('print')
     // await page.setViewport({
     //   width: 1275,
