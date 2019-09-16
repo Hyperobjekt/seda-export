@@ -779,11 +779,13 @@ class Pdfer {
     });
     await page.setContent(html);
     // await page.waitForNavigation();
-    return await page.pdf({
+    await page.pdf({
       path: output,
       format: 'Letter',
       printBackground: true
     })
+
+    return await browser.close();
   }
 }
 
