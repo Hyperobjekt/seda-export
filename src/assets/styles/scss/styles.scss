@@ -578,17 +578,19 @@ p {
               overflow: visible;
             }
             .dot-label {
-              width: 74px;
+              width: 130px;
+              display: inline-block;
+              white-space: nowrap;
               margin-top: 5px;
-              margin-left: calc(-50% + -36px);
+              margin-left: -75px;
               border-radius: 1.5px;
-              padding: 5px 5px 3px 5px;
+              padding: 5px 6px;
               background-color: $primary-dark;
               opacity: 0.8;
               color: #fff;
               font-family: $maisonneue-bold; // $sharpgrotesk-med-20;
               font-size: calc(14px * #{$vertical-ratio});
-              line-height: calc(14px * #{$vertical-ratio});
+              line-height: calc(17px * #{$vertical-ratio});
               letter-spacing: calc(0.37px * #{$vertical-ratio});
               text-transform: none;
             }

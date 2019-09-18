@@ -578,11 +578,23 @@ class Pdfer {
       const _verbiage = {}; // JSON object for addl strings needed by template
       _verbiage.type_plural = await this.getPlural(jsonparse.region);
       _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
-      _verbiage.ats_avg_fixed = await this.getPos(
-        await this.getFixed(jsonparse.location.all_avg, 2)
-      );
-      _verbiage.ats_hrl = await this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
-      _verbiage.ats_ab = await this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
+
+      // Only generate overview data if all_avg is available.
+      if (jsonparse.location.all_avg === -999) {
+        // Data not available. No need to determine verbiage.
+        _verbiage.avg_overall_performance = 'Average test scores for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+      } else {
+        _verbiage.ats_avg_fixed = await this.getPos(
+          await this.getFixed(jsonparse.location.all_avg, 2)
+        );
+        _verbiage.ats_hrl = await this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
+        _verbiage.ats_ab = await this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
+        _verbiage.avg_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' provides ' + _verbiage.ats_hrl +
+        ' average educational opportunities. Average test scores are ' +
+        _verbiage.ats_avg_fixed + ' grade level(s) ' + _verbiage.ats_ab +
+        ' the national average.';
+      }
+
       if (!!jsonparse.location.all_ses) {
         _verbiage.ats_vfb = await this.getBoilerplate(jsonparse.location.all_ses, _ats_vfb);
       }
@@ -592,19 +604,45 @@ class Pdfer {
         );
         _verbiage.ats_diff_hl = await this.getBoilerplate(jsonparse.location.diff_avg, _ats_diff_hl);
       }
-      _verbiage.grd_hrl = await this.getBoilerplate(jsonparse.location.all_grd, _grd_hrl);
-      _verbiage.grd_pct = await this.getPercentDiffBoilerplate(jsonparse.location.all_grd, 1);
+
+      // {{ location.name }}, {{location.state_name}} provides {{ verbiage.grd_hrl }} average educational opportunities while children are in school. Students learn {{ verbiage.grd_pct }} the U.S. average.{{#if location.all_ses}}
+
+      // Only generate overview data if all_grd is available.
+      if (jsonparse.location.all_grd === -999) {
+        // Data not available. No need to determine verbiage.
+        _verbiage.grd_overall_performance = 'Learning rates for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+      } else {
+        _verbiage.grd_hrl = await this.getBoilerplate(jsonparse.location.all_grd, _grd_hrl);
+        _verbiage.grd_pct = await this.getPercentDiffBoilerplate(jsonparse.location.all_grd, 1);
+        _verbiage.grd_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' provides ' + _verbiage.grd_hrl +
+        ' average educational opportunities while children are in school. Students learn ' + _verbiage.grd_pct + ' the U.S. average.';
+      }
+
       if (!!jsonparse.location.diff_grd) {
         _verbiage.grd_diff_fixed = await this.getPos(
           await this.getFixed(jsonparse.location.diff_grd, 2)
         );
         _verbiage.grd_diff_hl = await this.getBoilerplate(jsonparse.location.diff_grd, _ats_diff_hl);
       }
-      _verbiage.coh_dri = await this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
-      _verbiage.coh_id = await this.getBoilerplate(jsonparse.location.all_coh, _coh_id);
-      _verbiage.coh_grd = await this.getPos(
-        await this.getFixed(jsonparse.location.all_coh, 2)
-      );
+
+      // {{ location.name }}, {{location.state_name}} shows {{verbiage.coh_dri}} educational opportunity. Test scores {{verbiage.coh_id}} an average of {{verbiage.coh_grd}} grade levels each year from 2009-2016.
+      // Only generate overview data if all_grd is available.
+      if (jsonparse.location.all_coh === -999) {
+        // Data not available. No need to determine verbiage.
+        _verbiage.coh_overall_performance = 'Learning trends for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+      } else {
+
+        _verbiage.coh_dri = await this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
+        _verbiage.coh_id = await this.getBoilerplate(jsonparse.location.all_coh, _coh_id);
+        _verbiage.coh_grd = await this.getPos(
+          await this.getFixed(jsonparse.location.all_coh, 2)
+        );
+        _verbiage.coh_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' shows ' + _verbiage.coh_dri +
+        ' educational opportunity. Test scores ' + _verbiage.coh_id +
+        ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2016.';
+      }
+
+
       if (!!jsonparse.location.diff_coh) {
         _verbiage.coh_diff_fixed = await this.getPos(
           await this.getFixed(jsonparse.location.diff_coh, 2)
@@ -762,7 +800,7 @@ class Pdfer {
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
     });
     const page = await browser.newPage()
-    
+
     await page.emulateMedia('print')
     // await page.setViewport({
     //   width: 1275,
