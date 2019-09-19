@@ -579,6 +579,24 @@ class Pdfer {
       _verbiage.type_plural = await this.getPlural(jsonparse.region);
       _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
 
+      if (jsonparse.region === 'school') {
+        _verbiage.xLabel = 'Free and Reduced Lunch';
+      } else {
+        _verbiage.xLabel = 'Socioeconomic Status';
+      }
+
+      if (jsonparse.location.all_frl !== -999) {
+        _verbiage.all_frl = jsonparse.location.all_frl;
+      } else {
+        _verbiage.all_frl = false;
+      }
+
+      if (jsonparse.location.all_ses !== -999) {
+        _verbiage.all_ses = jsonparse.location.all_ses;
+      } else {
+        _verbiage.all_ses = false;
+      }
+
       // Only generate overview data if all_avg is available.
       if (jsonparse.location.all_avg === -999) {
         // Data not available. No need to determine verbiage.
@@ -595,17 +613,19 @@ class Pdfer {
         ' the national average.';
       }
 
-      if (!!jsonparse.location.all_ses) {
+      if (jsonparse.location.all_ses !== -999) {
         _verbiage.ats_vfb = await this.getBoilerplate(jsonparse.location.all_ses, _ats_vfb);
       }
-      if (!!jsonparse.location.diff_avg) {
+      if (jsonparse.location.diff_avg !== -999) {
         _verbiage.ats_diff_fixed = await this.getPos(
           await this.getFixed(jsonparse.location.diff_avg, 2)
         );
         _verbiage.ats_diff_hl = await this.getBoilerplate(jsonparse.location.diff_avg, _ats_diff_hl);
+      } else {
+        _verbiage.diff_avg = false;
+        _verbiage.ats_diff_fixed = false;
+        _verbiage.ats_diff_hl = false;
       }
-
-      // {{ location.name }}, {{location.state_name}} provides {{ verbiage.grd_hrl }} average educational opportunities while children are in school. Students learn {{ verbiage.grd_pct }} the U.S. average.{{#if location.all_ses}}
 
       // Only generate overview data if all_grd is available.
       if (jsonparse.location.all_grd === -999) {
@@ -618,20 +638,22 @@ class Pdfer {
         ' average educational opportunities while children are in school. Students learn ' + _verbiage.grd_pct + ' the U.S. average.';
       }
 
-      if (!!jsonparse.location.diff_grd) {
+      if (jsonparse.location.diff_grd !== -999) {
         _verbiage.grd_diff_fixed = await this.getPos(
           await this.getFixed(jsonparse.location.diff_grd, 2)
         );
         _verbiage.grd_diff_hl = await this.getBoilerplate(jsonparse.location.diff_grd, _ats_diff_hl);
+      } else {
+        _verbiage.diff_grd = false;
+        _verbiage.grd_diff_fixed = false;
+        _verbiage.grd_diff_hl = false;
       }
 
-      // {{ location.name }}, {{location.state_name}} shows {{verbiage.coh_dri}} educational opportunity. Test scores {{verbiage.coh_id}} an average of {{verbiage.coh_grd}} grade levels each year from 2009-2016.
       // Only generate overview data if all_grd is available.
       if (jsonparse.location.all_coh === -999) {
         // Data not available. No need to determine verbiage.
         _verbiage.coh_overall_performance = 'Learning trends for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       } else {
-
         _verbiage.coh_dri = await this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
         _verbiage.coh_id = await this.getBoilerplate(jsonparse.location.all_coh, _coh_id);
         _verbiage.coh_grd = await this.getPos(
@@ -642,13 +664,17 @@ class Pdfer {
         ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2016.';
       }
 
-
-      if (!!jsonparse.location.diff_coh) {
+      if (jsonparse.location.diff_coh !== -999) {
         _verbiage.coh_diff_fixed = await this.getPos(
           await this.getFixed(jsonparse.location.diff_coh, 2)
         );
         _verbiage.coh_diff_id = await this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_id);
         _verbiage.coh_diff_ml = await this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_ml);
+      } else {
+        _verbiage.diff_coh = false;
+        _verbiage.coh_diff_fixed = false;
+        _verbiage.coh_diff_id = false;
+        _verbiage.coh_diff_ml = false;
       }
       jsonparse.verbiage = _verbiage;
       const _avg = {}; // JSON object for average bar charts & conditionals
