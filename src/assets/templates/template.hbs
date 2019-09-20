@@ -104,15 +104,17 @@
       <div class="chart average">
         <div class="background">
           {{!-- <div class="dot" style="{{avg.chart.left}}{{avg.chart.top}}"></div> --}}
-          <div class="overlay">
-            <div class="overlay-child">
-              <div class="dot" style="left:{{avg.chart.left}};top:{{avg.chart.top}};">
-                <div class="dot-icon"></div>
-                <div class="dot-label">{{ verbiage.xLabel }}: {{avg.chart.displayX}}<br>
-                  Average Test Scores: {{avg.chart.displayY}}</div>
+          {{#if avg.chart.visible}}
+            <div class="overlay">
+              <div class="overlay-child">
+                <div class="dot" style="left:{{avg.chart.left}};top:{{avg.chart.top}};">
+                  <div class="dot-icon"></div>
+                  <div class="dot-label">{{ verbiage.xLabel }}: {{avg.chart.displayX}}<br>
+                    Average Test Scores: {{avg.chart.displayY}}</div>
+                </div>
               </div>
             </div>
-          </div>
+          {{/if}}
         </div>
       </div>
       <div class="text">
@@ -471,6 +473,7 @@
     <div id="page_6" class="page pagebreak">
       <div class="chart average">
         <div class="background">
+          {{#if grd.chart.visible}}
           <div class="overlay">
             <div class="overlay-child">
               <div class="dot" style="left:{{grd.chart.left}};top:{{grd.chart.top}};">
@@ -480,6 +483,7 @@
               </div>
             </div>
           </div>
+          {{/if}}
         </div>
       </div>
       <div class="text">
@@ -838,6 +842,7 @@
     <div id="page_8" class="page pagebreak">
       <div class="chart average">
         <div class="background">
+          {{#if avg.chart.visible}}
           <div class="overlay">
             <div class="overlay-child">
               <div class="dot" style="left:{{coh.chart.left}};top:{{coh.chart.top}};">
@@ -847,6 +852,7 @@
               </div>
             </div>
           </div>
+          {{/if}}
         </div>
       </div>
       <div class="text">

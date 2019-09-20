@@ -208,7 +208,7 @@ const DEV = true; // TODO: For live implementation change this to false.
 
 class Pdfer {
 
-  async getPercentDiffBoilerplate(v, from = 1) {
+  getPercentDiffBoilerplate(v, from = 1) {
     // console.log('getPercentDiffBoilerplate()');
     if (!v && v !== 0) { return 'N/A' }
     const percent = formatPercent(v - from);
@@ -225,11 +225,12 @@ class Pdfer {
     }
   }
 
-  async getFixed(value, decimals) {
+  getFixed(value, decimals) {
+    if (!this.isValid(value)) { return null; }
     return value.toFixed(decimals);
   }
 
-  async getPos(value) {
+  getPos(value) {
     if (value < 0) {
       return value * -1;
     } else {
@@ -237,7 +238,7 @@ class Pdfer {
     }
   }
 
-  async getBoilerplate(value, arr) {
+  getBoilerplate(value, arr) {
     // console.log('getBoilerplate');
     let str = null;
     arr.some((el) => {
@@ -253,7 +254,7 @@ class Pdfer {
     return str;
   }
 
-  async getPlural(entity) {
+  getPlural(entity) {
     // console.log('getPlural');
     switch (entity) {
       case 'county':
@@ -263,11 +264,11 @@ class Pdfer {
     }
   }
 
-  async getMin(range) {
+  getMin(range) {
     return Math.min(...range);
   }
 
-  async getMax(range) {
+  getMax(range) {
     return Math.max(...range);
   }
 
@@ -277,13 +278,13 @@ class Pdfer {
    * @param  {Boolean} [isPercent=false] isPercent, true if the result is based on percent diff from 1
    * @return {Promise}                   Two-item array of numerical values, lowest first
    */
-  async getMinMax(range, isPercent = false) {
+  getMinMax(range, isPercent = false) {
     // console.log('getMinMax()');
     let max = null;
     if (!isPercent) {
-      max = Math.max(...range.filter(v => parseInt(v) !== -999).map(a => Math.abs(a)));
+      max = Math.max(...range.filter(v => this.isValid(v)).map(a => Math.abs(a)));
     } else {
-      max = Math.max(...range.filter(v => parseInt(v) !== -999).map(a => Math.abs(formatPercentDiff(a, 1, 0))));
+      max = Math.max(...range.filter(v => this.isValid(v)).map(a => Math.abs(formatPercentDiff(a, 1, 0))));
     }
     const arr = [(max * -1), max];
     // console.log(arr);
@@ -298,9 +299,9 @@ class Pdfer {
    * @param  {[type]}  yRange       Range of chart, lowest first
    * @return {Promise}              Return object with left and top values
    */
-  async getChartCoords(data, chartType) {
+  getChartCoords(data, chartType) {
     // console.log('getChartCoords()');
-    const obj = {};
+    const obj = { visible: true};
     const region = data.region;
     let x = null;
     let y = null;
@@ -313,6 +314,9 @@ class Pdfer {
         // Set x and y value
         x = data.location['all_frl'];
         y = data.location['all_' + chartType];
+        if (!this.isValid(x) || !this.isValid(y)) {
+          return { visible: false };
+        }
         console.log('y = ' + y);
         // Establish ranges
         xRange =  data.ranges['range_frl'];
@@ -322,13 +326,18 @@ class Pdfer {
         obj.left = String((Math.abs(xRange[1] - x)/Math.abs(xRange[1] - xRange[0]))*100) + '%';
         obj.displayX = formatPercentDiff(x, 0) + '%';
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-        obj.displayY = chartType === 'grd' ? formatPercentDiff(y, 1) + '%' : y.toFixed(2);
+        obj.displayY = chartType === 'grd' ? 
+          formatPercentDiff(y, 1) + '%' : 
+          this.getFixed(y, 2);
         break;
       default:
         // console.log('it\'s a county or district, not a school');
         // Set x and y value
         x = data.location['all_ses'];
         y = data.location['all_' + chartType];
+        if (!this.isValid(x) || !this.isValid(y)) {
+          return { visible: false };
+        }
         // Establish ranges
         xRange =  data.ranges['range_ses'];
         yRange = data.ranges['range_' + chartType];
@@ -337,8 +346,10 @@ class Pdfer {
         obj.left = String(_left) + '%';
         // (Length from top to dot divided by length from top to bottom) * 100
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-        obj.displayX = x.toFixed(2);
-        obj.displayY = chartType === 'grd' ? formatPercentDiff(y, 1) + '%' : y.toFixed(2);
+        obj.displayX = this.getFixed(x, 2);
+        obj.displayY = chartType === 'grd' ? 
+          formatPercentDiff(y, 1) + '%' : 
+          this.getFixed(y, 2);
         break;
     }
     // console.log(obj);
@@ -355,7 +366,7 @@ class Pdfer {
    * @param  {Number}  [barHide=vars.barHide] Width at which to hide the bar min or max value
    * @return {Promise}                        Returns object
    */
-  async constructBar(val, range, barDecimals = 0, median = 0, format = 'number', barHide = vars.barHide) {
+  constructBar(val, range, barDecimals = 0, median = 0, format = 'number', barHide = vars.barHide) {
     // console.log('constructBar()');
     const obj = {};
     obj.num = {};
@@ -428,11 +439,11 @@ class Pdfer {
     return obj;
   }
 
-  async isValid(value) {
+  isValid(value) {
     return (value || value === 0) && value !== -999;
   }
 
-  async getStateAbbrev(state) {
+  getStateAbbrev(state) {
     // console.log('getStateAbbrev');
     switch (state) {
       case 'District of Columbia':
@@ -542,7 +553,7 @@ class Pdfer {
     }
   }
 
-  async html(data, templates) {
+  html(data, templates) {
     // console.log('html()');
     try {
       let json;
@@ -580,8 +591,8 @@ class Pdfer {
         jsonparse.ranges = _ranges[jsonparse.region];
       }
       const _verbiage = {}; // JSON object for addl strings needed by template
-      _verbiage.type_plural = await this.getPlural(jsonparse.region);
-      _verbiage.state_abbrev = await this.getStateAbbrev(jsonparse.location.state_name);
+      _verbiage.type_plural = this.getPlural(jsonparse.region);
+      _verbiage.state_abbrev = this.getStateAbbrev(jsonparse.location.state_name);
 
       if (jsonparse.region === 'school') {
         _verbiage.xLabel = 'Free and Reduced Lunch';
@@ -589,26 +600,26 @@ class Pdfer {
         _verbiage.xLabel = 'Socioeconomic Status';
       }
 
-      if (await this.isValid(jsonparse.location.all_frl)) {
+      if (this.isValid(jsonparse.location.all_frl)) {
         _verbiage.all_frl = jsonparse.location.all_frl;
       } else {
         _verbiage.all_frl = false;
       }
 
-      if (await this.isValid(jsonparse.location.all_ses)) {
+      if (this.isValid(jsonparse.location.all_ses)) {
         _verbiage.all_ses = jsonparse.location.all_ses;
-        _verbiage.ats_vfb = await this.getBoilerplate(jsonparse.location.all_ses, _ats_vfb);
+        _verbiage.ats_vfb = this.getBoilerplate(jsonparse.location.all_ses, _ats_vfb);
       } else {
         _verbiage.all_ses = false;
       }
 
       // Only generate overview data if all_avg is available.
-      if (await this.isValid(jsonparse.location.all_avg)) {
-        _verbiage.ats_avg_fixed = await this.getPos(
-          await this.getFixed(jsonparse.location.all_avg, 2)
+      if (this.isValid(jsonparse.location.all_avg)) {
+        _verbiage.ats_avg_fixed = this.getPos(
+          this.getFixed(jsonparse.location.all_avg, 2)
         );
-        _verbiage.ats_hrl = await this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
-        _verbiage.ats_ab = await this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
+        _verbiage.ats_hrl = this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
+        _verbiage.ats_ab = this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
         _verbiage.avg_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' provides ' + _verbiage.ats_hrl +
         ' average educational opportunities. Average test scores are ' +
         _verbiage.ats_avg_fixed + ' grade level(s) ' + _verbiage.ats_ab +
@@ -618,13 +629,13 @@ class Pdfer {
         _verbiage.avg_overall_performance = 'Average test scores for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       }
 
-      if (await this.isValid(jsonparse.location.diff_avg)) {
+      if (this.isValid(jsonparse.location.diff_avg)) {
         // console.log('diff_avg is valid');
         _verbiage.diff_avg = jsonparse.location.diff_avg;
-        _verbiage.ats_diff_fixed = await this.getPos(
-          await this.getFixed(jsonparse.location.diff_avg, 2)
+        _verbiage.ats_diff_fixed = this.getPos(
+          this.getFixed(jsonparse.location.diff_avg, 2)
         );
-        _verbiage.ats_diff_hl = await this.getBoilerplate(jsonparse.location.diff_avg, _ats_diff_hl);
+        _verbiage.ats_diff_hl = this.getBoilerplate(jsonparse.location.diff_avg, _ats_diff_hl);
       } else {
         _verbiage.diff_avg = false;
         _verbiage.ats_diff_fixed = false;
@@ -632,9 +643,9 @@ class Pdfer {
       }
 
       // Only generate overview data if all_grd is available.
-      if (await this.isValid(jsonparse.location.all_grd)) {
-        _verbiage.grd_hrl = await this.getBoilerplate(jsonparse.location.all_grd, _grd_hrl);
-        _verbiage.grd_pct = await this.getPercentDiffBoilerplate(jsonparse.location.all_grd, 1);
+      if (this.isValid(jsonparse.location.all_grd)) {
+        _verbiage.grd_hrl = this.getBoilerplate(jsonparse.location.all_grd, _grd_hrl);
+        _verbiage.grd_pct = this.getPercentDiffBoilerplate(jsonparse.location.all_grd, 1);
         _verbiage.grd_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' provides ' + _verbiage.grd_hrl +
         ' average educational opportunities while children are in school. Students learn ' + _verbiage.grd_pct + ' the U.S. average.';
       } else {
@@ -642,13 +653,13 @@ class Pdfer {
         _verbiage.grd_overall_performance = 'Learning rates for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       }
 
-      if (await this.isValid(jsonparse.location.diff_grd)) {
+      if (this.isValid(jsonparse.location.diff_grd)) {
         // console.log('diff_grd is valid');
         _verbiage.diff_grd = jsonparse.location.diff_grd;
-        _verbiage.grd_diff_fixed = await this.getPos(
-          await this.getFixed(jsonparse.location.diff_grd, 2)
+        _verbiage.grd_diff_fixed = this.getPos(
+          this.getFixed(jsonparse.location.diff_grd, 2)
         );
-        _verbiage.grd_diff_hl = await this.getBoilerplate(jsonparse.location.diff_grd, _ats_diff_hl);
+        _verbiage.grd_diff_hl = this.getBoilerplate(jsonparse.location.diff_grd, _ats_diff_hl);
       } else {
         // console.log('diff_grd not valid');
         _verbiage.diff_grd = false;
@@ -657,11 +668,11 @@ class Pdfer {
       }
 
       // Only generate overview data if all_grd is available.
-      if (await this.isValid(jsonparse.location.all_coh)) {
-        _verbiage.coh_dri = await this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
-        _verbiage.coh_id = await this.getBoilerplate(jsonparse.location.all_coh, _coh_id);
-        _verbiage.coh_grd = await this.getPos(
-          await this.getFixed(jsonparse.location.all_coh, 2)
+      if (this.isValid(jsonparse.location.all_coh)) {
+        _verbiage.coh_dri = this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
+        _verbiage.coh_id = this.getBoilerplate(jsonparse.location.all_coh, _coh_id);
+        _verbiage.coh_grd = this.getPos(
+          this.getFixed(jsonparse.location.all_coh, 2)
         );
         _verbiage.coh_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' shows ' + _verbiage.coh_dri +
         ' educational opportunity. Test scores ' + _verbiage.coh_id +
@@ -671,13 +682,13 @@ class Pdfer {
         _verbiage.coh_overall_performance = 'Learning trends for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       }
 
-      if (await this.isValid(jsonparse.location.diff_coh)) {
+      if (this.isValid(jsonparse.location.diff_coh)) {
         _verbiage.diff_coh = jsonparse.location.diff_coh;
-        _verbiage.coh_diff_fixed = await this.getPos(
-          await this.getFixed(jsonparse.location.diff_coh, 2)
+        _verbiage.coh_diff_fixed = this.getPos(
+          this.getFixed(jsonparse.location.diff_coh, 2)
         );
-        _verbiage.coh_diff_id = await this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_id);
-        _verbiage.coh_diff_ml = await this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_ml);
+        _verbiage.coh_diff_id = this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_id);
+        _verbiage.coh_diff_ml = this.getBoilerplate(jsonparse.location.diff_coh, _coh_diff_ml);
       } else {
         _verbiage.diff_coh = false;
         _verbiage.coh_diff_fixed = false;
@@ -703,22 +714,22 @@ class Pdfer {
         jsonparse.location.wh_avg,
         jsonparse.location.pn_avg
       ];
-      const avgRange = await this.getMinMax(avgSeries);
-      const avgGapRange = await this.getMinMax(avgGapSeries);
-      _avg.all = await this.constructBar(jsonparse.location.all_avg, avgRange, 2);
-      _avg.w = await this.constructBar(jsonparse.location.w_avg, avgRange, 2);
-      _avg.m = await this.constructBar(jsonparse.location.m_avg, avgRange, 2);
-      _avg.f = await this.constructBar(jsonparse.location.f_avg, avgRange, 2);
-      _avg.b = await this.constructBar(jsonparse.location.b_avg, avgRange, 2);
-      _avg.p = await this.constructBar(jsonparse.location.p_avg, avgRange, 2);
-      _avg.np = await this.constructBar(jsonparse.location.np_avg, avgRange, 2);
-      _avg.h = await this.constructBar(jsonparse.location.h_avg, avgRange, 2);
-      _avg.a = await this.constructBar(jsonparse.location.a_avg, avgRange, 2);
-      _avg.wb = await this.constructBar(jsonparse.location.wb_avg, avgGapRange, 2);
-      _avg.wa = await this.constructBar(jsonparse.location.wa_avg, avgGapRange, 2);
-      _avg.wh = await this.constructBar(jsonparse.location.wh_avg, avgGapRange, 2);
-      _avg.pn = await this.constructBar(jsonparse.location.pn_avg, avgGapRange, 2);
-      _avg.chart = await this.getChartCoords(jsonparse, 'avg');
+      const avgRange = this.getMinMax(avgSeries);
+      const avgGapRange = this.getMinMax(avgGapSeries);
+      _avg.all = this.constructBar(jsonparse.location.all_avg, avgRange, 2);
+      _avg.w = this.constructBar(jsonparse.location.w_avg, avgRange, 2);
+      _avg.m = this.constructBar(jsonparse.location.m_avg, avgRange, 2);
+      _avg.f = this.constructBar(jsonparse.location.f_avg, avgRange, 2);
+      _avg.b = this.constructBar(jsonparse.location.b_avg, avgRange, 2);
+      _avg.p = this.constructBar(jsonparse.location.p_avg, avgRange, 2);
+      _avg.np = this.constructBar(jsonparse.location.np_avg, avgRange, 2);
+      _avg.h = this.constructBar(jsonparse.location.h_avg, avgRange, 2);
+      _avg.a = this.constructBar(jsonparse.location.a_avg, avgRange, 2);
+      _avg.wb = this.constructBar(jsonparse.location.wb_avg, avgGapRange, 2);
+      _avg.wa = this.constructBar(jsonparse.location.wa_avg, avgGapRange, 2);
+      _avg.wh = this.constructBar(jsonparse.location.wh_avg, avgGapRange, 2);
+      _avg.pn = this.constructBar(jsonparse.location.pn_avg, avgGapRange, 2);
+      _avg.chart = this.getChartCoords(jsonparse, 'avg');
       jsonparse.avg = _avg;
       const _coh = {}; // JSON object for coh bar charts & conditionals
       const cohSeries = [
@@ -738,22 +749,22 @@ class Pdfer {
         jsonparse.location.wh_coh,
         jsonparse.location.pn_coh
       ];
-      const cohRange = await this.getMinMax(cohSeries);
-      const cohGapRange = await this.getMinMax(cohGapSeries);
-      _coh.all = await this.constructBar(jsonparse.location.all_coh, cohRange, 2);
-      _coh.w = await this.constructBar(jsonparse.location.w_coh, cohRange, 2);
-      _coh.m = await this.constructBar(jsonparse.location.m_coh, cohRange, 2);
-      _coh.f = await this.constructBar(jsonparse.location.f_coh, cohRange, 2);
-      _coh.b = await this.constructBar(jsonparse.location.b_coh, cohRange, 2);
-      _coh.p = await this.constructBar(jsonparse.location.p_coh, cohRange, 2);
-      _coh.np = await this.constructBar(jsonparse.location.np_coh, cohRange, 2);
-      _coh.h = await this.constructBar(jsonparse.location.h_coh, cohRange, 2);
-      _coh.a = await this.constructBar(jsonparse.location.a_coh, cohRange, 2);
-      _coh.wb = await this.constructBar(jsonparse.location.wb_coh, cohGapRange, 2);
-      _coh.wa = await this.constructBar(jsonparse.location.wa_coh, cohGapRange, 2);
-      _coh.wh = await this.constructBar(jsonparse.location.wh_coh, cohGapRange, 2);
-      _coh.pn = await this.constructBar(jsonparse.location.pn_coh, cohGapRange, 2);
-      _coh.chart = await this.getChartCoords(jsonparse, 'coh');
+      const cohRange = this.getMinMax(cohSeries);
+      const cohGapRange = this.getMinMax(cohGapSeries);
+      _coh.all = this.constructBar(jsonparse.location.all_coh, cohRange, 2);
+      _coh.w = this.constructBar(jsonparse.location.w_coh, cohRange, 2);
+      _coh.m = this.constructBar(jsonparse.location.m_coh, cohRange, 2);
+      _coh.f = this.constructBar(jsonparse.location.f_coh, cohRange, 2);
+      _coh.b = this.constructBar(jsonparse.location.b_coh, cohRange, 2);
+      _coh.p = this.constructBar(jsonparse.location.p_coh, cohRange, 2);
+      _coh.np = this.constructBar(jsonparse.location.np_coh, cohRange, 2);
+      _coh.h = this.constructBar(jsonparse.location.h_coh, cohRange, 2);
+      _coh.a = this.constructBar(jsonparse.location.a_coh, cohRange, 2);
+      _coh.wb = this.constructBar(jsonparse.location.wb_coh, cohGapRange, 2);
+      _coh.wa = this.constructBar(jsonparse.location.wa_coh, cohGapRange, 2);
+      _coh.wh = this.constructBar(jsonparse.location.wh_coh, cohGapRange, 2);
+      _coh.pn = this.constructBar(jsonparse.location.pn_coh, cohGapRange, 2);
+      _coh.chart = this.getChartCoords(jsonparse, 'coh');
       jsonparse.coh = _coh;
       const _grd = {}; // JSON object for grd bar charts & conditionals
       const grdSeries = [
@@ -773,23 +784,23 @@ class Pdfer {
         jsonparse.location.wh_grd,
         jsonparse.location.pn_grd
       ];
-      const grdRange = await this.getMinMax(grdSeries, true);
-      const grdGapRange = await this.getMinMax(grdGapSeries, false);
+      const grdRange = this.getMinMax(grdSeries, true);
+      const grdGapRange = this.getMinMax(grdGapSeries, false);
       const grdBarHide = 42;
-      _grd.all = await this.constructBar(jsonparse.location.all_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.w = await this.constructBar(jsonparse.location.w_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.m = await this.constructBar(jsonparse.location.m_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.f = await this.constructBar(jsonparse.location.f_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.b = await this.constructBar(jsonparse.location.b_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.p = await this.constructBar(jsonparse.location.p_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.np = await this.constructBar(jsonparse.location.np_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.h = await this.constructBar(jsonparse.location.h_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.a = await this.constructBar(jsonparse.location.a_grd, grdRange, 2, 1, 'percent', grdBarHide);
-      _grd.wb = await this.constructBar(jsonparse.location.wb_grd, grdGapRange, 2);
-      _grd.wa = await this.constructBar(jsonparse.location.wa_grd, grdGapRange, 2);
-      _grd.wh = await this.constructBar(jsonparse.location.wh_grd, grdGapRange, 2);
-      _grd.pn = await this.constructBar(jsonparse.location.pn_grd, grdGapRange, 2);
-      _grd.chart = await this.getChartCoords(jsonparse, 'grd');
+      _grd.all = this.constructBar(jsonparse.location.all_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.w = this.constructBar(jsonparse.location.w_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.m = this.constructBar(jsonparse.location.m_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.f = this.constructBar(jsonparse.location.f_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.b = this.constructBar(jsonparse.location.b_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.p = this.constructBar(jsonparse.location.p_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.np = this.constructBar(jsonparse.location.np_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.h = this.constructBar(jsonparse.location.h_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.a = this.constructBar(jsonparse.location.a_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.wb = this.constructBar(jsonparse.location.wb_grd, grdGapRange, 2);
+      _grd.wa = this.constructBar(jsonparse.location.wa_grd, grdGapRange, 2);
+      _grd.wh = this.constructBar(jsonparse.location.wh_grd, grdGapRange, 2);
+      _grd.pn = this.constructBar(jsonparse.location.pn_grd, grdGapRange, 2);
+      _grd.chart = this.getChartCoords(jsonparse, 'grd');
       jsonparse.grd = _grd;
       // console.log(jsonparse);
       // Fetch the template.
@@ -827,7 +838,7 @@ class Pdfer {
 
   async pdf(data, templates, output) {
     // console.log('pdf()');
-    const html = await this.html(data, templates)
+    const html = this.html(data, templates)
     // console.log(html)
     const browser = await Puppeteer.launch({
       headless: true,
