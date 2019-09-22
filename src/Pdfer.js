@@ -326,8 +326,8 @@ class Pdfer {
         obj.left = String((Math.abs(xRange[1] - x)/Math.abs(xRange[1] - xRange[0]))*100) + '%';
         obj.displayX = formatPercentDiff(x, 0) + '%';
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-        obj.displayY = chartType === 'grd' ? 
-          formatPercentDiff(y, 1) + '%' : 
+        obj.displayY = chartType === 'grd' ?
+          formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
         break;
       default:
@@ -347,8 +347,8 @@ class Pdfer {
         // (Length from top to dot divided by length from top to bottom) * 100
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
         obj.displayX = this.getFixed(x, 2);
-        obj.displayY = chartType === 'grd' ? 
-          formatPercentDiff(y, 1) + '%' : 
+        obj.displayY = chartType === 'grd' ?
+          formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
         break;
     }
@@ -601,7 +601,7 @@ class Pdfer {
       }
 
       if (this.isValid(jsonparse.location.all_frl)) {
-        _verbiage.all_frl = jsonparse.location.all_frl;
+        _verbiage.all_frl = formatPercentDiff(jsonparse.location.all_frl, 0);
       } else {
         _verbiage.all_frl = false;
       }
@@ -629,7 +629,7 @@ class Pdfer {
         _verbiage.avg_overall_performance = 'Average test scores for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       }
 
-      if (this.isValid(jsonparse.location.diff_avg)) {
+      if (this.isValid(jsonparse.location.all_avg) && this.isValid(jsonparse.location.diff_avg)) {
         // console.log('diff_avg is valid');
         _verbiage.diff_avg = jsonparse.location.diff_avg;
         _verbiage.ats_diff_fixed = this.getPos(
@@ -653,7 +653,7 @@ class Pdfer {
         _verbiage.grd_overall_performance = 'Learning rates for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       }
 
-      if (this.isValid(jsonparse.location.diff_grd)) {
+      if (this.isValid(jsonparse.location.all_grd) && this.isValid(jsonparse.location.diff_grd)) {
         // console.log('diff_grd is valid');
         _verbiage.diff_grd = jsonparse.location.diff_grd;
         _verbiage.grd_diff_fixed = this.getPos(
@@ -679,10 +679,10 @@ class Pdfer {
         ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2016.';
       } else {
         // Data not available. No need to determine verbiage.
-        _verbiage.coh_overall_performance = 'Learning trends for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+        _verbiage.coh_overall_performance = 'Trends in test scores for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
       }
 
-      if (this.isValid(jsonparse.location.diff_coh)) {
+      if (this.isValid(jsonparse.location.all_coh) && this.isValid(jsonparse.location.diff_coh)) {
         _verbiage.diff_coh = jsonparse.location.diff_coh;
         _verbiage.coh_diff_fixed = this.getPos(
           this.getFixed(jsonparse.location.diff_coh, 2)
