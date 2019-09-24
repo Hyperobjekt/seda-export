@@ -842,7 +842,7 @@
     <div id="page_8" class="page pagebreak">
       <div class="chart average">
         <div class="background">
-          {{#if avg.chart.visible}}
+          {{#if coh.chart.visible}}
           <div class="overlay">
             <div class="overlay-child">
               <div class="dot" style="left:{{coh.chart.left}};top:{{coh.chart.top}};">
@@ -864,7 +864,7 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ verbiage.coh_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{location.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_coh}} Average scores have {{verbiage.coh_diff_id}} by {{verbiage.coh_diff_fixed}} grade levels {{verbiage.coh_diff_ml}} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">{{ verbiage.coh_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_coh}} Average scores have {{verbiage.coh_diff_id}} by {{verbiage.coh_diff_fixed}} grade levels {{verbiage.coh_diff_ml}} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
           <p class="body-smaller">Average student test scores are influenced by children’s home environments, early childhood experiences, community resources, and schools. The trend (or change) in average student test scores from one year to the next indicates whether educational opportunities are improving or declining in a community. Where the trend is positive, students’ opportunities to learn are improving. Opportunities may improve over time because of changes in school quality or because of changes in children’s family resources, home environments, early childhood experiences, and community resources.</p>
         </div>
       </div>
