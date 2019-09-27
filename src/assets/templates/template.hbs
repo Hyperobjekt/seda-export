@@ -44,7 +44,7 @@
       <div class="content-wrapper">
         <div class="content">
           <span class="h2">About the Data</span>
-          <p class="body-smaller">The Educational Opportunity Project has derived these data and visualizations from the Stanford Education Data Archive (SEDA), which is the first national database of academic performance in the U.S.</p><p class="body-smaller">The SEDA data are based on the standardized accountability tests in math and English Language Arts (ELA) administered annually by each state to all public school students in grades 3-8 in each school year from 2008-09 through 2015-16. In these years, third- through eighth-graders in U.S. public schools took roughly 350 million standardized math and ELA tests.</p><p class="body-smaller">The Educational Opportunity Project harnesses these and other data to help scholars, policymakers, educators, and parents learn how to improve educational opportunity for all children.</p>
+          <p class="body-smaller">The Educational Opportunity Project has derived these data and visualizations from the Stanford Education Data Archive (SEDA), which is the first national database of academic performance in the U.S.</p><p class="body-smaller">The SEDA data are based on the standardized accountability tests in math and English Language Arts (ELA) administered by each state to all public-school students in grades 3–8 in each school year from 2008–09 through 2015–16. In these years, 3rd- through 8th-graders in U.S. public schools took roughly 350 million standardized math and ELA tests.</p><p class="body-smaller">The Educational Opportunity Project harnesses data to help scholars, policymakers, educators, and parents learn how to improve educational opportunity for all children.</p>
         </div>
       </div>
     </div>
@@ -64,11 +64,11 @@
           <div class="box">
             <div class="head">
               <div class="icon average"></div>
-              <span class="title h3">Average Test Scores</span>
+              <span class="title h3">Average test scores</span>
             </div>
             <div class="base">
-              <span class="h4">The educational opportunities available in a community, both in and out of school, are reflected in children's average test scores.</span>
-              <p class="body-smallest">Average test scores are influenced by children's opportunities to learn at home, in their neighborhoods, in childcare, preschool, and after-school programs, from peers and friends, and at school. Average test scores therefore reflect the total set of educational opportunities available in a community.</p>
+              <span class="h4">The educational opportunities available in a community, both in and out of school, are reflected in students' average test scores.</span>
+              <p class="body-smallest">Average test scores are influenced by children's opportunities to learn at home, in neighborhoods, in childcare, preschool, and after-school programs, from peers and friends, and at school. Average test scores therefore reflect the total set of educational opportunities available in a community.</p>
             </div>
           </div>
           <!-- average end -->
@@ -76,11 +76,11 @@
           <div class="box">
             <div class="head">
               <div class="icon growth"></div>
-              <div class="title h3">Learning Rates</div>
+              <div class="title h3">Learning rates</div>
             </div>
             <div class="base">
               <span class="h4">The contribution of schools to educational opportunity is reflected in the growth of test scores while children attend school.</span>
-              <p class="body-smallest">Learning rates measure how much student scores improve each year while they are in school. They are a better indicator of school quality than average test scores, which are influenced by a range of experiences outside of school.</p>
+              <p class="body-smallest">Learning rates measure how much scores improve each year while students are in school. They are a better indicator of school quality than average test scores, which are influenced by a range of experiences outside of school.</p>
             </div>
           </div>
           <!-- growth end -->
@@ -88,11 +88,11 @@
           <div class="box">
             <div class="head">
               <div class="icon changes"></div>
-              <div class="title h3">Trend in Test Scores</div>
+              <div class="title h3">Trends in test scores</div>
             </div>
             <div class="base">
               <span class="h4">The change in a community’s educational opportunities, both in and out of school, is reflected in average test score gains or losses.</span>
-              <p class="body-smallest">Trends in test scores reflect both changes in school quality and changes in other family and community features that provide opportunities for children.</p>
+              <p class="body-smallest">Trends in test scores reflect both changes in school quality and changes in family and community features that provide opportunities for children.</p>
             </div>
           </div>
         </div>
@@ -126,8 +126,8 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ verbiage.avg_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if verbiage.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels {{ verbiage.ats_diff_hl }} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
-          <p class="body-smaller">Average student test scores are influenced by children’s opportunities to learn in their homes, in their neighborhoods, in the childcare, preschool, and after-school programs they attend, from their peers and friends, and in their schools. Because of all these influences, average test scores are not a good way to assess how much children learn in schools. But they are a good way to assess the average set of educational opportunities available to children in a community. Where average scores are low, students have fewer opportunities to learn. Schools are better evaluated using Learning Rates, which measure how much student scores improve while they are in school.</p>
+          <p class="body-smaller">{{ verbiage.avg_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if verbiage.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels {{ verbiage.ats_diff_hl }} than those of {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">Average scores are influenced by opportunities to learn at home, in neighborhoods, in child-care, preschool, and after-school programs, from peers and friends, and in schools. Because of all these influences, average test scores are not a good way to assess how much children learn in schools. But they are a good way to assess the average set of educational opportunities available to children in a community. Where average scores are low, students have fewer opportunities to learn. Schools are better evaluated using learning rates, which measure how much student scores improve while they are in school.</p>
         </div>
       </div>
       <div class="footer">
@@ -495,8 +495,8 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ verbiage.grd_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_grd}} Learning rates are {{ verbiage.grd_diff_fixed }}% {{ verbiage.grd_diff_hl }} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
-          <p class="body-smaller">Learning rates measure how much student scores improve each year while they are in school. This is a better way to assess what children learn in schools than average test scores, which are heavily influenced by factors outside of school. To understand the distinction, think of a hospital: We wouldn’t assess a hospital based on the health of its patients; rather, we’d judge it on how much its patients’ health improves as a result of their time in the hospital. Similarly, we shouldn’t evaluate a school based on the average scores of its students, but rather by how much their test scores improve while in school.</p>
+          <p class="body-smaller">{{ verbiage.grd_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_grd}} Learning rates are {{ verbiage.grd_diff_fixed }}% {{ verbiage.grd_diff_hl }} than those of {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">Learning rates measure how much students’ scores improve each year while they are in school. This is a better way to assess what children learn in schools than average test scores, which are heavily influenced by factors outside of school. To understand the distinction, think of a hospital: We wouldn’t assess a hospital based on the health of its patients; rather, we’d judge it on how much the health of patients improves as a result of their time in the hospital. Similarly, we shouldn’t evaluate a school based on the average scores of its students, but rather by how much their test scores improve while in school.</p>
         </div>
       </div>
       <div class="footer">
@@ -864,8 +864,8 @@
               <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
             </div>
           </div>
-          <p class="body-smaller">{{ verbiage.coh_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_coh}} Average scores have {{verbiage.coh_diff_id}} by {{verbiage.coh_diff_fixed}} grade levels {{verbiage.coh_diff_ml}} than {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
-          <p class="body-smaller">Average student test scores are influenced by children’s home environments, early childhood experiences, community resources, and schools. The trend (or change) in average student test scores from one year to the next indicates whether educational opportunities are improving or declining in a community. Where the trend is positive, students’ opportunities to learn are improving. Opportunities may improve over time because of changes in school quality or because of changes in children’s family resources, home environments, early childhood experiences, and community resources.</p>
+          <p class="body-smaller">{{ verbiage.coh_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_coh}} Average scores have {{verbiage.coh_diff_id}} by {{verbiage.coh_diff_fixed}} grade levels {{verbiage.coh_diff_ml}} than those of {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
+          <p class="body-smaller">Average student test scores are influenced by home environments, early childhood experiences, community resources, and schools. The trend (or change) in average student test scores from one year to the next indicates whether educational opportunities are improving or declining in a community. Where the trend is positive, students’ opportunities to learn are improving. Opportunities may improve over time because of changes in school quality or because of changes in family resources, home environments, early childhood experiences, and/or community resources.</p>
         </div>
       </div>
       <div class="footer">
@@ -1217,7 +1217,7 @@
       </div>
       <div class="parent">
         <span class="h2">Learn more</span>
-        <p>View more information about {{ location.name }} and to see how it compares to the rest of the country.</p>
+        <p>View more information about {{ location.name }} and see how it compares to the rest of the country.</p>
         <a class="button" href="{{ url }}">GO TO THE SITE</a>
       </div>
     </div>
