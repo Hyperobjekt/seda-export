@@ -35,6 +35,21 @@ const _coh_dri = [
   }
 ];
 
+const _coh_dri_schools = [
+  {
+    range: [Number.NEGATIVE_INFINITY, -0.0249999],
+    text: 'declined'
+  },
+  {
+    range: [-0.025, 0.025],
+    text: 'were roughly stable'
+  },
+  {
+    range: [0.02500001, Number.POSITIVE_INFINITY],
+    text: 'improved'
+  }
+];
+
 const _ats_ab = [
   {
     range: [Number.NEGATIVE_INFINITY, -0.0000001],
@@ -317,7 +332,7 @@ class Pdfer {
         if (!this.isValid(x) || !this.isValid(y)) {
           return { visible: false };
         }
-        console.log('y = ' + y);
+        // console.log('y = ' + y);
         // Establish ranges
         xRange =  data.ranges['range_frl'];
         yRange = data.ranges['range_' + chartType];
@@ -620,8 +635,14 @@ class Pdfer {
         );
         _verbiage.ats_hrl = this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
         _verbiage.ats_ab = this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
-        _verbiage.avg_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' provides ' + _verbiage.ats_hrl +
-        ' average educational opportunities. Average test scores are ' +
+        const firstLine = jsonparse.region === 'school' ? `
+          The children attending ${jsonparse.location.name} have 
+          ${_verbiage.ats_hrl} average educational opportunities.
+        ` : `
+          ${jsonparse.location.name}, ${jsonparse.location.state_name} provides 
+          ${_verbiage.ats_hrl} average educational opportunities. 
+        `;
+        _verbiage.avg_overall_performance = firstLine + ' Average test scores are ' +
         _verbiage.ats_avg_fixed + ' grade level(s) ' + _verbiage.ats_ab +
         ' the national average.';
       } else {
@@ -669,13 +690,21 @@ class Pdfer {
 
       // Only generate overview data if all_grd is available.
       if (this.isValid(jsonparse.location.all_coh)) {
-        _verbiage.coh_dri = this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
+        _verbiage.coh_dri = jsonparse.region === 'school' ?
+          this.getBoilerplate(jsonparse.location.all_coh, _coh_dri_schools) :
+          this.getBoilerplate(jsonparse.location.all_coh, _coh_dri);
         _verbiage.coh_id = this.getBoilerplate(jsonparse.location.all_coh, _coh_id);
         _verbiage.coh_grd = this.getPos(
           this.getFixed(jsonparse.location.all_coh, 2)
         );
-        _verbiage.coh_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' shows ' + _verbiage.coh_dri +
-        ' educational opportunity. Test scores ' + _verbiage.coh_id +
+        const firstLine = jsonparse.region === 'school' ? `
+          Educational opportunities for the children attending 
+          ${jsonparse.location.name} ${_verbiage.coh_dri} in the years 2009-2016.
+        ` : `
+          ${jsonparse.location.name}, ${jsonparse.location.state_name} shows 
+          ${_verbiage.coh_dri} educational opportunity.
+        `
+        _verbiage.coh_overall_performance = firstLine + ' Test scores ' + _verbiage.coh_id +
         ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2016.';
       } else {
         // Data not available. No need to determine verbiage.
