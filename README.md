@@ -18,13 +18,25 @@ npm run dev
 
 For additional details on the file locations assumed for input and output for the node export command, see package.json.
 
-# Testing different region types
+## Testing different region types
 
 There are 3 region-specific json data src files with values corresponding to their prospective ranges. Toggle region types by editing the input value in the `export` script in package.json:
 
 ```
 --data=./input/data-district.json
 ```
+
+## Deploying 
+
+To deploy the PDF generator to production, commit the version you want to deploy to the `master` branch.  This will trigger a build of the [docker image on Dockerhub](https://hub.docker.com/r/hyperobjekt/seda-export).
+
+Once the Docker image has built successfully on Dockerhub, force a new deployment on the AWS ECS service using the AWS CLI.
+
+```
+aws ecs update-service --cluster edop-pdf-cluster --service edop-pdf-container-service --force-new-deployment
+```
+
+The service will decomission the running tasks and start new tasks using the updated code.  This takes a few minutes, but once complete the new code will be live.
 
 
 # Chart overlays
