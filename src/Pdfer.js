@@ -735,7 +735,8 @@ class Pdfer {
         jsonparse.location.p_avg,
         jsonparse.location.np_avg,
         jsonparse.location.h_avg,
-        jsonparse.location.a_avg
+        jsonparse.location.a_avg,
+        jsonparse.location.i_avg
       ];
       const avgGapSeries = [
         jsonparse.location.wb_avg,
@@ -754,6 +755,7 @@ class Pdfer {
       _avg.np = this.constructBar(jsonparse.location.np_avg, avgRange, 2);
       _avg.h = this.constructBar(jsonparse.location.h_avg, avgRange, 2);
       _avg.a = this.constructBar(jsonparse.location.a_avg, avgRange, 2);
+      _avg.i = this.constructBar(jsonparse.location.i_avg, avgRange, 2);
       _avg.wb = this.constructBar(jsonparse.location.wb_avg, avgGapRange, 2);
       _avg.wa = this.constructBar(jsonparse.location.wa_avg, avgGapRange, 2);
       _avg.wh = this.constructBar(jsonparse.location.wh_avg, avgGapRange, 2);
@@ -770,7 +772,8 @@ class Pdfer {
         jsonparse.location.p_coh,
         jsonparse.location.np_coh,
         jsonparse.location.h_coh,
-        jsonparse.location.a_coh
+        jsonparse.location.a_coh,
+        jsonparse.location.i_coh
       ];
       const cohGapSeries = [
         jsonparse.location.wb_coh,
@@ -789,6 +792,7 @@ class Pdfer {
       _coh.np = this.constructBar(jsonparse.location.np_coh, cohRange, 2);
       _coh.h = this.constructBar(jsonparse.location.h_coh, cohRange, 2);
       _coh.a = this.constructBar(jsonparse.location.a_coh, cohRange, 2);
+      _coh.i = this.constructBar(jsonparse.location.i_coh, cohRange, 2);
       _coh.wb = this.constructBar(jsonparse.location.wb_coh, cohGapRange, 2);
       _coh.wa = this.constructBar(jsonparse.location.wa_coh, cohGapRange, 2);
       _coh.wh = this.constructBar(jsonparse.location.wh_coh, cohGapRange, 2);
@@ -805,7 +809,8 @@ class Pdfer {
         jsonparse.location.p_grd,
         jsonparse.location.np_grd,
         jsonparse.location.h_grd,
-        jsonparse.location.a_grd
+        jsonparse.location.a_grd,
+        jsonparse.location.i_grd
       ];
       const grdGapSeries = [
         jsonparse.location.wb_grd,
@@ -825,6 +830,7 @@ class Pdfer {
       _grd.np = this.constructBar(jsonparse.location.np_grd, grdRange, 2, 1, 'percent', grdBarHide);
       _grd.h = this.constructBar(jsonparse.location.h_grd, grdRange, 2, 1, 'percent', grdBarHide);
       _grd.a = this.constructBar(jsonparse.location.a_grd, grdRange, 2, 1, 'percent', grdBarHide);
+      _grd.i = this.constructBar(jsonparse.location.i_grd, grdRange, 2, 1, 'percent', grdBarHide);
       _grd.wb = this.constructBar(jsonparse.location.wb_grd, grdGapRange, 2);
       _grd.wa = this.constructBar(jsonparse.location.wa_grd, grdGapRange, 2);
       _grd.wh = this.constructBar(jsonparse.location.wh_grd, grdGapRange, 2);
