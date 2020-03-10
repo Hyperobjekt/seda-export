@@ -28,7 +28,7 @@
   "homepage": "https://github.com/amygroshek/test-pdf-export#readme",
   "devDependencies": {
     "fs": "0.0.1-security",
-    "handlebars": "^4.1.2",
+    "handlebars": ">=4.3.0",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
