@@ -200,10 +200,10 @@ vars.barHide = 24;
 
 const _ranges = {
   county: {
-    "range_avg": [ -4.5, 2.5 ],
+    "range_avg": [ -4.5, 3 ], // avg test score
     "range_grd": [ 0.4, 1.6 ],
     "range_coh": [ -0.5, 0.5 ],
-    "range_ses": [-4, 3],
+    "range_ses": [-4, 2.5],
   },
   district: {
     "range_avg": [ -4.5, 4.5 ],
@@ -359,8 +359,10 @@ class Pdfer {
         // Set obj values
         _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
         obj.left = String(_left) + '%';
+        console.log(obj.left)
         // (Length from top to dot divided by length from top to bottom) * 100
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
+        console.log(obj.top)
         obj.displayX = this.getFixed(x, 2);
         obj.displayY = chartType === 'grd' ?
           formatPercentDiff(y, 1) + '%' :
