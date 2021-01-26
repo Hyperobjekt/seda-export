@@ -390,6 +390,10 @@ p {
     top: calc((1330px - 888px) * #{$vertical-ratio}); // 284px;
   }
   .date {
+    top: calc((1440px - 888px) * #{$vertical-ratio}); // 35px;
+    text-transform: uppercase;
+  }
+  .version {
     top: calc((1482px - 888px) * #{$vertical-ratio}); // 380px;
     text-transform: uppercase;
   }
