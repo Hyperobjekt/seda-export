@@ -200,22 +200,24 @@ vars.barHide = 24;
 
 const _ranges = {
   county: {
-    "range_avg": [ -4.5, 3 ], // avg test score
-    "range_grd": [ 0.4, 1.6 ],
-    "range_coh": [ -0.5, 0.5 ],
-    "range_ses": [-4, 2.5],
+    "range_avg": [ -4.47, 2.94 ], // avg test score
+    "range_grd": [ .35, 1.46 ],
+    "range_coh": [ -0.27, .277],
+    "domain_ses": [-3.92, 2.5],
   },
   district: {
-    "range_avg": [ -4.5, 4.5 ],
-    "range_grd": [ 0.4, 1.6 ],
-    "range_coh": [ -0.5, 0.5 ],
-    "range_ses": [ -5, 4 ],
+    "range_avg": [-7.47, 5.28],
+      // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. 100% as much is a y val of 2
+    "range_grd": [.285, 1.92],
+    "range_coh": [ -0.31, 0.375 ],
+    "domain_ses": [ -4.8, 3.6 ],
   },
   school: {
-    "range_avg": [ -8, 7 ],
-    "range_grd": [ -0.2, 2.6 ],
-    "range_coh": [-1, 1],
-    "range_frl": [ 0, 1 ],
+    "range_avg": [ -4.82, 6.82 ],
+    // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. 100% as much is a y val of 2.
+    "range_grd": [ -.52, 2.45 ],
+    "range_coh": [-.54, .63],
+    "domain_frl": [ 0, 1 ],
   }
 }
 
@@ -334,16 +336,19 @@ class Pdfer {
         }
         // console.log('y = ' + y);
         // Establish ranges
-        xRange =  data.ranges['range_frl'];
+        xRange =  data.ranges['domain_frl'];
         yRange = data.ranges['range_' + chartType];
         // Set obj values
         // frl is different, because the axis goes from high (1) to low (0)
         obj.left = String((Math.abs(xRange[1] - x)/Math.abs(xRange[1] - xRange[0]))*100) + '%';
         obj.displayX = formatPercentDiff(x, 0) + '%';
+        
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
         obj.displayY = chartType === 'grd' ?
           formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
+          console.log(obj.displayY)
+          console.log(y)
         break;
       default:
         // console.log('it\'s a county or district, not a school');
@@ -354,8 +359,11 @@ class Pdfer {
           return { visible: false };
         }
         // Establish ranges
-        xRange =  data.ranges['range_ses'];
+        xRange =  data.ranges['domain_ses'];
         yRange = data.ranges['range_' + chartType];
+        console.log('yrange =' + yRange)
+        console.log('y =' + y)
+
         // Set obj values
         _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
         obj.left = String(_left) + '%';

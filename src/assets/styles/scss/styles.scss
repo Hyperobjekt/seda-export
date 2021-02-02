@@ -536,7 +536,7 @@ p {
     justify-content: center;
     align-items: center;
     .background {
-      background-color: rgba(0, 119, 204, 0.25);
+      //background-color: rgba(0, 119, 204, 0.25);
       //background-color: #EFEFEF;
       height: calc(624px * #{$vertical-ratio});
       width: calc(1017px * #{$horizontal-ratio});
@@ -556,7 +556,7 @@ p {
           width: 100%;
           height: 100%;
           display: block;
-          background-color: rgba(0, 119, 204, 0.25);
+          //background-color: rgba(0, 119, 204, 0.25);
           //width: 543px;
           //height: 292px;
           .dot {
