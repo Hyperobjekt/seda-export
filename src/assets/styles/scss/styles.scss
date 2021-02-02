@@ -540,7 +540,8 @@ p {
     justify-content: center;
     align-items: center;
     .background {
-      background-color: #EFEFEF;
+      //background-color: rgba(0, 119, 204, 0.25);
+      //background-color: #EFEFEF;
       height: calc(624px * #{$vertical-ratio});
       width: calc(1017px * #{$horizontal-ratio});
       margin-top: calc(72px * #{$vertical-ratio});
@@ -548,20 +549,20 @@ p {
       .overlay {
         // background-color: rgba(0, 119, 204, 0.25);
         position: absolute;
-        top: 12.820512820512821%;
-        left: 2.359882005899705%;
-        bottom: 14.102564102564103%;
-        right: 14.159292%;
+        top: 11.61858974358974%;
+        left: 3.203828125%;
+        bottom: 10.33653846153846%;
+        right: 6.35218289085546%;
         // width: 548px;
         // height: 289px;
         .overlay-child {
           position: relative;
-          // width: 100%;
+          width: 100%;
+          height: 100%;
           display: block;
-          // background-color: rgba(0, 119, 204, 0.25);
-          width: 543px;
-          height: 292px;
-          // height: 100%;
+          //background-color: rgba(0, 119, 204, 0.25);
+          //width: 543px;
+          //height: 292px;
           .dot {
             display: block;
             position: absolute;
