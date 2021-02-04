@@ -233,10 +233,8 @@ const DEV = true; // TODO: For live implementation change this to false.
 class Pdfer {
 
   getPercentDiffBoilerplate(v, from = 1) {
-    // console.log('getPercentDiffBoilerplate()');
     if (!v && v !== 0) { return 'N/A' }
     const percent = formatPercent(v - from);
-    // console.log(percent);
     switch (true) {
       case (percent < 0):
         return (percent * -1) + '% less each grade than';
@@ -263,12 +261,10 @@ class Pdfer {
   }
 
   getBoilerplate(value, arr) {
-    // console.log('getBoilerplate');
     let str = null;
     arr.some((el) => {
-      // console.log(el);
       if (value >= el.range[0] && value <= el.range[1]) {
-        // console.log('value is in range');
+        // value is in range;
         str = el.text;
         return true;
       } else {
@@ -279,7 +275,6 @@ class Pdfer {
   }
 
   getPlural(entity) {
-    // console.log('getPlural');
     switch (entity) {
       case 'county':
         return 'counties';
@@ -303,7 +298,6 @@ class Pdfer {
    * @return {Promise}                   Two-item array of numerical values, lowest first
    */
   getMinMax(range, isPercent = false) {
-    // console.log('getMinMax()');
     let max = null;
     if (!isPercent) {
       max = Math.max(...range.filter(v => this.isValid(v)).map(a => Math.abs(a)));
@@ -311,7 +305,6 @@ class Pdfer {
       max = Math.max(...range.filter(v => this.isValid(v)).map(a => Math.abs(formatPercentDiff(a, 1, 0))));
     }
     const arr = [(max * -1), max];
-    // console.log(arr);
     return arr;
   }
 
@@ -324,7 +317,6 @@ class Pdfer {
    * @return {Promise}              Return object with left and top values
    */
   getChartCoords(data, chartType) {
-    // console.log('getChartCoords()');
     const obj = { visible: true};
     const region = data.region;
     let x = null;
@@ -334,14 +326,12 @@ class Pdfer {
     let _left = null;
     switch (region) {
       case 'school':
-        // console.log('it\'s a school');
         // Set x and y value
         x = data.location['all_frl'];
         y = data.location['all_' + chartType];
         if (!this.isValid(x) || !this.isValid(y)) {
           return { visible: false };
         }
-        // console.log('y = ' + y);
         // Establish ranges
         xRange =  data.ranges['domain_frl'];
         yRange = data.ranges['range_' + chartType];
@@ -354,8 +344,6 @@ class Pdfer {
         obj.displayY = chartType === 'grd' ?
           formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
-          console.log(obj.displayY)
-          console.log(y)
         break;
       default:
         // it's a county / district / state, not a school
@@ -368,23 +356,17 @@ class Pdfer {
         // Establish ranges
         xRange =  data.ranges['domain_ses'];
         yRange = data.ranges['range_' + chartType];
-        console.log('xrange =' + xRange)
-        console.log('x =' + x)
-
         // Set obj values
         _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
         obj.left = String(_left) + '%';
-        console.log('left '+ obj.left)
         // (Length from top to dot divided by length from top to bottom) * 100
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-        //console.log(obj.top)
         obj.displayX = this.getFixed(x, 2);
         obj.displayY = chartType === 'grd' ?
           formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
         break;
     }
-    // console.log(obj);
     return obj;
   }
 
@@ -399,13 +381,11 @@ class Pdfer {
    * @return {Promise}                        Returns object
    */
   constructBar(val, range, barDecimals = 0, median = 0, format = 'number', barHide = vars.barHide) {
-    // console.log('constructBar()');
     const obj = {};
     obj.num = {};
     obj.bar = {};
     obj.bar.neg = {};
     obj.bar.pos = {};
-    // console.log('format = ' + format)
     switch (true) {
       case (val >= median):
         obj.num.neg = '';
@@ -458,16 +438,14 @@ class Pdfer {
       obj.bar.min = '-';
       obj.bar.max = '+';
     } else if (format === 'number') {
-      // console.log('formatting minmax for ranges');
+      // formatting minmax for ranges
       obj.bar.min = formatNumber(range[0], barDecimals);
       obj.bar.max = '+' + formatNumber(range[1], barDecimals);
     } else {
-      // Percent formats for bar min and max labels
-      // console.log('formatting percentdiff for ranges');
+      // format percentdiff for bar min and max labels
       obj.bar.min = range[0] + '%';
       obj.bar.max = '+' + range[1] + '%';
     }
-    // console.log(obj);
     return obj;
   }
 
@@ -476,7 +454,6 @@ class Pdfer {
   }
 
   getStateAbbrev(state) {
-    // console.log('getStateAbbrev');
     switch (state) {
       case 'District of Columbia':
         return 'DC';
@@ -586,7 +563,6 @@ class Pdfer {
   }
 
   html(data, templates) {
-    // console.log('html()');
     try {
       let json;
       let jsonparse;
@@ -681,7 +657,7 @@ class Pdfer {
       }
 
       if (this.isValid(jsonparse.location.all_avg) && this.isValid(jsonparse.location.diff_avg)) {
-        // console.log('diff_avg is valid');
+        // diff_avg is valid
         _verbiage.diff_avg = jsonparse.location.diff_avg;
         _verbiage.ats_diff_fixed = this.getPos(
           this.getFixed(jsonparse.location.diff_avg, 2)
@@ -714,14 +690,14 @@ class Pdfer {
       }
 
       if (this.isValid(jsonparse.location.all_grd) && this.isValid(jsonparse.location.diff_grd)) {
-        // console.log('diff_grd is valid');
+        // diff_grd is valid;
         _verbiage.diff_grd = jsonparse.location.diff_grd;
         _verbiage.grd_diff_fixed = this.getPos(
           this.getFixed(jsonparse.location.diff_grd, 2)
         );
         _verbiage.grd_diff_hl = this.getBoilerplate(jsonparse.location.diff_grd, _ats_diff_hl);
       } else {
-        // console.log('diff_grd not valid');
+        // diff_grd not valid;
         _verbiage.diff_grd = false;
         _verbiage.grd_diff_fixed = false;
         _verbiage.grd_diff_hl = false;
@@ -883,7 +859,6 @@ class Pdfer {
       _grd.pn = this.constructBar(jsonparse.location.pn_grd, grdGapRange, 2);
       _grd.chart = this.getChartCoords(jsonparse, 'grd');
       jsonparse.grd = _grd;
-      // console.log(jsonparse);
       // Fetch the template.
       let t = templates + '/template.hbs';
       const templatePath = Path.resolve(t);
@@ -898,10 +873,7 @@ class Pdfer {
       // let fontsPartial = Fs.readFileSync(templates + '/fonts.hbs', 'utf8');
       // Handlebars.registerPartial('fonts', fontsPartial);
       let stylesPartial = Fs.readFileSync(templates + '/styles.hbs', 'utf8');
-      // console.log(stylesPartial);
       Handlebars.registerPartial('styles', stylesPartial);
-      // console.log('partials:');
-      // console.log(Handlebars.partials);
       // compile and render the template with handlebars
       let handlebars;
       try {
@@ -918,9 +890,7 @@ class Pdfer {
   }
 
   async pdf(data, templates, output) {
-    // console.log('pdf()');
     const html = this.html(data, templates)
-    // console.log(html)
     const browser = await Puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
