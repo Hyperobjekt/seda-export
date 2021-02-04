@@ -104,7 +104,7 @@
     <div id="page_4" class="page pagebreak">
       <div class="chart average">
         <div class="background">
-          {{!-- <div class="dot" style="{{avg.chart.left}}{{avg.chart.top}}"></div> --}}
+          <div class="dot" style="{{avg.chart.left}}{{avg.chart.top}}"></div>
           {{#if avg.chart.visible}}
             <div class="overlay">
               <div class="overlay-child">
@@ -124,7 +124,7 @@
             <div class="icon average"></div>
             <div class="header">
               <span class="title h5">Average Test Scores</span>
-              <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+                <span class="placename h6">{{verbiage.chart_caption_loc}}</span>
             </div>
           </div>
           <p class="body-smaller">{{ verbiage.avg_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}} {{#if verbiage.diff_avg}} Average scores are {{ verbiage.ats_diff_fixed }} grade levels {{ verbiage.ats_diff_hl }} than those of {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
@@ -153,14 +153,14 @@
           <div class="icon average"></div>
           <div class="header">
             <span class="title h5">Average Test Scores</span>
-            <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+            <span class="placename h6">{{verbiage.chart_caption_loc}}</span>
           </div>
         </div>
       </div>
       <div class="bars">
         <div class="demographic-parent">
           <span class="h7">By Demographic Group</span>
-          <p class="body-smaller">The bars in this section show Average Test Scores for various demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p>
+          <p class="body-smaller">The bars in this section show Average Test Scores for various demographic groups in {{verbiage.chart_caption_loc}}. The middle line in each bar represents the national average for all students; bars to the left of the line show scores below the national average, and bars to the right of the line show scores above the national average.</p>
           <table class="demographic">
             <tr>
               <td class="label">ALL STUDENTS</td>
@@ -377,7 +377,7 @@
         <div class="gaps-parent">
           <div class="gaps">
             <span class="h7">Gaps</span>
-            <p class="body-smaller">The bars in this section show differences in Average Test Scores between demographic groups in {{ location.name }}, {{location.state_name}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
+            <p class="body-smaller">The bars in this section show differences in Average Test Scores between demographic groups in {{verbiage.chart_caption_loc}}. The middle line in each bar indicates no gap. Bars to the right of the line indicate that the scores of the first group listed are higher than those of the second group; bars to the left indicate the opposite.</p>
             <table class="gaps-table">
               <tr>
                 <td class="label">WHITE /<br>BLACK</td>
@@ -493,7 +493,7 @@
             <div class="icon growth"></div>
             <div class="header">
               <span class="title h5">Learning Rates</span>
-              <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+              <span class="placename h6">{{verbiage.chart_caption_loc}}</span>
             </div>
           </div>
           <p class="body-smaller">{{ verbiage.grd_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_grd}} Learning rates are {{ verbiage.grd_diff_fixed }}% {{ verbiage.grd_diff_hl }} than those of {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
@@ -522,7 +522,7 @@
           <div class="icon growth"></div>
           <div class="header">
             <span class="title h5">Learning Rates Bar Charts</span>
-            <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+            <span class="placename h6">{{verbiage.chart_caption_loc}}</span>
           </div>
         </div>
       </div>
@@ -862,7 +862,7 @@
             <div class="icon changes"></div>
             <div class="header">
               <span class="title h5">Trend in Test Scores</span>
-              <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+              <span class="placename h6">{{verbiage.chart_caption_loc}}</span>
             </div>
           </div>
           <p class="body-smaller">{{ verbiage.coh_overall_performance }} {{#if verbiage.all_ses}} Socioeconomic status is {{ verbiage.ats_vfb }} the national average.{{/if}}{{#if verbiage.all_frl}} {{verbiage.all_frl}}% of students are eligible for the Federal Free & Reduced Price Lunch Program.{{/if}}{{#if verbiage.diff_coh}} Average scores have {{verbiage.coh_diff_id}} by {{verbiage.coh_diff_fixed}} grade levels {{verbiage.coh_diff_ml}} than those of {{verbiage.type_plural}} with similar socioeconomic status.{{/if}}</p>
@@ -891,7 +891,7 @@
           <div class="icon changes"></div>
           <div class="header">
             <span class="title h5">Trend in Test Scores Bar Charts</span>
-            <span class="placename h6">{{location.name}}, {{location.state_name}}</span>
+            <span class="placename h6">{{verbiage.chart_caption_loc}}</span>
           </div>
         </div>
       </div>
