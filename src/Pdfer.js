@@ -712,17 +712,19 @@ class Pdfer {
         _verbiage.coh_grd = this.getPos(
           this.getFixed(jsonparse.location.all_coh, 2)
         );
+        
         const firstLine = jsonparse.region === 'school' ? 
           `Educational opportunities for the children attending 
-          ${jsonparse.location.name} ${_verbiage.coh_dri} in the years 2009-2016.`
+          ${jsonparse.location.name} ${_verbiage.coh_dri} in the years 2009-2018.`
           : jsonparse.region === 'state' ?
           `${jsonparse.location.name} shows 
           ${_verbiage.coh_dri} educational opportunity.`
           :
           `${jsonparse.location.name}, ${jsonparse.location.state_name} shows 
           ${_verbiage.coh_dri} educational opportunity.`
+
         _verbiage.coh_overall_performance = firstLine + ' Test scores ' + _verbiage.coh_id +
-        ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2016.';
+        ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2018.';
       } else {
         // Data not available. No need to determine verbiage.
         _verbiage.coh_overall_performance = jsonparse.region != 'state' ? 
