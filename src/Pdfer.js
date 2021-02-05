@@ -207,17 +207,24 @@ const _ranges = {
   },
   district: {
     "range_avg": [-7.47, 5.28],
-      // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. 100% as much is a y val of 2
+      // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. '100% more' is a y val of 2
     "range_grd": [.285, 1.92],
     "range_coh": [ -0.31, 0.375 ],
     "domain_ses": [ -4.8, 3.6 ],
   },
   school: {
     "range_avg": [ -4.82, 6.82 ],
-    // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. 100% as much is a y val of 2.
+    // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. '100% more' is a y val of 2.
     "range_grd": [ -.52, 2.45 ],
     "range_coh": [-.54, .63],
     "domain_frl": [ 0, 1 ],
+  },
+  state: {
+    "range_avg": [ -1.583, 1.44 ],
+    // on the yaxis on the grd plot, 'learned 100% less' corresponds to a passed y val of 0. '100% more' is a y val of 2.
+    "range_grd": [ .86, 1.154 ],
+    "range_coh": [-.069, .174],
+    "domain_ses": [ -1.093, .873 ],
   }
 }
 
@@ -226,10 +233,8 @@ const DEV = true; // TODO: For live implementation change this to false.
 class Pdfer {
 
   getPercentDiffBoilerplate(v, from = 1) {
-    // console.log('getPercentDiffBoilerplate()');
     if (!v && v !== 0) { return 'N/A' }
     const percent = formatPercent(v - from);
-    // console.log(percent);
     switch (true) {
       case (percent < 0):
         return (percent * -1) + '% less each grade than';
@@ -256,12 +261,10 @@ class Pdfer {
   }
 
   getBoilerplate(value, arr) {
-    // console.log('getBoilerplate');
     let str = null;
     arr.some((el) => {
-      // console.log(el);
       if (value >= el.range[0] && value <= el.range[1]) {
-        // console.log('value is in range');
+        // value is in range;
         str = el.text;
         return true;
       } else {
@@ -272,7 +275,6 @@ class Pdfer {
   }
 
   getPlural(entity) {
-    // console.log('getPlural');
     switch (entity) {
       case 'county':
         return 'counties';
@@ -296,7 +298,6 @@ class Pdfer {
    * @return {Promise}                   Two-item array of numerical values, lowest first
    */
   getMinMax(range, isPercent = false) {
-    // console.log('getMinMax()');
     let max = null;
     if (!isPercent) {
       max = Math.max(...range.filter(v => this.isValid(v)).map(a => Math.abs(a)));
@@ -304,7 +305,6 @@ class Pdfer {
       max = Math.max(...range.filter(v => this.isValid(v)).map(a => Math.abs(formatPercentDiff(a, 1, 0))));
     }
     const arr = [(max * -1), max];
-    // console.log(arr);
     return arr;
   }
 
@@ -317,7 +317,6 @@ class Pdfer {
    * @return {Promise}              Return object with left and top values
    */
   getChartCoords(data, chartType) {
-    // console.log('getChartCoords()');
     const obj = { visible: true};
     const region = data.region;
     let x = null;
@@ -327,14 +326,12 @@ class Pdfer {
     let _left = null;
     switch (region) {
       case 'school':
-        // console.log('it\'s a school');
         // Set x and y value
         x = data.location['all_frl'];
         y = data.location['all_' + chartType];
         if (!this.isValid(x) || !this.isValid(y)) {
           return { visible: false };
         }
-        // console.log('y = ' + y);
         // Establish ranges
         xRange =  data.ranges['domain_frl'];
         yRange = data.ranges['range_' + chartType];
@@ -347,11 +344,9 @@ class Pdfer {
         obj.displayY = chartType === 'grd' ?
           formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
-          console.log(obj.displayY)
-          console.log(y)
         break;
       default:
-        // console.log('it\'s a county or district, not a school');
+        // it's a county / district / state, not a school
         // Set x and y value
         x = data.location['all_ses'];
         y = data.location['all_' + chartType];
@@ -361,23 +356,17 @@ class Pdfer {
         // Establish ranges
         xRange =  data.ranges['domain_ses'];
         yRange = data.ranges['range_' + chartType];
-        console.log('yrange =' + yRange)
-        console.log('y =' + y)
-
         // Set obj values
         _left = (Math.abs(xRange[0] - x)/Math.abs(xRange[1] - xRange[0]))*100;
         obj.left = String(_left) + '%';
-        console.log(obj.left)
         // (Length from top to dot divided by length from top to bottom) * 100
         obj.top = String((Math.abs(yRange[1] - y)/Math.abs(yRange[1] - yRange[0]))*100) + '%';
-        console.log(obj.top)
         obj.displayX = this.getFixed(x, 2);
         obj.displayY = chartType === 'grd' ?
           formatPercentDiff(y, 1) + '%' :
           this.getFixed(y, 2);
         break;
     }
-    // console.log(obj);
     return obj;
   }
 
@@ -392,13 +381,11 @@ class Pdfer {
    * @return {Promise}                        Returns object
    */
   constructBar(val, range, barDecimals = 0, median = 0, format = 'number', barHide = vars.barHide) {
-    // console.log('constructBar()');
     const obj = {};
     obj.num = {};
     obj.bar = {};
     obj.bar.neg = {};
     obj.bar.pos = {};
-    // console.log('format = ' + format)
     switch (true) {
       case (val >= median):
         obj.num.neg = '';
@@ -451,16 +438,14 @@ class Pdfer {
       obj.bar.min = '-';
       obj.bar.max = '+';
     } else if (format === 'number') {
-      // console.log('formatting minmax for ranges');
+      // formatting minmax for ranges
       obj.bar.min = formatNumber(range[0], barDecimals);
       obj.bar.max = '+' + formatNumber(range[1], barDecimals);
     } else {
-      // Percent formats for bar min and max labels
-      // console.log('formatting percentdiff for ranges');
+      // format percentdiff for bar min and max labels
       obj.bar.min = range[0] + '%';
       obj.bar.max = '+' + range[1] + '%';
     }
-    // console.log(obj);
     return obj;
   }
 
@@ -469,7 +454,6 @@ class Pdfer {
   }
 
   getStateAbbrev(state) {
-    // console.log('getStateAbbrev');
     switch (state) {
       case 'District of Columbia':
         return 'DC';
@@ -579,7 +563,6 @@ class Pdfer {
   }
 
   html(data, templates) {
-    // console.log('html()');
     try {
       let json;
       let jsonparse;
@@ -617,7 +600,7 @@ class Pdfer {
       }
       const _verbiage = {}; // JSON object for addl strings needed by template
       _verbiage.type_plural = this.getPlural(jsonparse.region);
-      _verbiage.state_abbrev = this.getStateAbbrev(jsonparse.location.state_name);
+      _verbiage.state_abbrev = jsonparse.region != 'state' ? this.getStateAbbrev(jsonparse.location.state_name) : null;
 
       if (jsonparse.region === 'school') {
         _verbiage.xLabel = 'Free and Reduced Lunch';
@@ -645,23 +628,36 @@ class Pdfer {
         );
         _verbiage.ats_hrl = this.getBoilerplate(jsonparse.location.all_avg, _ats_hrl);
         _verbiage.ats_ab = this.getBoilerplate(jsonparse.location.all_avg, _ats_ab);
-        const firstLine = jsonparse.region === 'school' ? `
-          The children attending ${jsonparse.location.name} have 
-          ${_verbiage.ats_hrl} average educational opportunities.
-        ` : `
-          ${jsonparse.location.name}, ${jsonparse.location.state_name} provides 
-          ${_verbiage.ats_hrl} average educational opportunities. 
-        `;
+        const firstLine = 
+          jsonparse.region === 'school' ? 
+          `The children attending ${jsonparse.location.name} have 
+          ${_verbiage.ats_hrl} average educational opportunities.` 
+          : jsonparse.region === 'state' ?
+          `${jsonparse.location.name} provides 
+          ${_verbiage.ats_hrl} average educational opportunities.`
+          :
+          `${jsonparse.location.name}, ${jsonparse.location.state_name} provides 
+          ${_verbiage.ats_hrl} average educational opportunities.`
+        // const firstLine = jsonparse.region === 'school' ? `
+        //   The children attending ${jsonparse.location.name} have 
+        //   ${_verbiage.ats_hrl} average educational opportunities.
+        // ` : `
+        //   ${jsonparse.location.name}, ${jsonparse.location.state_name} provides 
+        //   ${_verbiage.ats_hrl} average educational opportunities. 
+        // `;
         _verbiage.avg_overall_performance = firstLine + ' Average test scores are ' +
         _verbiage.ats_avg_fixed + ' grade level(s) ' + _verbiage.ats_ab +
         ' the national average.';
       } else {
         // Data not available. No need to determine verbiage.
-        _verbiage.avg_overall_performance = 'Average test scores for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+        _verbiage.avg_overall_performance = jsonparse.region != 'state' ? 
+        `Average test scores for ${jsonparse.location.name}, ${jsonparse.location.state_name} are unavailable.`
+        :
+        `Average test scores for ${jsonparse.location.name} are unavailable.`
       }
 
       if (this.isValid(jsonparse.location.all_avg) && this.isValid(jsonparse.location.diff_avg)) {
-        // console.log('diff_avg is valid');
+        // diff_avg is valid
         _verbiage.diff_avg = jsonparse.location.diff_avg;
         _verbiage.ats_diff_fixed = this.getPos(
           this.getFixed(jsonparse.location.diff_avg, 2)
@@ -677,22 +673,31 @@ class Pdfer {
       if (this.isValid(jsonparse.location.all_grd)) {
         _verbiage.grd_hrl = this.getBoilerplate(jsonparse.location.all_grd, _grd_hrl);
         _verbiage.grd_pct = this.getPercentDiffBoilerplate(jsonparse.location.all_grd, 1);
-        _verbiage.grd_overall_performance = jsonparse.location.name + ', ' + jsonparse.location.state_name + ' provides ' + _verbiage.grd_hrl +
-        ' average educational opportunities while children are in school. Students learn ' + _verbiage.grd_pct + ' the U.S. average.';
+        _verbiage.grd_overall_performance = jsonparse.region != 'state' ? 
+          `${jsonparse.location.name}, ${jsonparse.location.state_name} provides ${_verbiage.grd_hrl} 
+          average educational opportunities while children are in school. Students learn 
+          ${_verbiage.grd_pct} the U.S. average.`
+          : 
+          `${jsonparse.location.name} provides ${_verbiage.grd_hrl} 
+          average educational opportunities while children are in school. Students learn 
+          ${_verbiage.grd_pct} the U.S. average.`
       } else {
         // Data not available. No need to determine verbiage.
-        _verbiage.grd_overall_performance = 'Learning rates for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+        _verbiage.grd_overall_performance = jsonparse.region != 'state' ?
+        `Learning rates for ${jsonparse.location.name}, ${jsonparse.location.state_name} are unavailable.`
+        :
+        `Learning rates for ${jsonparse.location.name} are unavailable.`
       }
 
       if (this.isValid(jsonparse.location.all_grd) && this.isValid(jsonparse.location.diff_grd)) {
-        // console.log('diff_grd is valid');
+        // diff_grd is valid;
         _verbiage.diff_grd = jsonparse.location.diff_grd;
         _verbiage.grd_diff_fixed = this.getPos(
           this.getFixed(jsonparse.location.diff_grd, 2)
         );
         _verbiage.grd_diff_hl = this.getBoilerplate(jsonparse.location.diff_grd, _ats_diff_hl);
       } else {
-        // console.log('diff_grd not valid');
+        // diff_grd not valid;
         _verbiage.diff_grd = false;
         _verbiage.grd_diff_fixed = false;
         _verbiage.grd_diff_hl = false;
@@ -707,18 +712,25 @@ class Pdfer {
         _verbiage.coh_grd = this.getPos(
           this.getFixed(jsonparse.location.all_coh, 2)
         );
-        const firstLine = jsonparse.region === 'school' ? `
-          Educational opportunities for the children attending 
-          ${jsonparse.location.name} ${_verbiage.coh_dri} in the years 2009-2016.
-        ` : `
-          ${jsonparse.location.name}, ${jsonparse.location.state_name} shows 
-          ${_verbiage.coh_dri} educational opportunity.
-        `
+        
+        const firstLine = jsonparse.region === 'school' ? 
+          `Educational opportunities for the children attending 
+          ${jsonparse.location.name} ${_verbiage.coh_dri} in the years 2009-2018.`
+          : jsonparse.region === 'state' ?
+          `${jsonparse.location.name} shows 
+          ${_verbiage.coh_dri} educational opportunity.`
+          :
+          `${jsonparse.location.name}, ${jsonparse.location.state_name} shows 
+          ${_verbiage.coh_dri} educational opportunity.`
+
         _verbiage.coh_overall_performance = firstLine + ' Test scores ' + _verbiage.coh_id +
-        ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2016.';
+        ' an average of ' + _verbiage.coh_grd + ' grade levels each year from 2009-2018.';
       } else {
         // Data not available. No need to determine verbiage.
-        _verbiage.coh_overall_performance = 'Trends in test scores for ' + jsonparse.location.name + ', ' + jsonparse.location.state_name + ' are unavailable.'
+        _verbiage.coh_overall_performance = jsonparse.region != 'state' ? 
+        `Trends in test scores for ${jsonparse.location.name}, ${jsonparse.location.state_name} are unavailable.`
+        :
+        `Trends in test scores for ${jsonparse.location.name} are unavailable.`
       }
 
       if (this.isValid(jsonparse.location.all_coh) && this.isValid(jsonparse.location.diff_coh)) {
@@ -734,7 +746,15 @@ class Pdfer {
         _verbiage.coh_diff_id = false;
         _verbiage.coh_diff_ml = false;
       }
+
+      if (jsonparse.region != 'state') {
+        _verbiage.chart_caption_loc = `${jsonparse.location.name}, ${jsonparse.location.state_name}`
+      } else {
+        _verbiage.chart_caption_loc = jsonparse.location.name
+      }
+
       jsonparse.verbiage = _verbiage;
+
       const _avg = {}; // JSON object for average bar charts & conditionals
       const avgSeries = [
         jsonparse.location.all_avg,
@@ -841,7 +861,6 @@ class Pdfer {
       _grd.pn = this.constructBar(jsonparse.location.pn_grd, grdGapRange, 2);
       _grd.chart = this.getChartCoords(jsonparse, 'grd');
       jsonparse.grd = _grd;
-      // console.log(jsonparse);
       // Fetch the template.
       let t = templates + '/template.hbs';
       const templatePath = Path.resolve(t);
@@ -856,10 +875,7 @@ class Pdfer {
       // let fontsPartial = Fs.readFileSync(templates + '/fonts.hbs', 'utf8');
       // Handlebars.registerPartial('fonts', fontsPartial);
       let stylesPartial = Fs.readFileSync(templates + '/styles.hbs', 'utf8');
-      // console.log(stylesPartial);
       Handlebars.registerPartial('styles', stylesPartial);
-      // console.log('partials:');
-      // console.log(Handlebars.partials);
       // compile and render the template with handlebars
       let handlebars;
       try {
@@ -876,9 +892,7 @@ class Pdfer {
   }
 
   async pdf(data, templates, output) {
-    // console.log('pdf()');
     const html = this.html(data, templates)
-    // console.log(html)
     const browser = await Puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
@@ -904,7 +918,7 @@ class Pdfer {
     await page.pdf({
       path: output,
       format: 'Letter',
-      printBackground: true
+      printBackground: false
     })
 
     return await browser.close();

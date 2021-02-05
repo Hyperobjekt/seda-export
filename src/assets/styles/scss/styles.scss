@@ -24,6 +24,8 @@
 @import "./dot-coh.scss";
 @import "./dot.scss";
 @import "./chart-overlay.scss";
+@import "./fonts.scss";
+// referenced as background in the 4 location-type-* subclasses
 @import "./counties-avg.scss";
 @import "./counties-grd.scss";
 @import "./counties-coh.scss";
@@ -33,7 +35,9 @@
 @import "./schools-avg.scss";
 @import "./schools-grd.scss";
 @import "./schools-coh.scss";
-@import "./fonts.scss";
+@import "./states-avg.scss";
+@import "./states-grd.scss";
+@import "./states-coh.scss";
 
 
 html, body {
@@ -782,6 +786,51 @@ body.location-type-school {
     .chart {
       .background {
         background: $schools-coh; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        // .dot {
+        //   background: $dot-coh;
+        //   background-size: 100% 100%;
+        //   background-position: 0 0;
+        //   background-repeat: no-repeat;
+        // }
+      }
+    }
+  }
+}
+// state backgrounds
+body.location-type-state {
+  #page_4 {
+    .chart {
+      .background {
+        background: $states-avg; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  #page_6 {
+    .chart {
+      .background {
+        background: $states-grd; // $chart-overlay;
+        background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        // .dot {
+        //   background: $dot-grd;
+        //   background-size: 100% 100%;
+        //   background-position: 0 0;
+        //   background-repeat: no-repeat;
+        // }
+      }
+    }
+  }
+  #page_8 {
+    .chart {
+      .background {
+        background: $states-coh; // $chart-overlay;
         background-size: calc(1017px * #{$horizontal-ratio}) calc(624px * #{$vertical-ratio});
         background-position: 0 0;
         background-repeat: no-repeat;
