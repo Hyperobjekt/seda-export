@@ -589,7 +589,7 @@ class Pdfer {
       const datestring = mm + '/' + dd + '/' + yy;
       jsonparse.today = datestring;
       jsonparse.infourl = 'EDOPPORTUNITY.ORG';
-      if (jsonparse.region === 'county' || jsonparse.region === 'district') {
+      if (jsonparse.region === 'county' || jsonparse.region === 'district' || jsonparse.region === 'state') {
         jsonparse.showbarcharts = true;
       } else {
         jsonparse.showbarcharts = false;
